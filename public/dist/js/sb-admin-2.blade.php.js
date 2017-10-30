@@ -11,30 +11,7 @@ $(function() {
 //collapses the sidebar on window resize.
 // Sets the min-height of #page-wrapper to window size
 
-     $(document).ready(function(){
-		 function getSession(){
-			 
-		$.ajax({
-					type: 'GET',
-					url: "/waybill/session_info",
-					dataType: 'JSON',
-					beforeSend: function(xhr)
-					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-					data: {
-
-					},                                                                                             
-					error: function( xhr ){ 
-					// alert("ERROR ON SUBMIT");
-//					console.log("error on submit"+xhr);
-					},
-					success: function( data ){ 
-					$doc = data;
-//					console.log($doc.id);
-					}
-				
-				});
-		 }
-		 
+     $(document).ready(function(){	 
 		 function zeroPad(num, places) {
   var zero = places - num.toString().length + 1;
   return Array(+(zero > 0 && zero)).join("0") + num;
@@ -46,8 +23,9 @@ $(function() {
       for (var key in obj) if (isEmpty(obj[key])) return true;
       return false;
     }
-	var $userid='';
-	var $username='';
+	var $userid= $("#userid").val();
+	var $username = $("#username").val();
+	console.log("Username " + $username + "  User id: "+ $userid);
 	var $item_stat = "";
 	var $item_err = 0;
 	var $doc_id;
@@ -244,9 +222,9 @@ $(function() {
 					if($doc.wType=='LOAN'){
 						
 						if($doc.ackcnt>9){
-							console.log("username"+$userid);
-						$("#rec_btn1").hide();
-					//$("#rec_btn2").show();
+							console.log("username " + $userid);
+					$("#rec_btn1").hide();
+					$("#rec_btn2").show();
 					
 						}
 					}

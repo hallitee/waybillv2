@@ -58,6 +58,8 @@
 			 @else
 			<li>
            {{ Auth::user()->name }} 
+			{!! Form::hidden('userid',Auth::user()->id, array('class' => 'input-md emailinput form-control', 'id'=>'userid')); !!}
+			{!! Form::hidden('username',Auth::user()->name, array('class' => 'input-md emailinput form-control', 'id'=>'username')); !!}
 		   </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">

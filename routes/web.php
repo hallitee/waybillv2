@@ -18,22 +18,7 @@ use App\User;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('waybill/session_info', function(Request $request){
-	$company = $request->company;
-	$location = $request->location;	
 
-	$data = User::where('company', $company)->where('location', $location)->get();	
-	if($data->isEmpty()){
-	$data = User::where('location', $location)->get();
-	}
-	else{			}
-
-	if(Auth::user()->priv == 1){
-		$data = User::all();
-	}	
-    return Response::json($data);
-	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
-});
 Route::get('waybill/loadusers', function(Request $request){
 	$company = $request->company;
 	$location = $request->location;	
