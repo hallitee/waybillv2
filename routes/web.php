@@ -18,6 +18,22 @@ use App\User;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('waybill/session_info', function(Request $request){
+	$company = $request->company;
+	$location = $request->location;	
+
+	$data = User::where('company', $company)->where('location', $location)->get();	
+	if($data->isEmpty()){
+	$data = User::where('location', $location)->get();
+	}
+	else{			}
+
+	if(Auth::user()->priv == 1){
+		$data = User::all();
+	}	
+    return Response::json($data);
+	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
+});
 Route::get('waybill/loadusers', function(Request $request){
 	$company = $request->company;
 	$location = $request->location;	
@@ -75,10 +91,19 @@ Route::get('waybill/recitem', function(Request $request){
 	$item_stat = $request->item_stat;	
 	$userid = $request->userid;
 	$remText = $request->remText;
-		if($item_stat=='CLOSED'){
+	if($item_stat=='CLOSED'){
 	$g = doc::where('id', $doc_id)->first();
 	$g->receiveStatus = $item_stat;
 	$g->receivedBy =Auth::user()->name;
+	$g->closeremark = $remText;
+	$g->receiveDate = date("Y-m-d");
+	$g->save();		
+	}
+	if($item_stat=='ACK'){
+	$g = doc::where('id', $doc_id)->first();	
+	$g->receiveStatus = 'OPEN';
+	$g->ackcnt = 10;	
+	$g->receivedBy =Auth::user()->name;	
 	$g->closeremark = $remText;
 	$g->receiveDate = date("Y-m-d");
 	$g->save();		

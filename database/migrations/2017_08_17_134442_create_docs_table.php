@@ -33,6 +33,7 @@ class CreateDocsTable extends Migration
 			$table->integer('reprintNo')->nullable();
 			$table->date('printDate')->nullable();	
 			$table->date('reprintDate')->nullable();	
+			$table->integer('ackcnt')->nullable();
 			$table->integer('user_id')->unsigned();			
 			$table->foreign('user_id')->references('id')->
 			on('users')->onDelete('cascade');

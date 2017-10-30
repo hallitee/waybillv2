@@ -217,7 +217,7 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 				</tbody>
 			</table>		
 			</div>
-			<div id='recRemarks' hidden>
+			<div id='recRemarks' style="display:none">
 			<textarea id="recRemText" placeholder="Enter remarks before closing waybill" class="center-block" cols="40" rows="3" style="width:300px;height:100px;border:5px solid orange;border-radius:2px"></textarea>			
 			</div>
 			</div>
@@ -246,10 +246,17 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 		  <thead>
 		  <tr>
 		  <th> </th>
-		  <th> </th>		  
+		  <th> </th>	
+			@if($form=='transfer')
 		  <th><button id="rec_btn" type="button" class="btn btn-info btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Receive Partly</button> </th>
 		  <th> </th>
 		  <th> <button id="rec_btn1" type="button" class="btn btn-warning btn-lg" style="width: 80%;"><span class="glyphicon glyphicon-ok-sign"></span> Receive Completely</button></th>
+		  @elseif($form=='loan')
+		 <th> <button id="rec_btn1" type="button" class="btn btn-warning btn-lg" style="width: 80%;"><span class="glyphicon glyphicon-ok-sign"></span>Acknowledge Receive</button></th>			
+		 <th> <button id="rec_btn2" type="button" class="btn btn-warning btn-lg" style="width: 80%;display:none"><span class="glyphicon glyphicon-ok-sign"></span>Return Gatepass</button></th>				 
+		  @else
+			<th> <button id="rec_btn1" type="button" class="btn btn-warning btn-lg" style="width: 80%;"><span class="glyphicon glyphicon-ok-sign"></span> Receive Items</button></th>			  
+		  @endif
 		  </tr>
 		  
 		  </thead>

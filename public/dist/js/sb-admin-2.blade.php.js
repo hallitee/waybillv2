@@ -12,6 +12,29 @@ $(function() {
 // Sets the min-height of #page-wrapper to window size
 
      $(document).ready(function(){
+		 function getSession(){
+			 
+		$.ajax({
+					type: 'GET',
+					url: "/waybill/session_info",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+//					console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+					$doc = data;
+//					console.log($doc.id);
+					}
+				
+				});
+		 }
+		 
 		 function zeroPad(num, places) {
   var zero = places - num.toString().length + 1;
   return Array(+(zero > 0 && zero)).join("0") + num;
@@ -141,7 +164,7 @@ $(function() {
 //				console.log("Items button clicked");
 				$userid = $("#userid").val();
 				$doc_id = $(this).val();
-								$.ajax({
+				$.ajax({
 					type: 'GET',
 					url: "/waybill/loaddoc",
 					dataType: 'JSON',
@@ -158,8 +181,9 @@ $(function() {
 					$doc = data;
 //					console.log($doc.id);
 					}
-				});
 				
+				});
+					
 				$.ajax({
 					type: 'GET',
 					url: "/waybill/loadItems",
@@ -181,7 +205,7 @@ $(function() {
 					$.each(data, function(i, item){
 						if(item.recqty===item.qty){
 							$rd = "readonly";
-						}
+						}else if($doc.ackcnt>9){$rd="readonly"}
 						else{$rd = "";}
 //						console.log(i);
 						rec_qty[i] = item.recqty;
@@ -217,6 +241,15 @@ $(function() {
 					$("#edit").modal('show');
 					$("#rec_err").text("");
 					$("#rec_suc").text("");
+					if($doc.wType=='LOAN'){
+						
+						if($doc.ackcnt>9){
+							console.log("username"+$userid);
+						$("#rec_btn1").hide();
+					//$("#rec_btn2").show();
+					
+						}
+					}
 					//$("#rec_err").hide();
 					//data response can contain what we want here...
 					
@@ -224,6 +257,7 @@ $(function() {
 					//console.log("SUCCESS, data="+data);
 					}
 				});
+				
 	});
 $("body").on("click",'.btn_itemshow', function(){
 				console.log("Items button clicked");
@@ -346,8 +380,11 @@ $("body").on("click",'.btn_itemshow', function(){
 	
 	
 	$("body").on("click",'#rec_btn1', function(){ 
-				//$("#rec_err").hide();
-				$("#rec_err").text("");			
+	
+
+		//$("#rec_err").hide();
+		$("#recRemarks").css('diplay','none');
+		$("#rec_err").text("");			
 		$item_err = 0; 
 		for(var c=0; c<$item_count; c++){
 		//	console.log("Received quantity"+ rec_qty[c]);
@@ -373,7 +410,7 @@ $("body").on("click",'.btn_itemshow', function(){
 							}
 							else if($g<$h){
 								$item_err=$item_err+1;	
-							console.log("Quantity received less"+ $g+" counter "+c +" Item error"+$item_err);	
+							//console.log("Quantity received less"+ $g+" counter "+c +" Item error"+$item_err);	
 								}
 							else if($g === $h){ 
 							$item_err=$item_err-1;
@@ -381,28 +418,26 @@ $("body").on("click",'.btn_itemshow', function(){
 											}
 		                    } 		
 		if($item_err>0){
-			if($("#recRemarks").is(":visible")){
-			if($("#recRemText").val()===""){
-		//	console.log("Remarks cannot be empty");	
+			
+			if($('#recRemarks').is(':visible')){
+			console.log("did u run this");
+			if($("#recRemText").val()==""){
+			console.log("Remarks cannot be empty");	
 			$("#rec_err").text("Remarks cannot be empty");
 			$("#rec_err").show();
 			}
 			else{
 				//$("#rec_err").hide();
 				$("#rec_err").text("");
-				recComplete();
+				recLoan();
 		}
-	}	else{$("#recRemarks").show();}	
+	}	else{$("#recRemarks").show();}	 
 		}
 		else if($item_err<0){
-				recComplete();
-		}
+				recLoan();
+		} 
+		
 //		console.log("receive button clicked "+$item_err);
-			
-	
-			
-
-
 //			console.log("receive button 1  clicked ");		
 				});
 		
@@ -631,6 +666,57 @@ function loaddoc(){
 				}
 function recComplete(){
 					$item_stat='CLOSED';
+//			console.log("Item error less than zero"+ $g+" counter "+c +" Item error"+$item_err);
+			for(var d=0; d<$item_count; d++){
+				var	$rec = Number($("input[name='item["+d+"][recqty]'").val());
+				var $recqty = $rec + Number(rec_qty[d]);
+				var	$id = $("input[name='item["+d+"][id]'").val();
+//				console.log("Quantity received "+ $g+" counter "+d +" Item error"+$item_err);
+			console.log("item id "+$id+" Receive quatity "+ $recqty );
+//				console.log("Doc id "+$doc_id+" Item Status "+ $item_stat );
+			$.ajax({
+					type: 'GET',
+					url: "/waybill/recitem",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"doc_id": $doc_id,
+					"recqty": $recqty,
+					"currRec": $rec,
+					"item_id": $id,
+					"item_stat": $item_stat,
+					"userid": $userid,
+					"remText": $("#recRemText").val()
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+//					console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+
+					//data response can contain what we want here...
+//					console.log("Item saved "+data+"fully");
+					}
+				});
+			
+			}
+			$("#rec_suc").text("Items received succesfully");
+			$('#edit').delay(2000).fadeOut(2000);
+			setTimeout(function(){
+				$('#edit').modal("hide");
+				window.location.href = '/home';
+				}, 4500);
+}
+function recLoan(){
+						
+					if(($doc.wType=='LOAN' )&&($doc.ackcnt==0)){
+						$item_stat = 'ACK';
+					}
+					else{
+						$item_stat='CLOSED';
+					}
+
 //			console.log("Item error less than zero"+ $g+" counter "+c +" Item error"+$item_err);
 			for(var d=0; d<$item_count; d++){
 				var	$rec = Number($("input[name='item["+d+"][recqty]'").val());
