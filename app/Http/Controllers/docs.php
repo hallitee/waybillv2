@@ -79,7 +79,13 @@ public function reports(Request $request) {
 	$type = strtoupper($request->input('type'));
 	$status = $request->input('status');		
 	$id=Auth::user()->id;
-	$doc = doc::where('wType', $type)->where('receiveStatus', $status)->where('user_id', $id)->orderby('sentDate', 'DESC')->get();
+	$loc = Auth::user()->company.' '.Auth::user()->location;
+	
+	$doc=doc::where('wType', $type)->where(function ($q) use ($status){
+	$q->where('receiveStatus', $status)->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');})->where(function($g) use ($loc){
+		$g->where('sentTo',$loc)->orWhere('sentFrom',$loc);})->orderby('sentDate', 'DESC')->get();
+	
+	/*$doc = doc::where('wType', $type)->orderby('sentDate', 'DESC')->get();*/
 	return view('docs.reports')->with('userid', $id)->with('type', $type)->with('status', $status)->with('doc', $doc);
 }
 	
@@ -146,6 +152,15 @@ public function prints(Request $req) {
 	return view('docs.print'); 
 	}
 	}
+public function rprint(Request $req) {
+	//$id=Auth::user()->email;
+	//$doc = doc::where('id', $docid)->get()->first();
+	//$item = item::where('doc_id', $docid)->get();
+	$ptype = $req->pType;
+	$doc = doc::where('id', $req->doc)->first();
+	$item = item::where('doc_id', $req->doc)->get();
+	return view('docs.rprint')->with(['load'=>'no','doc'=>$doc, 'ptype'=>$ptype, 'items'=>$item]);
+	}	
 public function printreview(Request $req) {
 	 $usrname=Auth::user()->name;
 	//$doc = doc::where('id', $docid)->get()->first();

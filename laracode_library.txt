@@ -1,3 +1,120 @@
+	 	$("body").on("click",'#rec_btn', function(){ 
+
+		//$("#rec_err").append("Error in your inputs");
+		/*$("#tbody1 > tr").each(function(i, tr){
+			console.log(" i "+i+ "  tr "+tr);		
+			var val = $("input", tr).val();	
+			console.log("VAL "+val);			
+						
+		});*/
+		//console.log($("input[name='item[0][desc]'").val());
+		$item_err = 0; 
+		for(var c=0; c<$item_count; c++){
+			console.log("Received quantity"+$rec_qty[c]);
+		var	$h = $("input[name='item["+c+"][qty]'").val();
+		var	$g = $("input[name='item["+c+"][recqty]'").val();
+		var	$j = $("input[name='item["+c+"][recvnqty]'").val();
+		var	$i = $("input[name='item["+c+"][id]'").val();
+		console.log("c "+ c + " g "+ $i);
+				if(($g+$rec_qty[c])>$h)	{
+					$("#rec_err").text("Received can't be greater than sent on Item "+(c+1)+" ");
+					return true;
+							}
+							else if(($g+$rec_qty[c])<$h){
+								$item_err=$item_err+1;	
+							console.log("Quantity received "+ $g+" counter "+c +" Item error"+$item_err);	
+								}
+							else if(($g+$rec_qty[c]) === $h){ 
+							console.log("Quantity received "+ $g+" counter "+c +" Item error"+$item_err);
+											}
+		} 
+		if($item_err>0){
+			console.log("Received Less ");
+			$item_stat='OPEN';
+			console.log("Quantity received "+ $g+" counter "+c +" Item error"+$item_err);
+			for(var d=0; d<$item_count; d++){
+				var	$rec = $("input[name='item["+d+"][recqty]'").val();
+				var $recqty = $rec + $rec_qty[d];
+				var	$id = $("input[name='item["+d+"][id]'").val();
+				console.log("Quantity received "+ $g+" counter "+d +" Item error"+$item_err);
+				console.log("item id "+$id+" Receive quatity "+ $recqty );
+				console.log("Doc id "+$doc_id+" Item Status "+ $item_stat );
+				$.ajax({
+					type: 'GET',
+					url: "/waybill/recitem",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"doc_id": $doc_id,
+					"recqty": $recqty,
+					"item_id": $id,
+					"item_stat": $item_stat
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+					console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+					//data response can contain what we want here...
+					console.log("Item saved "+data+"fully");
+					}
+				});
+			}
+					$("#rec_suc").text("Items received succesfully");
+						
+					
+		}
+		else{
+			$item_stat='CLOSED';
+			console.log("Quantity received "+ $g+" counter "+c +" Item error"+$item_err);
+			for(var d=0; d<$item_count; d++){
+				var	$rec = $("input[name='item["+d+"][recqty]'").val();
+				var $recqty = $rec + $rec_qty[d];
+				var	$id = $("input[name='item["+d+"][id]'").val();
+				console.log("Quantity received "+ $g+" counter "+d +" Item error"+$item_err);
+				console.log("item id "+$id+" Receive quatity "+ $recqty );
+				console.log("Doc id "+$doc_id+" Item Status "+ $item_stat );
+			$.ajax({
+					type: 'GET',
+					url: "/waybill/recitem",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"doc_id": $doc_id,
+					"recqty": $recqty,
+					"item_id": $id,
+					"item_stat": $item_stat
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+					console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+
+					//data response can contain what we want here...
+					console.log("Item saved "+data+"fully");
+					}
+				});
+			
+			}
+			$("#rec_suc").text("Items received succesfully");
+			$('#edit').delay(3000).fadeOut(3000);
+			setTimeout(function(){
+				$('#edit').modal("hide");
+				window.location.href = '/home';
+				}, 6000);
+		}
+		console.log("receive button clicked "+$item_err);
+			
+	
+		
+				});
+	
+	 ======================================================================================================================================================================
+	 $('#addrs'+i).html("<td>"+ (i+1) +"</td><td><input name='items["+i+"][desc]' value='"+item.item_desc+"' type='text' placeholder='Item description' class='form-control input-md' readonly/> </td><td><input  name='items["+i+"][qty]'  type='text' placeholder='Quantity'  class='form-control input-md' value='"+item.serialNo+"' readonly></td><td><input  name='items["+i+"][serial]' type='text' placeholder='Serial Number'  class='form-control input-md' value='"+item.qty+"' readonly></td><td><input  name='items["+i+"][status]' type='text' placeholder='Item Status'  class='form-control input-md' value='"+item.status+"' readonly></td><td><p data-placement='top' data-toggle='tooltip' title='Edit'><button class='btn btn-primary btn-xs btn_items' value='"+item.id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td>");
+===========================================================================================================================================================================
 {!! Form::open(['action' => 'docs@store', 'class'=>'form']) !!}
 
 

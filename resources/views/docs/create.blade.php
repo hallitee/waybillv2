@@ -11,7 +11,7 @@
 New Way Bill
 <ul id="errmsg" style="color:red;font-size:14px" hidden>
 
-<li>Enter receiving location 'sent To' </li>
+<li id="errmsglist">Enter receiving location 'sent To' </li>
 
 </ul>
 @endsection

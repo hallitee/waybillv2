@@ -244,22 +244,32 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
           <div class="modal-footer col-md">
 		  <table class="table table-hover">
 		  <thead>
+		<tr>
+		<th id='printText'>Print</th>
+		</tr>
 		  <tr>
-		  <th> </th>
+		  <td>
+		  <div class="form-group">
+		  {!! Form::select('printType',['','WAYBILL'=>'Return Waybill', 'No'=>'No'],null, array('class' => 'form-control input-xs', 'id'=>'printType')); !!}
+		  </div>
+		  </td>
 		  <th> </th>	
 			@if($form=='transfer')
 		  <th><button id="rec_btn" type="button" class="btn btn-info btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Receive Partly</button> </th>
 		  <th> </th>
 		  <th> <button id="rec_btn1" type="button" class="btn btn-warning btn-lg" style="width: 80%;"><span class="glyphicon glyphicon-ok-sign"></span> Receive Completely</button></th>
 		  @elseif($form=='loan')
-		 <th> <button id="rec_btn1" type="button" class="btn btn-warning btn-lg" style="width: 80%;"><span class="glyphicon glyphicon-ok-sign"></span>Acknowledge Receive</button></th>			
-		 <th> <button id="rec_btn2" type="button" class="btn btn-warning btn-lg" style="width: 80%;display:none"><span class="glyphicon glyphicon-ok-sign"></span>Return Gatepass</button></th>				 
+		 <th> <button id="rec_btn1" type="button" class="btn btn-warning btn-lg" style="width: 80%;"><span class="glyphicon glyphicon-ok-sign"></span>Receive Items</button></th>			
+		 <th> <button id="rec_btn2" type="button" class="btn btn-danger btn-lg" style="width: 80%;display:none"><span class="glyphicon glyphicon-ok-sign"></span>Return Items</button></th>	
+		 <th> <button id="rec_btn3" type="button" class="btn btn-danger btn-lg" style="width: 80%;display:none"><span class="glyphicon glyphicon-print"></span>Print</button></th>	
+		 <th> <button id="rec_btn4" type="button" class="btn btn-success btn-lg" style="width: 80%;display:none"><span class="glyphicon glyphicon-ok-sign"></span>Receive Returned</button></th>			 
 		  @else
 			<th> <button id="rec_btn1" type="button" class="btn btn-warning btn-lg" style="width: 80%;"><span class="glyphicon glyphicon-ok-sign"></span> Receive Items</button></th>			  
 		  @endif
 		  </tr>
 		  
 		  </thead>
+
 		  </table>
  
       </div>

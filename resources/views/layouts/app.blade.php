@@ -60,7 +60,36 @@
            {{ Auth::user()->name }} 
 			{!! Form::hidden('userid',Auth::user()->id, array('class' => 'input-md emailinput form-control', 'id'=>'userid')); !!}
 			{!! Form::hidden('username',Auth::user()->name, array('class' => 'input-md emailinput form-control', 'id'=>'username')); !!}
+			{!! Form::hidden('usercompany',Auth::user()->company, array('class' => 'input-md emailinput form-control', 'id'=>'usercompany')); !!}
+			{!! Form::hidden('userlocation',Auth::user()->location, array('class' => 'input-md emailinput form-control', 'id'=>'userlocation')); !!}
 		   </li>
+		                   <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu alert-dropdown">
+                        <li>
+                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">View All</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -78,6 +107,7 @@
                     <!-- /.dropdown-user -->
                 </li>
                 <!-- /.dropdown -->
+				
 			@endif
             </ul>
             <!-- /.navbar-top-links -->

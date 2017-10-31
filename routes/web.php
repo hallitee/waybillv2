@@ -19,6 +19,16 @@ use App\User;
 |
 */
 
+Route::get('waybill/return', function(Request $request){
+	$id = $request->doc_id;
+	$printType = $request->printType;	
+	$data = doc::where('id', $id)->first();
+	$data->receiveStatus = 'RETURNED';
+	$data->ackcnt = 20;
+	$data->save();
+    return Response::json($data);
+	//return view('waybill.reports');
+});
 Route::get('waybill/loadusers', function(Request $request){
 	$company = $request->company;
 	$location = $request->location;	
@@ -57,11 +67,14 @@ Route::get('waybill/load', function(Request $request){
 	$wType = strtoupper($request->wType);
 	
 	if ($loc!=''){
-	$data = doc::where('wType', $wType)->where('sentTo', $loc)->where('receiveStatus', 'OPEN')->orderby('sentDate', 'DESC')->get();	
+	$data = doc::where('wType', $wType)->where(function ($q){
+	$q->where('receiveStatus', 'OPEN')->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');})->where(function($g) use ($loc){
+		$g->where('sentTo',$loc)->orWhere('sentFrom',$loc);})->orderby('sentDate', 'DESC')->get();	
 	}
 	else{$data = [];}
 	if($id!=''){
-	$data = doc::where('wType',$wType)->where('id', $id)->where('receiveStatus','OPEN')->orderby('sentDate', 'DESC')->get();
+	$data = doc::where('wType',$wType)->where('id', $id)->where(function ($q){
+	$q->where('receiveStatus', 'OPEN')->orWhere('receiveStatus', 'RECEIVED');})->orderby('sentDate', 'DESC')->get();
 	}
 	
     return Response::json($data);
@@ -86,7 +99,7 @@ Route::get('waybill/recitem', function(Request $request){
 	}
 	if($item_stat=='ACK'){
 	$g = doc::where('id', $doc_id)->first();	
-	$g->receiveStatus = 'OPEN';
+	$g->receiveStatus = 'RECEIVED';
 	$g->ackcnt = 10;	
 	$g->receivedBy =Auth::user()->name;	
 	$g->closeremark = $remText;
@@ -133,8 +146,10 @@ Route::get('waybill/checkdoc',['as' => 'waybill.checkdoc', 'uses' => 'docs@check
 //return View::make('waybill.print')->with(['doc'=>$doc]);
 //}]);
 Route::get('waybill/printreview/{docid?}',['as' => 'waybill.print', 'uses' => 'docs@printreview', 'docid'=>'docid']);
+//Route::get('waybill/rprint',['as' => 'waybill.rprint', 'uses' => 'docs@rprint']);
 Route::get('waybill/print/{docid?}',['as' => 'waybill.print', 'uses' => 'docs@prints', 'docid'=>'docid']);
 Route::get('waybill/receive',['as' => 'waybill.receive', 'uses' => 'docs@receive']);
+Route::get('waybill/rprint',['as' => 'waybill.rprint', 'uses' => 'docs@rprint', 'doc']);
 Route::get('waybill/reports',['as' => 'waybill.reports', 'uses' => 'docs@reports']);
 Route::post('waybill/receive',['as' => 'waybill.receive', 'uses' => 'docs@receive']);
 Route::resource('waybill', 'docs',array('names' => array('receive' => 'docs.receive','load'=>'no' )));

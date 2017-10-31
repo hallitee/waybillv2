@@ -25,16 +25,39 @@ $(function() {
     }
 	var $userid= $("#userid").val();
 	var $username = $("#username").val();
-	console.log("Username " + $username + "  User id: "+ $userid);
+	var $location = $("#userlocation").val();
+	var $company =  $("#usercompany").val();
+	var $lc = $company+" "+$location;
+	console.log("Username " + $username + "  User id: "+ $userid + " company "+ $company +" location: "+ $location);
 	var $item_stat = "";
 	var $item_err = 0;
 	var $doc_id;
 	var $doc;
+	var $data;
 	var rec_qty = [];
       var i=1;
 
 	  $("#sentTosel").change(function(){
+		  		if($(this).find(":selected").val()==='VENDOR'){
+		$("#vendiv1").show();
+
+		$("#deliveredTo").hide();
+		$("#delivdTo").append("<input type='text' name='deliveredTo' id='delivTo' placeholder='Samuel Besiktas' class='input-md emailinput form-control'/>");		
+	}
+	else{$("#vendiv1").hide();
+		$("#delivTo").remove();
+		$("#deliveredTo").show();	
+	}
 		 $sentTo = $("#sentTosel").val();
+		 //$lc = $company+" "+$location;
+		 console.log(" $lc "+ $lc + " sent To "+$sentTo);
+		 if($sentTo == $lc){
+			 console.log("same company and location detected");
+			 $("#errmsglist").text("choose another location");
+			$("#errmsg").prop('hidden', false);
+		}else{
+			$("#errmsglist").text("");
+			$("#errmsg").hide();
 		 console.log(" Selected "); 
 		 $("#errmsg").hide();
 			var $word = $sentTo.split(" ");
@@ -65,13 +88,15 @@ $(function() {
 					}
 				});
 	
-		  
+		}
 		});
 
 		$("#deliveredTo").on("focus mouseover", function(){
 			$sentTo = $("#sentTosel").val();
 
 		if($sentTo==null){
+			
+			$("#errmsglist").text("Enter receiving location 'sent To'");
 			$("#errmsg").prop('hidden', false);
 		}else{$("#errmsg").hide();}	
 	  });  
@@ -139,6 +164,8 @@ $(function() {
 				});
 	
 	$("body").on("click",'.btn_items', function(){
+				$("#printText").hide();
+				$("#printType").hide();
 //				console.log("Items button clicked");
 				$userid = $("#userid").val();
 				$doc_id = $(this).val();
@@ -222,10 +249,41 @@ $(function() {
 					if($doc.wType=='LOAN'){
 						
 						if($doc.ackcnt>9){
-							console.log("username " + $userid);
+
 					$("#rec_btn1").hide();
 					$("#rec_btn2").show();
-					
+					$("#printText").show();
+					$("#printType").show();						
+										if($username == $doc.sentBy){
+						console.log("same person");
+					$("#rec_btn1").show();
+					$("#rec_btn2").hide();							
+					$("#printText").hide();
+					$("#printType").hide();							
+					}
+				
+						}else{
+					$("#rec_btn1").show();
+					$("#rec_btn2").hide();							
+					$("#printText").hide();
+					$("#printType").hide();				
+						}
+						if($doc.ackcnt>19){
+					if($username==$doc.sentBy){
+					$("#rec_btn1").hide();  //receive button
+					$("#rec_btn2").hide();	// receive button load for loan 						
+					$("#printText").hide();
+					$("#printType").hide();	
+					$("#rec_btn4").show();
+							}
+							else{	
+					$("#rec_btn1").hide();
+					$("#rec_btn2").hide();							
+					$("#printText").show();
+					$("#printType").show();	
+					$("#rec_btn3").show();
+							}
+							
 						}
 					}
 					//$("#rec_err").hide();
@@ -359,7 +417,9 @@ $("body").on("click",'.btn_itemshow', function(){
 	
 	$("body").on("click",'#rec_btn1', function(){ 
 	
+		loaddoc();
 
+		if($doc.sentTo == $lc){    //if waybill sent To location same as receiver location
 		//$("#rec_err").hide();
 		$("#recRemarks").css('diplay','none');
 		$("#rec_err").text("");			
@@ -414,11 +474,58 @@ $("body").on("click",'.btn_itemshow', function(){
 		else if($item_err<0){
 				recLoan();
 		} 
-		
 //		console.log("receive button clicked "+$item_err);
 //			console.log("receive button 1  clicked ");		
-				});
+		}else{
+			if(($doc.receiveStatus=='RETURNED')||$doc.ackcnt>19){
+												//if waybill returned to allow sender close waybill
+												// do final receive command
+			}else{
+		$("#rec_err").text("Not authorized receiver");	
+			}
+		}
+			});
+
+	$("body").on("click", "#rec_btn2", function(){
+		console.log("Return Submitted");
+		$printType=$("#printType").find(":selected").val();
+		console.log("Print type "+$printType);
 		
+					$.ajax({
+					type: 'GET',
+					url: "/waybill/return",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"doc_id": $doc_id,
+					"printType": $printType
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+	//				console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+					$data = data;
+					//data response can contain what we want here...
+					console.log("Item saved "+data.sentTo+"fully");
+					$("#rec_suc").text("Return Successful");
+					$("#rec_suc").show();
+					}
+				});
+		$("#rec_suc").text("Return Succesful");
+			$('#edit').delay(2000).fadeOut(2000);
+			setTimeout(function(){
+				$('#edit').modal("hide");
+				if($printType=='WAYBILL'){
+				//window.location.href = "/home";
+				window.location.href = '/waybill/rprint?pType='+$printType+'&doc='+$data.id;
+				}else{
+					window.location.href = '/home';
+				}
+				}, 4500);	
+		
+	});
 $("body").on("click",'#print_btn', function(){ 
 	//	console.log("print button clicked "+$item_err);
 		window.print();
@@ -480,20 +587,7 @@ $("body").on("click",'#searchp_btn', function(){
 		//$("#deliveredTo").replaceWith("<select class='input-md emailinput form-control' id='deliveredTo'> </select>");
 	}
 	});
-$("#sentTosel").on("change", function(){
-
-		if($(this).find(":selected").val()==='VENDOR'){
-		$("#vendiv1").show();
-
-		$("#deliveredTo").hide();
-		$("#delivdTo").append("<input type='text' name='deliveredTo' id='delivTo' placeholder='Samuel Besiktas' class='input-md emailinput form-control'/>");		
-	}
-	else{$("#vendiv1").hide();
-		$("#delivTo").remove();
-		$("#deliveredTo").show();	
-	}
-	
-}); 								
+								
 function recitem(){
 	
 			$item_err = 0; 
