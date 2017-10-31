@@ -21,13 +21,25 @@ use App\User;
 
 Route::get('waybill/return', function(Request $request){
 	$id = $request->doc_id;
-	$printType = $request->printType;	
+	$printType = $request->printType;
+	if($request->printType=='CLOSED'){
+	$data = doc::where('id', $id)->first();
+	$data->receiveStatus = 'CLOSED';
+	$data->ackcnt = 5;
+	$data->save();		
+		
+	}
+	else{
+
+		
 	$data = doc::where('id', $id)->first();
 	$data->receiveStatus = 'RETURNED';
 	$data->ackcnt = 20;
 	$data->save();
     return Response::json($data);
 	//return view('waybill.reports');
+	
+	}
 });
 Route::get('waybill/loadusers', function(Request $request){
 	$company = $request->company;

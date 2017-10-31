@@ -526,7 +526,47 @@ $("body").on("click",'.btn_itemshow', function(){
 				}, 4500);	
 		
 	});
-$("body").on("click",'#print_btn', function(){ 
+$("body").on("click", "#rec_btn3", function(){
+		$printType=$("#printType").find(":selected").val();
+		if($printType=='WAYBILL'){
+			console.log("doc id   "+$doc_id);
+			window.location.href = '/waybill/rprint?pType='+$printType+'&doc='+$doc_id;
+		}else{
+			$('.modal').modal('hide');
+		}
+})
+$("body").on("click", "#rec_btn4", function(){
+					$printType = 'CLOSED';
+					$.ajax({
+					type: 'GET',
+					url: "/waybill/return",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"doc_id": $doc_id,
+					"printType": $printType
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+	//				console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+					$data = data;
+					//data response can contain what we want here...
+					console.log("Item saved "+data.sentTo+"fully");
+
+					}
+				});
+					$("#rec_suc").text("Loan Transfer Completed");
+					$("#rec_suc").show();		
+			$('#edit').delay(2000).fadeOut(2000);
+			setTimeout(function(){
+				$('#edit').modal("hide");
+				window.location.href = '/home';
+				}, 4500);					
+})
+	$("body").on("click",'#print_btn', function(){ 
 	//	console.log("print button clicked "+$item_err);
 		window.print();
 				});	
