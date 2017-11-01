@@ -8,6 +8,7 @@ use App\itemslog;
 use App\User;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,7 +19,6 @@ use App\User;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('waybill/return', function(Request $request){
 	$id = $request->doc_id;
 	$printType = $request->printType;
@@ -62,6 +62,7 @@ Route::get('waybill/loaddoc', function(Request $request){
 	if ($id!=''){
 	$data = doc::where('id', $id)->first();	
 	}	
+	$itemCnt = item::where('doc_id', $id)->get();
     return Response::json($data);
 	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
 });
@@ -73,15 +74,22 @@ Route::get('waybill/loadItems', function(Request $request){
     return Response::json($data);
 	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
 });
+
 Route::get('waybill/load', function(Request $request){
 	$loc = $request->location;
 	$id = $request->search;
 	$wType = strtoupper($request->wType);
 	
 	if ($loc!=''){
+		if($wType=='LOAN'){
 	$data = doc::where('wType', $wType)->where(function ($q){
 	$q->where('receiveStatus', 'OPEN')->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');})->where(function($g) use ($loc){
 		$g->where('sentTo',$loc)->orWhere('sentFrom',$loc);})->orderby('sentDate', 'DESC')->get();	
+		}else{
+	$data = doc::where('wType', $wType)->where(function ($q){
+	$q->where('receiveStatus', 'OPEN')->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');})->where(function($g) use ($loc){
+		$g->where('sentTo',$loc);})->orderby('sentDate', 'DESC')->get();				
+		}
 	}
 	else{$data = [];}
 	if($id!=''){

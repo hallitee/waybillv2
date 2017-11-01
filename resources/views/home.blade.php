@@ -11,16 +11,29 @@ Dashboard
                 <div class="col-lg-5 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
+						Transfers
                             <div class="row">
                                 <div class="col-xs-3">
                                     <i class="fa fa-random fa-5x"></i>
                                 </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">{{ $transfers }}
+                                <div class="col-xs-3 text-right">
+                                    <div class="huge">{{ $tSent }}
 									
 									</div>
-                                    <div>Transferred!</div>
+                                    <div>Sent</div>
                                 </div>
+                                <div class="col-xs-3 text-right">
+                                    <div class="huge">{{ $tRec }}
+									
+									</div>
+                                    <div>Received</div>
+                                </div>
+                                <div class="col-xs-3 text-right">
+                                    <div class="huge">{{ $tPend }}
+									
+									</div>
+                                    <div>In Transit</div>
+                                </div>								
                             </div>
                         </div>
                         <a href="{{ route('waybill.reports',['type'=>'transfer','status'=>'OPEN']) }}">
@@ -35,13 +48,28 @@ Dashboard
                 <div class="col-lg-5 col-md-6">
                     <div class="panel panel-green">
                         <div class="panel-heading">
+						Loan
                             <div class="row">
                                 <div class="col-xs-3">
                                     <i class="fa fa-asl-interpreting fa-5x"></i>
                                 </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">{{ $loaned }}</div>
-                                    <div>Loans!</div>
+                                <div class="col-xs-3 text-right">
+                                    <div class="huge">{{ $lSent }}
+									
+									</div>
+                                    <div>Sent</div>
+                                </div>
+                                <div class="col-xs-3 text-right">
+                                    <div class="huge">{{ $lRec }}
+									
+									</div>
+                                    <div>Received</div>
+                                </div>
+                                <div class="col-xs-3 text-right">
+                                    <div class="huge">{{ $lPend }}
+									
+									</div>
+                                    <div>In Transit</div>
                                 </div>
                             </div>
                         </div>
@@ -57,13 +85,28 @@ Dashboard
                 <div class="col-lg-5 col-md-6">
                     <div class="panel panel-yellow">
                         <div class="panel-heading">
+						Repairs
                             <div class="row">
                                 <div class="col-xs-3">
                                     <i class="fa fa-wrench fa-5x"></i>
                                 </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">{{ $repaired }}</div>
-                                    <div>Repairs!</div>
+                              <div class="col-xs-3 text-right">
+                                    <div class="huge">{{ $rSent }}
+									
+									</div>
+                                    <div>Sent</div>
+                                </div>
+                                <div class="col-xs-3 text-right">
+                                    <div class="huge">{{ $rRec }}
+									
+									</div>
+                                    <div>Received</div>
+                                </div>
+                                <div class="col-xs-3 text-right">
+                                    <div class="huge">{{ $rPend }}
+									
+									</div>
+                                    <div>In Transit</div>
                                 </div>
                             </div>
                         </div>

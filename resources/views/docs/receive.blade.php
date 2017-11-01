@@ -159,7 +159,7 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 						<th class="col-xs-1 text-center">
 							Quantity
 						</th>
-						<th class="col-xs-1 text-center">
+						<th class="col-xs-1 text-center" id="recheader">
 							Receiving
 							Quantity
 						</th>	
@@ -259,9 +259,9 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 		  <th> </th>
 		  <th> <button id="rec_btn1" type="button" class="btn btn-warning btn-lg" style="width: 80%;"><span class="glyphicon glyphicon-ok-sign"></span> Receive Completely</button></th>
 		  @elseif($form=='loan')
-		 <th> <button id="rec_btn1" type="button" class="btn btn-warning btn-lg" style="width: 80%;"><span class="glyphicon glyphicon-ok-sign"></span>Receive Items</button></th>			
-		 <th> <button id="rec_btn2" type="button" class="btn btn-danger btn-lg" style="width: 80%;display:none"><span class="glyphicon glyphicon-ok-sign"></span>Return Items</button></th>	
-		 <th> <button id="rec_btn3" type="button" class="btn btn-danger btn-lg" style="width: 80%;display:none"><span class="glyphicon glyphicon-print"></span>Print</button></th>	
+		 <th> <button id="rec_btn1" type="button" class="btn btn-warning btn-lg center" style="width: 80%;"><span class="glyphicon glyphicon-ok-sign"></span>Receive Items</button></th>			
+		 <th> <button id="rec_btn2" type="button" class="btn btn-danger btn-lg" style="width: 80%;display:none"><span class="glyphicon glyphicon-ok-sign center"></span>Return Items</button></th>	
+		 <th id="recbtn3"> <button id="rec_btn3" type="button" class="btn btn-danger btn-lg" style="width: 80%;display:none">Print</button></th>	
 		 <th> <button id="rec_btn4" type="button" class="btn btn-success btn-lg" style="width: 80%;display:none"><span class="glyphicon glyphicon-ok-sign"></span>Receive Returned</button></th>			 
 		  @else
 			<th> <button id="rec_btn1" type="button" class="btn btn-warning btn-lg" style="width: 80%;"><span class="glyphicon glyphicon-ok-sign"></span> Receive Items</button></th>			  

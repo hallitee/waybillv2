@@ -9,14 +9,17 @@ use App\doc;
 use App\item;
 use App\printlog;
 use PDF;
+use App\HomeController;
 
 
 class docs extends Controller
 {
     //
+
+	
 public function __construct()
 {
-    $this->middleware('auth');
+    $this->middleware('auth');	
 }
 
 	public function index()
@@ -39,14 +42,18 @@ switch ($priv) {
         $arr_option = array('ESRNL IKOYI' => 'ESRNL IKOYI', 'NPRNL IKOYI'=>'NPRNL IKOYI','PFNL IKOYI'=>'PFNL IKOYI','GSNL IKOYI'=>'GSNL IKOYI');
         break;
     case "3":
-	$arr_option = array($company." ".$location=>$company." ".$location);
-        echo "i is cake";
-		break;
+	$arr_option = array($company." ".$location=>$company." ".$location);		break;
 	case "4":
 	        $arr_option = array('ESRNL IKOYI' => 'ESRNL IKOYI', 'NPRNL IKOYI'=>'NPRNL IKOYI','PFNL IKOYI'=>'PFNL IKOYI','GSNL IKOYI'=>'GSNL IKOYI', 'ESRNL PARKVIEW' => 'ESRNL PARKVIEW','NPRNL PARKVIEW' => 'NPRNL PARKVIEW','PFNL PARKVIEW' => 'PFNL PARKVIEW', 'GSNL PARKVIEW' => 'GSNL PARKVIEW');
         break;
 }
-	return view('docs.create')->with(['load'=>'no', 'arr_option'=>$arr_option]);
+		$name = Auth::user()->name;
+		$loc = $company." ".$location;
+		$pendCnt = doc::where(function($q) use ($loc, $name){
+		$q->where('deliveredTo', $name)->orWhere('sentTo', $loc);})->where(function($q){
+			$q->where('receiveStatus', 'OPEN')->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');
+		})->count();
+	return view('docs.create')->with(['load'=>'no', 'arr_option'=>$arr_option, 'pendCnt'=>$pendCnt]);
 	}
 public function receive(Request $request) {
 	$form = $request->input('a');
@@ -66,13 +73,18 @@ switch ($priv) {
         break;
     case "3":
 	$arr_option = array($company." ".$location=>$company." ".$location);
-        echo "i is cake";
 		break;
 	case "4":
 	        $arr_option = array('ESRNL IKOYI' => 'ESRNL IKOYI', 'NPRNL IKOYI'=>'NPRNL IKOYI','PFNL IKOYI'=>'PFNL IKOYI','GSNL IKOYI'=>'GSNL IKOYI', 'ESRNL PARKVIEW' => 'ESRNL PARKVIEW','NPRNL PARKVIEW' => 'NPRNL PARKVIEW','PFNL PARKVIEW' => 'PFNL PARKVIEW', 'GSNL PARKVIEW' => 'GSNL PARKVIEW');
         break;
 }
-	return view('docs.receive')->with('message', "Waybill \n ".$searched. " Successfully created! \t ")->with('form', $form)->with('searched', $searched)->with('userid', $id)->with('arr_option',$arr_option);
+		$name = Auth::user()->name;
+		$loc = $company." ".$location;
+		$pendCnt = doc::where(function($q) use ($loc, $name){
+		$q->where('deliveredTo', $name)->orWhere('sentTo', $loc);})->where(function($q){
+			$q->where('receiveStatus', 'OPEN')->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');
+		})->count();
+	return view('docs.receive')->with('message', "Waybill \n ".$searched. " Successfully created! \t ")->with('form', $form)->with('searched', $searched)->with('userid', $id)->with('arr_option',$arr_option)->with('pendCnt', $pendCnt);
 	}
 	
 public function reports(Request $request) {
@@ -80,7 +92,14 @@ public function reports(Request $request) {
 	$status = $request->input('status');		
 	$id=Auth::user()->id;
 	$loc = Auth::user()->company.' '.Auth::user()->location;
-	
+	if($status=='OPEN'){
+		
+		echo "OPEN FOR ME";
+	}
+	else{
+		
+		
+	}
 	$doc=doc::where('wType', $type)->where(function ($q) use ($status){
 	$q->where('receiveStatus', $status)->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');})->where(function($g) use ($loc){
 		$g->where('sentTo',$loc)->orWhere('sentFrom',$loc);})->orderby('sentDate', 'DESC')->get();

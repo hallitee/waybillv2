@@ -32,6 +32,7 @@ $(function() {
 	var $item_stat = "";
 	var $item_err = 0;
 	var $doc_id;
+	var $ins;
 	var $doc;
 	var $data;
 	var rec_qty = [];
@@ -91,7 +92,19 @@ $(function() {
 		}
 		});
 
-		$("#deliveredTo").on("focus mouseover", function(){
+	 $("#printType").change(function(){
+		 	$res= $(this).find(":selected").val();
+			
+		if($res=='No'){
+		$("#rec_btn3").append('<span class="glyphicon glyphicon-print"></span>');
+		$("#rec_btn3").text("Close");
+			}else{
+						$("#rec_btn3").append('<span class="glyphicon glyphicon-print"></span>');
+		$("#rec_btn3").text("Print");
+			}
+			
+	 });
+	$("#deliveredTo").on("focus mouseover", function(){
 			$sentTo = $("#sentTosel").val();
 
 		if($sentTo==null){
@@ -100,13 +113,13 @@ $(function() {
 			$("#errmsg").prop('hidden', false);
 		}else{$("#errmsg").hide();}	
 	  });  
-	  $("body").on("mouseover hover focus click", '#sentBy', function(){
+	$("body").on("mouseover hover focus click", '#sentBy', function(){
 		$userid = $("#userid").val();
 		$username = $("#username").val();
 		$(this).val($username);
 	   $(this).prop('readonly', true);
 	  });
-     $("#add_row").click(function(){
+    $("#add_row").click(function(){
       $('#addr'+i).html("<td class='text-center'>"+ (i+1) +"</td><td><input name='items["+i+"][desc]' type='text' placeholder='Item description' class='form-control input-md'  /> </td><td><input  name='items["+i+"][qty]'  type='number' onkeypress='return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57' type='number' min='0' max='1000' placeholder='Quantity'  class='form-control input-md'></td><td><input  name='items["+i+"][serial]' type='text' placeholder='Serial Number'  class='form-control input-md'></td><td><input  name='items["+i+"][status]' type='text' placeholder='Item Status'  class='form-control input-md'></td><td><input  name='items["+i+"][remark]' type='text' placeholder='Remarks'  class='form-control input-md'></td><td><input  name='items["+i+"][sircode]' type='text' placeholder='SIR Number'  class='form-control input-md'></td><td><input  name='items["+i+"][lpo]' type='text' placeholder='LPO Number'  class='form-control input-md'></td>");
 
 	$('#tbody').append('<tr id="addr'+(i+1)+'"></tr>');      i++; 
@@ -115,7 +128,7 @@ $(function() {
 
 	console.log(g);
   });
-     $("#delete_row").click(function(){
+    $("#delete_row").click(function(){
     	 if(i>1){
 		 $("#addr"+(i-1)).html('');
 		 i--;
@@ -123,10 +136,9 @@ $(function() {
 	 });
 	 $loc = $("#wType").val();
      console.log($loc);
-	 $("#search_btn").click(function(){
+	$("#search_btn").click(function(){
 	//	console.log("search button clicked");
-		 $userid = $("#userid").val();
-		
+
 				$.ajax({
 					type: 'GET',
 					url: "/waybill/load",
@@ -166,6 +178,7 @@ $(function() {
 	$("body").on("click",'.btn_items', function(){
 				$("#printText").hide();
 				$("#printType").hide();
+				$("#rec_btn3").hide();
 //				console.log("Items button clicked");
 				$userid = $("#userid").val();
 				$doc_id = $(this).val();
@@ -188,7 +201,7 @@ $(function() {
 					}
 				
 				});
-					
+
 				$.ajax({
 					type: 'GET',
 					url: "/waybill/loadItems",
@@ -214,7 +227,16 @@ $(function() {
 						else{$rd = "";}
 //						console.log(i);
 						rec_qty[i] = item.recqty;
-					 $('#addrs'+i).html("<td>"+ (i+1) +"<input name='item["+i+"][id]' value='"+item.id+"' type='text' placeholder='Item description' hidden/> </td><td><input name='item["+i+"][desc]' value='"+item.item_desc+"' type='text' placeholder='Item description' class='form-control input-md'  readonly/> </td><td><input  name='item["+i+"][serial]' value='"+item.serialNo+"' type='text' placeholder='Quantity'  class='form-control input-md' readonly></td><td><input  name='item["+i+"][qty]'  value='"+item.qty+"'  type='text' placeholder='Serial Number'  class='form-control input-md' readonly></td><td><input  name='item["+i+"][recqty]' onkeypress='return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57' type='number' min='0' max='1000' placeholder='qty' value='0' class='form-control input-md' required "+$rd+"></td><td><input  name='item["+i+"][recvnqty]'  value='"+(item.qty-item.recqty)+"' type='text' min='0' max='1000' placeholder='Serial Number'  class='form-control input-md' required "+$rd+" readonly></td><td><input  name='item["+i+"][status]'  value='"+item.status+"' type='text' placeholder='Item Status'  class='form-control input-md' readonly></td><td><input  value='"+item.remark+"'  name='item["+i+"][remark]' type='text' placeholder='Remarks'  class='form-control input-md' readonly></td><td><input  value='"+item.sircode+"'  name='item["+i+"][sircode]' type='text' placeholder='SIR Number'  class='form-control input-md' readonly></td><td><input  value='"+item.lpo+"'  name='item["+i+"][lpo]' type='text' placeholder='LPO Number'  class='form-control input-md' readonly></td>");
+			if($doc.receiveStatus=='CLOSED' || $doc.receiveStatus=='RECEIVED' || $doc.receiveStatus == 'RETURNED')	{
+					$rd = 'readonly';
+					$("#recheader").text("Received Quantity");
+					$ins="<td><input  name='item["+i+"][recqty]' onkeypress='return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57' type='number' min='0' max='1000' placeholder='qty' value='"+item.recqty+"' class='form-control input-md' required "+$rd+"></td>";
+				}else{
+					$rd="";
+					$("#recheader").text("Receiving Quantity");
+					$ins="<td><input  name='item["+i+"][recqty]' onkeypress='return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57' type='number' min='0' max='1000' placeholder='qty' value='0' class='form-control input-md' required "+$rd+"></td>";
+				}
+					 $('#addrs'+i).html("<td>"+ (i+1) +"<input name='item["+i+"][id]' value='"+item.id+"' type='text' placeholder='Item description' hidden/> </td><td><input name='item["+i+"][desc]' value='"+item.item_desc+"' type='text' placeholder='Item description' class='form-control input-md'  readonly/> </td><td><input  name='item["+i+"][serial]' value='"+item.serialNo+"' type='text' placeholder='Quantity'  class='form-control input-md' readonly></td><td><input  name='item["+i+"][qty]'  value='"+item.qty+"'  type='text' placeholder='Serial Number'  class='form-control input-md' readonly></td>"+$ins+"<td><input  name='item["+i+"][recvnqty]'  value='"+(item.qty-item.recqty)+"' type='text' min='0' max='1000' placeholder='Serial Number'  class='form-control input-md' required "+$rd+" readonly></td><td><input  name='item["+i+"][status]'  value='"+item.status+"' type='text' placeholder='Item Status'  class='form-control input-md' readonly></td><td><input  value='"+item.remark+"'  name='item["+i+"][remark]' type='text' placeholder='Remarks'  class='form-control input-md' readonly></td><td><input  value='"+item.sircode+"'  name='item["+i+"][sircode]' type='text' placeholder='SIR Number'  class='form-control input-md' readonly></td><td><input  value='"+item.lpo+"'  name='item["+i+"][lpo]' type='text' placeholder='LPO Number'  class='form-control input-md' readonly></td>");
 					 $('#tbody1').append('<tr id="addrs'+(i+1)+'"></tr>');     
 					 $item_count++;
 					$('#row_value').val(i);
@@ -254,7 +276,7 @@ $(function() {
 					$("#rec_btn2").show();
 					$("#printText").show();
 					$("#printType").show();						
-										if($username == $doc.sentBy){
+					if($username == $doc.sentBy){
 						console.log("same person");
 					$("#rec_btn1").show();
 					$("#rec_btn2").hide();							
@@ -580,6 +602,7 @@ $("body").on("click",'#searchp_btn', function(){
 				else{
 				i=0
 				$("#tab_logic2 tbody2 > tr > td").remove();	
+				$itemCnt=0;				
 				$.ajax({
 					type: 'GET',
 					url: "/waybill/loaddoc",
