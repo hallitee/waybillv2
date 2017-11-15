@@ -71,10 +71,10 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 							Sent Date
 						</th>
 						<th class="text-center">
-						Sent By
+						Sender
 						</th>
 						<th class="text-center">
-							Sent From
+							Origin
 						</th>
 						<th class="text-center">
 							Delivered By

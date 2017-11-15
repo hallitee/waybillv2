@@ -6,6 +6,7 @@ use App\doc;
 use App\item;
 use App\itemslog;
 use App\User;
+use App\Mail\NewWaybill;
 
 
 
@@ -19,6 +20,17 @@ use App\User;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('waybill/email', function(){
+	$doc = doc::where('id', 70)->first();
+	$item = item::where('doc_id', 70)->first();
+	$doc = array('hello', 'taofik');
+	//return view('email.NewWaybill')->with(['doc'=>$doc,'item'=>$item]);
+	Mail::send('email.NewWaybill',array('doc'=>$doc) , function($message){
+		$message->from('helpdesk@esrnl.com', 'Waybill Manager');
+		$message->to($user_email);
+	});
+	return;
+});
 Route::get('waybill/return', function(Request $request){
 	$id = $request->doc_id;
 	$printType = $request->printType;

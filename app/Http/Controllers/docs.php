@@ -10,13 +10,14 @@ use App\item;
 use App\printlog;
 use PDF;
 use App\HomeController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewWaybill;
 
 
 class docs extends Controller
 {
     //
 
-	
 public function __construct()
 {
     $this->middleware('auth');	
@@ -116,6 +117,7 @@ public function checkdoc()
  public function store(DocFormRequest  $request)
  {
 	 $user_id = Auth::user()->id;
+	 $user_email = Auth::user()->email;
 	$doc = new doc;
 	$doc->wType = $request->wType;	
 	if($doc->wType == 'PROMO'){
@@ -157,7 +159,7 @@ public function checkdoc()
 			$item->save();
 	}
     //$doc->$item->insert(Input::get('items'));
-	
+	Mail::to('taofik.alli-balogun@natural-prime.com')	->send(new NewWaybill);
 		return redirect('waybill/print')->with('message', "Waybill \n W".ucfirst($doc->wType[0]).str_pad($doc->id, 5, "0", STR_PAD_LEFT). " Successfully created! \t ")->with(['load'=>'no','sw'=>1, 'doc'=>$doc, 'items'=> $items]); 
 	 
  }

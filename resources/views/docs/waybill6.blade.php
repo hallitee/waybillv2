@@ -558,7 +558,7 @@ style='mso-bidi-font-weight:normal'><o:p></o:p></b></span></p>
   9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:paragraph;
   mso-element-anchor-horizontal:margin;mso-element-left:right;mso-element-top:
   4.0pt;mso-height-rule:exactly'><span style='font-size:12.0pt;mso-bidi-font-size:
-  11.0pt;font-family:"Times New Roman","serif"'>Delivered To<o:p></o:p></span></p>
+  11.0pt;font-family:"Times New Roman","serif"'>Receiver<o:p></o:p></span></p>
   </td>
   <td width=149 valign=top style='width:111.95pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
@@ -632,8 +632,7 @@ style='mso-bidi-font-weight:normal'><o:p></o:p></b></span></p>
   normal;mso-element:frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:
   around;mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:
   margin;mso-element-top:8.2pt;mso-height-rule:exactly'><span style='font-size:
-  12.0pt;mso-bidi-font-size:11.0pt;font-family:"Times New Roman","serif"'>Sent
-  From</span><span style='font-size:14.0pt;mso-bidi-font-size:11.0pt;
+  12.0pt;mso-bidi-font-size:11.0pt;font-family:"Times New Roman","serif"'>Origin</span><span style='font-size:14.0pt;mso-bidi-font-size:11.0pt;
   font-family:"Times New Roman","serif"'><o:p></o:p></span></p>
   </td>
   <td width=160 valign=top style='width:120.1pt;border:solid windowtext 1.0pt;
@@ -654,8 +653,7 @@ style='mso-bidi-font-weight:normal'><o:p></o:p></b></span></p>
   normal;mso-element:frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:
   around;mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:
   margin;mso-element-top:8.2pt;mso-height-rule:exactly'><span style='font-size:
-  12.0pt;mso-bidi-font-size:11.0pt;font-family:"Times New Roman","serif"'>Sent
-  To <o:p></o:p></span></p>
+  12.0pt;mso-bidi-font-size:11.0pt;font-family:"Times New Roman","serif"'>Destination <o:p></o:p></span></p>
   </td>
   <td width=160 valign=top style='width:120.1pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -676,8 +674,7 @@ style='mso-bidi-font-weight:normal'><o:p></o:p></b></span></p>
   normal;mso-element:frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:
   around;mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:
   margin;mso-element-top:8.2pt;mso-height-rule:exactly'><span style='font-size:
-  12.0pt;mso-bidi-font-size:11.0pt;font-family:"Times New Roman","serif"'>Sent
-  By<o:p></o:p></span></p>
+  12.0pt;mso-bidi-font-size:11.0pt;font-family:"Times New Roman","serif"'>Sender<o:p></o:p></span></p>
   </td>
   <td width=160 valign=top style='width:120.1pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;

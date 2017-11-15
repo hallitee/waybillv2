@@ -17,7 +17,7 @@
 											
 										</div> 
 									    <div id="div_id_select" class="form-group required">
-											<label for="id_select"  class="control-label col-lg-4  requiredField">Sent From <span class="asteriskField">*</span> </label>
+											<label for="id_select"  class="control-label col-lg-4  requiredField">Origin <span class="asteriskField">*</span> </label>
 											<div class="controls col-lg-5 "  style="margin-bottom: 10px">
 												{!! Form::select('sentFrom',$arr_option,null, array('class' => 'input-md emailinput form-control', 'id'=>'sentFsel', 'placeholder'=>'e.g Ikoyi office')); !!}
 											</div>
@@ -30,7 +30,7 @@
 											
 										</div> 										
 								        <div id="div_id_select" class="form-group required">
-											<label for="id_select"  class="control-label col-lg-4  requiredField">Sent By<span class="asteriskField">*</span> </label>
+											<label for="id_select"  class="control-label col-lg-4  requiredField">Sender<span class="asteriskField">*</span> </label>
 											<div class="controls col-lg-8"  style="margin-bottom: 10px">
 												{!! Form::text('sentBy',"",  array('class' => 'input-md emailinput form-control', 'id'=>'sentBy', 'placeholder'=>'e.g Danny Olabisi')); !!}
 												<input type="hidden" id="username" value="{{Auth::user()->name}}"></input>
@@ -39,7 +39,7 @@
 											
 										</div> 
 									    <div id="div_id_select" class="form-group required">
-											<label for="id_select"  class="control-label col-lg-4  requiredField">Delivered To <span class="asteriskField">*</span> </label>
+											<label for="id_select"  class="control-label col-lg-4  requiredField">Receiver <span class="asteriskField">*</span> </label>
 											<div class="controls col-lg-8 "  id='delivdTo' style="margin-bottom: 10px">
 												{!! Form::select('deliveredTo',[],null, array('class' => 'input-md emailinput form-control', 'id'=>'deliveredTo','placeholder'=>'e.g Samuel Besiktas')); !!}
 												{!! Form::hidden('deliveredTo','', array('class' => 'input-md emailinput form-control','id'=>'delivTo','placeholder'=>'e.g Samuel Besiktas')); !!}
@@ -56,7 +56,7 @@
 											</div>	
 										</div>
 									    <div id="div_id_select" class="form-group required">
-											<label for="id_select"  class="control-label col-lg-4  requiredField">Sent To<span class="asteriskField">*</span> </label>
+											<label for="id_select"  class="control-label col-lg-4  requiredField">Destination<span class="asteriskField">*</span> </label>
 											<div class="controls col-lg-5 "  style="margin-bottom: 10px">
 												{!! Form::select('sentTo',$arr_option1,null, array('class' => 'input-md emailinput form-control', 'id'=>'sentTosel','placeholder'=>'e.g esrnl Agbara')); !!}
 				

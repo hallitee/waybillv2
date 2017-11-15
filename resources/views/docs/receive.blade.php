@@ -28,7 +28,7 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
                             <div class="row">
                                 <div class="col-lg-6">
 											<div id="div_id_select" class="form-group required">
-											<label for="id_select"  class="control-label col-lg-3  requiredField">Sent To<span class="asteriskField">*</span> </label>
+											<label for="id_select"  class="control-label col-lg-3  requiredField">Destination<span class="asteriskField">*</span> </label>
 											<div class="controls col-lg-5"  style="margin-bottom: 10px">
 											<input type="hidden" id="userid" value="{{Auth::user()->id}}"></input>
 												{!! Form::select('sentTo',$arr_option,null, array('class' => 'input-md emailinput form-control', 'id'=>'loc_input', 'placeholder'=>'e.g esrnl Agbara')); !!}
@@ -81,10 +81,10 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 							Sent Date
 						</th>
 						<th class="text-center">
-						Sent By
+						Sender
 						</th>
 						<th class="text-center">
-							Sent From
+							Origin
 						</th>
 						<th class="text-center">
 							Delivered By
@@ -103,22 +103,22 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 						1
 						</td>
 						<td>
-						<input type="text" name='items[0][desc]'  placeholder='Item description' class="form-control"/>
+						<input type="text" name='items[0][desc]'  placeholder='2017-11-20' class="form-control"/>
 						</td>
 						<td>
-						<input type="text" name='items[0][qty]' placeholder='Quantity' class="form-control"/>
+						<input type="text" name='items[0][qty]' placeholder='Tunde Martins' class="form-control"/>
 						</td>
 						<td>
-						<input type="text" name='items[0][serial]' placeholder='Serial Number' class="form-control"/>
+						<input type="text" name='items[0][serial]' placeholder='ESRNL IKOYI' class="form-control"/>
 						</td>
 						<td>
-						<input type="text" name='items[0][status]' placeholder='Item Status' class="form-control"/>
+						<input type="text" name='items[0][status]' placeholder='John Alade' class="form-control"/>
 						</td>
 						<td>
-						<input type="text" name='items[0][remark]' placeholder='Remarks' class="form-control"/>
+						<input type="text" name='items[0][remark]'  class="form-control"/>
 						</td>		
 						<td>
-						<input type="text" name='items[0][remark]' placeholder='Status' class="form-control"/>
+						<input type="text" name='items[0][remark]' placeholder='OPEN/CLOSED/RECEIVED' class="form-control"/>
 						</td>							
 					</tr>
                     <tr id='addr1'></tr>
