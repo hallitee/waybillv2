@@ -8,28 +8,59 @@
 <li>{{ $error }}</li>
  @endforeach
 </ul>
-Waybill Report - {{ ucfirst($type) }}
+Search Item / Waybill
 @endsection
 @section('content')
 @php
-$arr_option = array(''=>'','ESRNL IKOYI' => 'ESRNL IKOYI', 'NPRNL IKOYI'=>'NPRNL IKOYI','PFNL IKOYI'=>'PFNL IKOYI','GSNL IKOYI'=>'GSNL IKOYI','ESRNL AGBARA' => 'ESRNL AGBARA', 'NPRNL AGBARA' => 'NPRNL AGBARA', 'PFNL AGBARA' => 'PFNL AGBARA', 'GSNL AGBARA' => 'GSNL AGBARA', 'EUROMEGA IKEJA' => 'EUROMEGA IKEJA','ESRNL PARKVIEW' => 'ESRNL PARKVIEW','NPRNL PARKVIEW' => 'NPRNL PARKVIEW','PFNL PARKVIEW' => 'PFNL PARKVIEW', 'GSNL PARKVIEW' => 'GSNL PARKVIEW', 'VENDOR'=>'VENDOR');
+$arr_option = array('IKOYI' => 'IKOYI', 'ESRNL AGBARA' => 'ESRNL AGBARA', 'NPRNL AGBARA' => 'NPRNL AGBARA', 'PFNL AGBARA' => 'PFNL AGBARA',
+ 'EUROMEGA IKEJA' => 'EUROMEGA', 'PARKVIEW IKOYI' => 'PARKVIEW', 'APAPA' => 'APAPA')
 @endphp
 @php
 $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 'LOAN') 
 @endphp
+ <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Enter Waybill Information
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+						  <div class="col-lg-6">
+							<label for="id_select"  class="control-label col-lg-4  requiredField">Waybill/item <span class="asteriskField">*</span> </label>
 
-                <div   class="row">
+							<div class="input-group custom-search-form col-lg-8">
+                                <input type="text" id="search_input" class="form-control" placeholder="Item description/waybill number" required>
+                                <span class="input-group-btn">
+                                <button id="searchi_btn" class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+								</div>						
+                              
+                                <div class="col-lg-4">
+							
+								</div>								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				</div>
+
+ <div   class="row">
                 <div class="col-lg-12" id="tbl_list">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                           Waybill List
+                           Search result 
                         </div>
 							<div class="panel-body">
 								<div class="row">
 								<div class="table-responsive">
 							
-					<table class="table table-bordered table-hover" id="tab_logic">
-						<thead>
+					<table class="table table-bordered table-hover" id="tab_logic2" hidden>
+						<thead id='thead1' hidden>
 						<tr >
 						<th class="text-center">
 							Waybill #
@@ -38,61 +69,55 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 							Sent Date
 						</th>
 						<th class="text-center">
-						Receiver 
+						Sender
+						</th>
+						<th class="text-center">
+							Origin
 						</th>
 						<th class="text-center">
 							Destination
 						</th>
 						<th class="text-center">
-							Delivered By
+							Items
+						</th>							
+					</tr>
+				</thead>
+						<thead id='thead2' hidden>
+						<tr >
+						<th class="text-center">
+							Waybill #
+						</th>
+						<th class="text-center">
+							Sent Date
+						</th>
+						<th class="text-center">
+							Item Description
+						</th>
+						<th class="text-center">
+							Origin
+						</th>
+						<th class="text-center">
+							Destination
 						</th>
 						<th class="text-center">
 							Items
-						</th>			
-						<th class="text-center">
-							Status
-						</th>						
+						</th>							
 					</tr>
-				</thead>
-				<tbody id='tbody'>
-				@foreach($doc as $d)
-					<tr id='addr0'>
-						<td>
-					W{{ucfirst($d->wType[0])}}{{str_pad($d->id, 5, "0", STR_PAD_LEFT)}}
-						</td>
-						<td>
-						{{ $d->sentDate }}
-						</td>
-						<td>
-						{{ $d->deliveredTo }}
-						</td>
-						<td>
-						{{ $d->sentTo}}
-						</td>
-						<td>
-						{{ $d->deliveredBy}}
-						</td>
-						<td>
-						<button class='btn btn-primary btn-xs btn_itemshow' value='{{$d->id}}'><span class='glyphicon glyphicon-pencil'></span></button>
-						</td>		
-						<td>
-						{{ $d->receiveStatus}}
-						</td>							
-					</tr>
-					@endforeach
+				</thead>				
+				<tbody id='tbody2'>
+				
+                    <tr id='addr0'></tr>
 				</tbody>
 			</table>								
 									</div>
 								</div>								
 							</div>
 							
-							{{ $doc->appends(['type'=>request()->type, 'status'=>request()->status])->links() }}
-							
 						</div>
 					</div>
 				</div>
-				</div>	
-	<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+							
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
       <div class="modal-dialog modal-lg">
     <div class="modal-content">
           <div class="modal-header">
@@ -121,13 +146,11 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 						<th class="col-xs-1 text-center">
 							Received
 						</th>	
-						<th class="col-xs-1 text-center">
-							Received Pending
-						</th>						
+						
 						<th class="col-xs-1 text-center">
 							Status
 						</th>
-						<th class="col-xs-1 text-center">
+						<th class="col-xs-2 text-center">
 							Remark
 						</th>	
 						<th class="col-xs-1 text-center">
@@ -153,17 +176,21 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 						<input type="text" name='item[0][qty]' placeholder='Quantity' class="form-control"/>
 						</td>
 						<td>
-						<input type="text" name='item[0][recqty]' placeholder='Receiving Quantity' class="form-control"/>
+						<input type="text" name='item[0][recqty]' placeholder='Received' class="form-control"/>
 						</td>
-						<td>
-						<input type="text" name='item[0][recvnqty]' placeholder='Received Pending' class="form-control"/>
-						</td>						
+						
 						<td>
 						<input type="text" name='item[0][status]' placeholder='Item Status' class="form-control"/>
 						</td>
 						<td>
 						<input type="text" name='item[0][remark]' placeholder='Remarks' class="form-control"/>
-						</td>						
+						</td>	
+						<td>
+						<input type="text" name='item[0][sir]' placeholder='SIR Code' class="form-control"/>
+						</td>
+						<td>
+						<input type="text" name='item[0][lpo]' placeholder='LPO code' class="form-control"/>
+						</td>							
 					</tr>
                 
 				</tbody>
@@ -207,4 +234,5 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
       <!-- /.modal-dialog --> 
     </div>
     
+
 @endsection

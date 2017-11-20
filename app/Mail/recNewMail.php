@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Mail;
-
 use App\doc;
 use App\item;
 use Illuminate\Bus\Queueable;
@@ -9,15 +8,10 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NewWaybill extends Mailable
+class recNewMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
 	 public $doc, $item;
     public function __construct(doc $do, $it)
     {
@@ -36,7 +30,7 @@ class NewWaybill extends Mailable
 		$address = 'helpdesk@esrnl.com';
 		$name = 'Waybill Manager';
 		$subject = 'New Waybill created';
-        return $this->view('email.NewWaybill')
+        return $this->view('email.recNewMail')
 					->from($address, $name)
 					->subject($subject);
     }

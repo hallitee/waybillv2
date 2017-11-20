@@ -27,7 +27,7 @@
 </table>
 <br>
 <p>
-Items listed below will be sent with this waybill
+Items listed below is being sent to your location, please update item waybill on portal upon receive. 
 </p>
 <table class="table2">
 <thead><th>S/n</th><th>Item description</th><th>Qty</th><th>Serial No</th><th>Status</th><th>Remarks</th><th>SIR Code</th><th>LPO Code</th></thead>
@@ -37,10 +37,8 @@ Items listed below will be sent with this waybill
 @endforeach
 </tbody >
 </table>
-<p>Please endeavor to track items till destination and ensure all open waybills closed</p>
-<p>
-Notification has been sent to receiver.
-</p>
+
+<br>
 <p>Thank You</p>
 </body>
 </html>

@@ -38,7 +38,9 @@
                                 <li>
                                     <a href="{{ route('waybill.print') }}">Print Waybill</a>
                                 </li>
-
+                                <li>
+                                    <a href="{{ route('waybill.search') }}">Find Item/Waybill </a>
+                                </li>
 
                             </ul>
                             <!-- /.nav-second-level -->

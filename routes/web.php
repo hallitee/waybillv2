@@ -21,15 +21,10 @@ use App\Mail\NewWaybill;
 |
 */
 Route::get('waybill/email', function(){
-	$doc = doc::where('id', 70)->first();
-	$item = item::where('doc_id', 70)->first();
-	$doc = array('hello', 'taofik');
-	//return view('email.NewWaybill')->with(['doc'=>$doc,'item'=>$item]);
-	Mail::send('email.NewWaybill',array('doc'=>$doc) , function($message){
-		$message->from('helpdesk@esrnl.com', 'Waybill Manager');
-		$message->to($user_email);
-	});
-	return;
+	$doc = doc::where('id', 101)->first();
+	$item = item::where('doc_id', 101)->get();
+	return view('email.recNewMail')->with(['doc'=>$doc,'item'=>$item]);
+
 });
 Route::get('waybill/return', function(Request $request){
 	$id = $request->doc_id;
@@ -74,7 +69,16 @@ Route::get('waybill/loaddoc', function(Request $request){
 	if ($id!=''){
 	$data = doc::where('id', $id)->first();	
 	}	
-	$itemCnt = item::where('doc_id', $id)->get();
+	$itemCnt = item::where('doc_id', $id)->paginate(20);
+    return Response::json($data);
+	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
+});
+Route::get('waybill/searchitem', function(Request $request){
+	$id = $request->id;
+	if ($id!=''){
+	$data = item::where('item_desc', 'LIKE', '%'.$id.'%')->get();	
+	}	
+	//$itemCnt = item::where('doc_id', $id)->paginate(20);
     return Response::json($data);
 	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
 });
@@ -180,6 +184,7 @@ Route::get('waybill/checkdoc',['as' => 'waybill.checkdoc', 'uses' => 'docs@check
 Route::get('waybill/printreview/{docid?}',['as' => 'waybill.print', 'uses' => 'docs@printreview', 'docid'=>'docid']);
 //Route::get('waybill/rprint',['as' => 'waybill.rprint', 'uses' => 'docs@rprint']);
 Route::get('waybill/print/{docid?}',['as' => 'waybill.print', 'uses' => 'docs@prints', 'docid'=>'docid']);
+Route::get('waybill/search/{docid?}',['as' => 'waybill.search', 'uses' => 'docs@search', 'docid'=>'docid']);
 Route::get('waybill/receive',['as' => 'waybill.receive', 'uses' => 'docs@receive']);
 Route::get('waybill/rprint',['as' => 'waybill.rprint', 'uses' => 'docs@rprint', 'doc']);
 Route::get('waybill/reports',['as' => 'waybill.reports', 'uses' => 'docs@reports']);

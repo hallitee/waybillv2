@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\DocFormRequest;
 use Auth;
 use App\doc;
+use App\User;
 use App\item;
 use App\printlog;
 use PDF;
 use App\HomeController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewWaybill;
-
+use App\Mail\recNewMail;
 
 class docs extends Controller
 {
@@ -95,7 +100,7 @@ public function reports(Request $request) {
 	$loc = Auth::user()->company.' '.Auth::user()->location;
 	if($status=='OPEN'){
 		
-		echo "OPEN FOR ME";
+	
 	}
 	else{
 		
@@ -103,10 +108,11 @@ public function reports(Request $request) {
 	}
 	$doc=doc::where('wType', $type)->where(function ($q) use ($status){
 	$q->where('receiveStatus', $status)->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');})->where(function($g) use ($loc){
-		$g->where('sentTo',$loc)->orWhere('sentFrom',$loc);})->orderby('sentDate', 'DESC')->get();
-	
+		$g->where('sentTo',$loc)->orWhere('sentFrom',$loc);})->orderby('sentDate', 'DESC')->paginate(10);
+
+	//$doc = doc::where('wType', $type)->paginate(20);
 	/*$doc = doc::where('wType', $type)->orderby('sentDate', 'DESC')->get();*/
-	return view('docs.reports')->with('userid', $id)->with('type', $type)->with('status', $status)->with('doc', $doc);
+	return view('docs.reports', compact('doc'))->with('userid', $id)->with('type', $type)->with('status', $status)->with('doc', $doc);
 }
 	
 public function checkdoc()
@@ -158,8 +164,17 @@ public function checkdoc()
 			$item->lpo = $val['lpo'];
 			$item->save();
 	}
+
     //$doc->$item->insert(Input::get('items'));
-	Mail::to('taofik.alli-balogun@natural-prime.com')	->send(new NewWaybill);
+	$items = item::where('doc_id', $doc->id)->get();
+	Mail::to($user_email)->send(new NewWaybill($doc, $items));
+		if($doc->sentTo == 'VENDOR' || $doc->deliveredTo == ""){
+		
+	}
+	else{
+		$recEmail = User::where('name', $doc->deliveredTo)->first()->email;
+		Mail::to($recEmail)->send(new recNewMail($doc, $items));
+	}
 		return redirect('waybill/print')->with('message', "Waybill \n W".ucfirst($doc->wType[0]).str_pad($doc->id, 5, "0", STR_PAD_LEFT). " Successfully created! \t ")->with(['load'=>'no','sw'=>1, 'doc'=>$doc, 'items'=> $items]); 
 	 
  }
@@ -173,6 +188,16 @@ public function prints(Request $req) {
 	return view('docs.print'); 
 	}
 	}
+public function search(Request $req) {
+	//$id=Auth::user()->email;
+	//$doc = doc::where('id', $docid)->get()->first();
+	//$item = item::where('doc_id', $docid)->get();
+	if($req->has('docid')){
+	return view('docs.create')->with(['load'=>'no']);	
+	}else{
+	return view('docs.search'); 
+	}
+	}	
 public function rprint(Request $req) {
 	//$id=Auth::user()->email;
 	//$doc = doc::where('id', $docid)->get()->first();

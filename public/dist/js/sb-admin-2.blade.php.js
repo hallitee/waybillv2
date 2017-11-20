@@ -51,21 +51,21 @@ $(function() {
 	}
 		 $sentTo = $("#sentTosel").val();
 		 //$lc = $company+" "+$location;
-		 console.log(" $lc "+ $lc + " sent To "+$sentTo);
+	//	 console.log(" $lc "+ $lc + " sent To "+$sentTo);
 		 if($sentTo == $lc){
-			 console.log("same company and location detected");
+		//	 console.log("same company and location detected");
 			 $("#errmsglist").text("choose another location");
 			$("#errmsg").prop('hidden', false);
 		}else{
 			$("#errmsglist").text("");
 			$("#errmsg").hide();
-		 console.log(" Selected "); 
+		// console.log(" Selected "); 
 		 $("#errmsg").hide();
 			var $word = $sentTo.split(" ");
 			var $company = $word[0];
 			var $location = $word[1];
 			var options = $("#deliveredTo");
-			console.log($location);			
+	//		console.log($location);			
 				$.ajax({
 					type: 'GET',
 					url: "/waybill/loadusers",
@@ -82,13 +82,23 @@ $(function() {
 					},
 					success: function( data ){ 
 					console.log(data);
+					if (data.length===0){
+					options.hide();	
+						$("#delivdTo").empty();
+		$("#delivdTo").append("<input type='text' name='deliveredTo' id='delivTo' placeholder='Samuel Besiktas' class='input-md emailinput form-control'/>");	
+					}else
+					{
+					$("#delivTo").remove();	
+					options.show();
+				
 					options.empty();
 					$.each(data, function(i, list){
 						options.append(new Option(list.name, this.value));
 					});
 					}
+					}
 				});
-	
+			
 		}
 		});
 
@@ -174,7 +184,50 @@ $(function() {
 					}
 				});
 				});
-	
+	$("body").on("click", '.btn_items1', function(){
+		$('.modal').modal('show');
+		$doc_id = $(this).val();
+		console.log($doc_id);
+		$.ajax({
+					type: 'GET',
+					url: "/waybill/loadItems",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"id": $doc_id
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+					console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+					$item_err = 0; 
+					$item_count=0;i=0;
+					rec_qty = [];
+					//$("#tbody1 > tr > td").empty();	
+					$.each(data, function(i, item){
+						if(item.recqty===item.qty){
+							$rd = "readonly";
+						}else if($doc.ackcnt>9){$rd="readonly"}
+						else{$rd = "";}
+//						console.log(i);
+						rec_qty[i] = item.recqty;
+
+					 $('#addrs'+i).html("<td>"+ (i+1) +"<input name='item["+i+"][id]' value='"+item.id+"' type='text' placeholder='Item description' hidden/> </td><td><input name='item["+i+"][desc]' value='"+item.item_desc+"' type='text' placeholder='Item description' class='form-control input-md'  readonly/> </td><td><input  name='item["+i+"][serial]' value='"+item.serialNo+"' type='text' placeholder='Quantity'  class='form-control input-md' readonly></td><td><input  name='item["+i+"][qty]'  value='"+item.qty+"'  type='text' placeholder='Serial Number'  class='form-control input-md' readonly></td>"+$ins+"<td><input  name='item["+i+"][recvnqty]'  value='"+(item.qty-item.recqty)+"' type='text' min='0' max='1000' placeholder='Serial Number'  class='form-control input-md' required "+$rd+" readonly></td><td><input  name='item["+i+"][status]'  value='"+item.status+"' type='text' placeholder='Item Status'  class='form-control input-md' readonly></td><td><input  value='"+item.remark+"'  name='item["+i+"][remark]' type='text' placeholder='Remarks'  class='form-control input-md' readonly></td><td><input  value='"+item.sircode+"'  name='item["+i+"][sircode]' type='text' placeholder='SIR Number'  class='form-control input-md' readonly></td><td><input  value='"+item.lpo+"'  name='item["+i+"][lpo]' type='text' placeholder='LPO Number'  class='form-control input-md' readonly></td>");
+					 $('#tbody1').append('<tr id="addrs'+(i+1)+'"></tr>');     
+					 $item_count++;
+					$('#row_value').val(i);
+					}); 	
+
+					//$("#rec_err").hide();
+					//data response can contain what we want here...
+					
+	//				console.log(data);
+					//console.log("SUCCESS, data="+data);
+					}
+				});
+	});
 	$("body").on("click",'.btn_items', function(){
 				$("#printText").hide();
 				$("#printType").hide();
@@ -592,7 +645,96 @@ $("body").on("click", "#rec_btn4", function(){
 	//	console.log("print button clicked "+$item_err);
 		window.print();
 				});	
+$("body").on("click",'#searchi_btn', function(){ 
+				var $s = $("#search_input").val();
+				if($s===''){
+	//				console.log("search button clicked");
+					$("#tbody2 > tr > td").remove();	
+				}
+				else{
+					if($.isNumeric($s)){
+				i=0
+				$("#tbody2 > tr").empty();
+				$("#thead1").show();
+				$("#thead2").hide();
+				//$("#tab_logic2 tbody2 > tr > td").remove();	
+				$itemCnt=0;				
+				$.ajax({
+					type: 'GET',
+					url: "/waybill/loaddoc",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"id": $("#search_input").val()
+					},                                                                           
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+	//				console.log("error on submit"+xhr);
+					},
+					success: function( item ){ 
+	//				console.log('data '+ item);
+					//data response can contain what we want here...
+					//i++; 
+					//	item.receivedBy = 'OPEN';
+					$doc_id = item.id;
+					 $('#addr'+i).html("<td class='text-center'>"+'W'+item.wType.charAt(0)+ zeroPad(item.id, 5) +"</td><td class='text-center'>"+item.sentDate+"</td><td class='text-center'>"+item.sentBy+"</td><td class='text-center'>"+item.sentFrom+"</td><td class='text-center'>"+item.sentTo+"</td><td><p data-placement='top' data-toggle='tooltip' title='List items'><button class='btn btn-primary btn-xs btn_items1' value='"+item.id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td>");
 
+					$('#tbody2').append('<tr id="addr'+(i+1)+'"></tr>');    				
+					$("#tab_logic2").show();
+
+					}
+				});
+					}
+					else
+					{
+						console.log("Text input entered");
+				i=0
+				$("#tab_logic2 tbody2 > tr > td").remove();	
+				$itemCnt=0;				
+				$("#thead2").show();
+				$("#thead1").hide();
+				$.ajax({
+					type: 'GET',
+					url: "/waybill/searchitem",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"id": $("#search_input").val()
+					},                                                                           
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+	//				console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+					console.log(data);
+					$("#tbody2 > tr").empty();
+						i=0
+					$.each(data, function(i, item){
+						
+					 $('#addr'+i).html("<td class='text-center'>"+'W'+item.doc_id +"</td><td class='text-center'>"+item.item_desc+"</td><td class='text-center'>"+item.qty+"</td><td class='text-center'>"+item.serialNo+"</td><td class='text-center'>"+item.lpo+"</td><td class='text-center'><p data-placement='top' data-toggle='tooltip' title='Print waybill'><a id='printbtn' type='submit' href='printreview?docid="+item.sircode+"' class='btn btn-primary btn-xs' value='"+item.id+"'><span class='glyphicon glyphicon-print fa-2x'></span></a></p></td>");
+
+					$('#tbody2').append('<tr id="addr'+(i+1)+'"></tr>');    				
+					$("#tab_logic2").show();  				
+					
+					
+					});
+					$("#tab_logic2").show();
+	//				console.log('data '+ item);
+					//data response can contain what we want here...
+			/*		i++; 
+					//	item.receivedBy = 'OPEN';
+					 $('#addr'+i).html("<td class='text-center'>"+'W'+item.wType.charAt(0)+ zeroPad(item.id, 5) +"</td><td class='text-center'>"+item.sentDate+"</td><td class='text-center'>"+item.sentBy+"</td><td class='text-center'>"+item.sentFrom+"</td><td class='text-center'>"+item.deliveredBy+"</td><td class='text-center'><p data-placement='top' data-toggle='tooltip' title='Print waybill'><a id='printbtn' type='submit' href='printreview?docid="+item.id+"' class='btn btn-primary btn-xs' value='"+item.id+"'><span class='glyphicon glyphicon-print fa-2x'></span></a></p></td>");
+
+					$('#tbody2').append('<tr id="addr'+(i+1)+'"></tr>');    				
+					$("#tab_logic2").show(); */
+
+					}
+				});						
+						}
+					}	
+				});		
 $("body").on("click",'#searchp_btn', function(){ 
 				var $s = $("#search_input").val();
 				if($s===''){
@@ -643,7 +785,7 @@ $("body").on("click",'#searchp_btn', function(){
 		$("#delivdTo").append("<input type='text' name='deliveredTo' id='delivTo' placeholder='Samuel Besiktas' class='input-md emailinput form-control'/>");
 	}else{ 
 		$("#delivTo").remove();
-		$("#deliveredTo").show();
+
 		//$("#delivTo").hide();	
 		//$("#deliveredTo").show();	
 			//$("#delivTo").remove();
