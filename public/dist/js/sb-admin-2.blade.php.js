@@ -148,8 +148,64 @@ $(function() {
      console.log($loc);
 	$("#search_btn").click(function(){
 	//	console.log("search button clicked");
-
+					var $s = $("#search_input").val();
+					if(!$.isNumeric($s) && !isEmpty($s)){				
+				console.log(" it is a string");
+				$("#tab_logic tbody > tr > td").remove();
+				
+						console.log("Text input entered");
+				i=0
+				$("#tbody > tr").empty();
+				//$("#tab_logic2 tbody2 > tr > td").remove();	
+				$itemCnt=0;				
+				$("#thead2").show();
+				$("#thead1").hide();
 				$.ajax({
+					type: 'GET',
+					url: "/waybill/searchitem",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"id": $("#search_input").val()
+					},                                                                           
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+	//				console.log("error on submit"+xhr);
+					},
+					success: function( data, res ){ 
+					console.log(data[0][0].item_desc);
+					$("#tbody > tr").empty();
+						i=0
+					$.each(data[0], function(i, item){
+					
+					 $('#addr'+i).html("<td class='text-center'>"+'W'+data[1][i].wType.charAt(0)+ zeroPad(data[1][i].id, 5) +"</td><td class='text-center'>"+data[1][i].sentDate+"</td><td class='text-center'>"+item.item_desc+"</td><td class='text-center'>"+item.qty+"</td><td class='text-center'>"+data[1][i].sentFrom+"</td><td class='text-center'>"+data[1][i].sentTo+"</td><td><p data-placement='top' data-toggle='tooltip' title='List items'><button class='btn btn-primary btn-xs btn_items1' value='"+data[1][i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td>");
+
+					$('#tbody').append('<tr id="addr'+(i+1)+'"></tr>');    				
+					$("#tab_logic").show();  				
+					
+					
+					});
+					$("#tab_logic").show();
+	//				console.log('data '+ item);
+					//data response can contain what we want here...
+			/*		i++; 
+					//	item.receivedBy = 'OPEN';
+					 $('#addr'+i).html("<td class='text-center'>"+'W'+item.wType.charAt(0)+ zeroPad(item.id, 5) +"</td><td class='text-center'>"+item.sentDate+"</td><td class='text-center'>"+item.sentBy+"</td><td class='text-center'>"+item.sentFrom+"</td><td class='text-center'>"+item.deliveredBy+"</td><td class='text-center'><p data-placement='top' data-toggle='tooltip' title='Print waybill'><a id='printbtn' type='submit' href='printreview?docid="+item.id+"' class='btn btn-primary btn-xs' value='"+item.id+"'><span class='glyphicon glyphicon-print fa-2x'></span></a></p></td>");
+
+					$('#tbody2').append('<tr id="addr'+(i+1)+'"></tr>');    				
+					$("#tab_logic2").show(); */
+
+					}
+				});					
+				
+				
+		}else{
+			
+				$("#thead1").show();
+				$("#thead2").hide();
+		$.ajax({
+			
 					type: 'GET',
 					url: "/waybill/load",
 					dataType: 'JSON',
@@ -171,7 +227,7 @@ $(function() {
 					$("#tab_logic tbody > tr > td").remove();	
 					$.each(data, function(i, item){
 					//	item.receivedBy = 'OPEN';
-					 $('#addr'+i).html("<td>"+'W'+ item.wType.charAt(0)+zeroPad(item.id,5) +"</td><td>"+item.sentDate+"</td><td>"+item.sentBy+"</td><td>"+item.sentFrom+"</td><td>"+item.deliveredBy+"</td><td><p data-placement='top' data-toggle='tooltip' title='Edit'><button class='btn btn-primary btn-xs btn_items' value='"+item.id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td><td>"+item.receiveStatus+"</td>");
+					 $('#addr'+i).html("<td>"+'W'+ item.wType.charAt(0)+zeroPad(item.id,5) +"</td><td>"+item.sentDate+"</td><td>"+item.sentBy+"</td><td>"+item.sentFrom+"</td><td>"+item.sentTo+"</td><td>"+item.deliveredBy+"</td><td><p data-placement='top' data-toggle='tooltip' title='Edit'><button class='btn btn-primary btn-xs btn_items' value='"+item.id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td><td>"+item.receiveStatus+"</td>");
 
 					$('#tbody').append('<tr id="addr'+(i+1)+'"></tr>');     
 					i++; 
@@ -183,11 +239,13 @@ $(function() {
 			//		console.log("SUCCESS, data="+data);
 					}
 				});
+	}
+				
 				});
 	$("body").on("click", '.btn_items1', function(){
-		$('.modal').modal('show');
+		$('#classModal').modal('show');
 		$doc_id = $(this).val();
-		console.log($doc_id);
+		console.log(" doc id "+$doc_id);
 		$.ajax({
 					type: 'GET',
 					url: "/waybill/loadItems",
@@ -205,17 +263,15 @@ $(function() {
 					$item_err = 0; 
 					$item_count=0;i=0;
 					rec_qty = [];
+					$rd = "readonly";
 					//$("#tbody1 > tr > td").empty();	
 					$.each(data, function(i, item){
-						if(item.recqty===item.qty){
-							$rd = "readonly";
-						}else if($doc.ackcnt>9){$rd="readonly"}
-						else{$rd = "";}
-//						console.log(i);
-						rec_qty[i] = item.recqty;
 
-					 $('#addrs'+i).html("<td>"+ (i+1) +"<input name='item["+i+"][id]' value='"+item.id+"' type='text' placeholder='Item description' hidden/> </td><td><input name='item["+i+"][desc]' value='"+item.item_desc+"' type='text' placeholder='Item description' class='form-control input-md'  readonly/> </td><td><input  name='item["+i+"][serial]' value='"+item.serialNo+"' type='text' placeholder='Quantity'  class='form-control input-md' readonly></td><td><input  name='item["+i+"][qty]'  value='"+item.qty+"'  type='text' placeholder='Serial Number'  class='form-control input-md' readonly></td>"+$ins+"<td><input  name='item["+i+"][recvnqty]'  value='"+(item.qty-item.recqty)+"' type='text' min='0' max='1000' placeholder='Serial Number'  class='form-control input-md' required "+$rd+" readonly></td><td><input  name='item["+i+"][status]'  value='"+item.status+"' type='text' placeholder='Item Status'  class='form-control input-md' readonly></td><td><input  value='"+item.remark+"'  name='item["+i+"][remark]' type='text' placeholder='Remarks'  class='form-control input-md' readonly></td><td><input  value='"+item.sircode+"'  name='item["+i+"][sircode]' type='text' placeholder='SIR Number'  class='form-control input-md' readonly></td><td><input  value='"+item.lpo+"'  name='item["+i+"][lpo]' type='text' placeholder='LPO Number'  class='form-control input-md' readonly></td>");
-					 $('#tbody1').append('<tr id="addrs'+(i+1)+'"></tr>');     
+						console.log(" items "+ item.item_desc);
+						//rec_qty[i] = item.recqty;
+					$('#trows'+i).html("<td>"+(i+1)+"</td><td>"+item.item_desc+"</td><td> "+item.serialNo+"</td><td>"+item.qty+"</td><td>"+item.recqty+"</td><td>"+(item.qty-item.recqty)+"</td><td>"+item.status +"</td><td>"+item.remark+"</td><td>"+item.sircode+"</td><td>"+item.lpo+"</td>");
+					
+					 $('#tbodys').append('<tr id="trows'+(i+1)+'"></tr>');     
 					 $item_count++;
 					$('#row_value').val(i);
 					}); 	
@@ -690,7 +746,8 @@ $("body").on("click",'#searchi_btn', function(){
 					{
 						console.log("Text input entered");
 				i=0
-				$("#tab_logic2 tbody2 > tr > td").remove();	
+				$("#tbody2 > tr").empty();
+				//$("#tab_logic2 tbody2 > tr > td").remove();	
 				$itemCnt=0;				
 				$("#thead2").show();
 				$("#thead1").hide();
@@ -707,13 +764,13 @@ $("body").on("click",'#searchi_btn', function(){
 					// alert("ERROR ON SUBMIT");
 	//				console.log("error on submit"+xhr);
 					},
-					success: function( data ){ 
-					console.log(data);
+					success: function( data, res ){ 
+					console.log(data[0][0].item_desc);
 					$("#tbody2 > tr").empty();
 						i=0
-					$.each(data, function(i, item){
-						
-					 $('#addr'+i).html("<td class='text-center'>"+'W'+item.doc_id +"</td><td class='text-center'>"+item.item_desc+"</td><td class='text-center'>"+item.qty+"</td><td class='text-center'>"+item.serialNo+"</td><td class='text-center'>"+item.lpo+"</td><td class='text-center'><p data-placement='top' data-toggle='tooltip' title='Print waybill'><a id='printbtn' type='submit' href='printreview?docid="+item.sircode+"' class='btn btn-primary btn-xs' value='"+item.id+"'><span class='glyphicon glyphicon-print fa-2x'></span></a></p></td>");
+					$.each(data[0], function(i, item){
+					
+					 $('#addr'+i).html("<td class='text-center'>"+'W'+data[1][i].wType.charAt(0)+ zeroPad(data[1][i].id, 5) +"</td><td class='text-center'>"+data[1][i].sentDate+"</td><td class='text-center'>"+item.item_desc+"</td><td class='text-center'>"+item.qty+"</td><td class='text-center'>"+data[1][i].sentFrom+"</td><td class='text-center'>"+data[1][i].sentTo+"</td><td><p data-placement='top' data-toggle='tooltip' title='List items'><button class='btn btn-primary btn-xs btn_items1' value='"+data[1][i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td>");
 
 					$('#tbody2').append('<tr id="addr'+(i+1)+'"></tr>');    				
 					$("#tab_logic2").show();  				
@@ -742,6 +799,7 @@ $("body").on("click",'#searchp_btn', function(){
 					$("#tbody2 > tr > td").remove();	
 				}
 				else{
+			
 				i=0
 				$("#tab_logic2 tbody2 > tr > td").remove();	
 				$itemCnt=0;				
@@ -770,6 +828,8 @@ $("body").on("click",'#searchp_btn', function(){
 
 					}
 				});
+				
+						
 					}	
 				});		
 	$("#wTypeSel").on("change", function(){

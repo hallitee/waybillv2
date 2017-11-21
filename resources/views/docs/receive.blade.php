@@ -72,7 +72,7 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 								<div class="table-responsive">
 							
 					<table class="table table-bordered table-hover" id="tab_logic">
-						<thead>
+						<thead id="thead1" hidden>
 						<tr >
 						<th class="text-center">
 							Waybill #
@@ -87,6 +87,9 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 							Origin
 						</th>
 						<th class="text-center">
+							Destination
+						</th>						
+						<th class="text-center">
 							Delivered By
 						</th>
 						<th class="text-center">
@@ -97,6 +100,37 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 						</th>						
 					</tr>
 				</thead>
+						<thead id="thead2" hidden>
+						<tr >
+						<th class="text-center">
+							Waybill #
+						</th>
+						<th class="text-center">
+							Sent Date
+						</th>
+						<th class="text-center">
+						Item Description
+						</th>						
+						<th class="text-center">
+						Sender
+						</th>
+						<th class="text-center">
+							Origin
+						</th>
+						<th class="text-center">
+							Destination
+						</th>						
+						<th class="text-center">
+							Delivered By
+						</th>
+						<th class="text-center">
+							Items
+						</th>			
+						<th class="text-center">
+							Status
+						</th>						
+					</tr>
+				</thead>				
 				<tbody id='tbody'>
 					<tr id='addr0'>
 						<td>

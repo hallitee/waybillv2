@@ -74,12 +74,16 @@ Route::get('waybill/loaddoc', function(Request $request){
 	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
 });
 Route::get('waybill/searchitem', function(Request $request){
+	$docs = [];
 	$id = $request->id;
 	if ($id!=''){
 	$data = item::where('item_desc', 'LIKE', '%'.$id.'%')->get();	
+	foreach($data as $key=>$value){
+		$docs[$key]= doc::where('id', $value->doc_id)->first();
+	}
 	}	
 	//$itemCnt = item::where('doc_id', $id)->paginate(20);
-    return Response::json($data);
+    return Response::json([$data, $docs]);
 	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
 });
 Route::get('waybill/loadItems', function(Request $request){
