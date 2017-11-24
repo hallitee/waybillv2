@@ -35,20 +35,20 @@ $(function() {
 	var $ins;
 	var $doc;
 	var $data;
+	var $loc, $wType;
 	var rec_qty = [];
       var i=1;
-
+$("input[type='checkbox']").change(function() {
+    if(this.checked) {
+       $("#proxyName").show();
+	   console.log("checked");
+    }else{
+		$("#proxyName").hide();
+		console.log("unchecked");
+	}
+});
 	  $("#sentTosel").change(function(){
-		  		if($(this).find(":selected").val()==='VENDOR'){
-		$("#vendiv1").show();
-
-		$("#deliveredTo").hide();
-		$("#delivdTo").append("<input type='text' name='deliveredTo' id='delivTo' placeholder='Samuel Besiktas' class='input-md emailinput form-control'/>");		
-	}
-	else{$("#vendiv1").hide();
-		$("#delivTo").remove();
-		$("#deliveredTo").show();	
-	}
+	
 		 $sentTo = $("#sentTosel").val();
 		 //$lc = $company+" "+$location;
 	//	 console.log(" $lc "+ $lc + " sent To "+$sentTo);
@@ -81,17 +81,18 @@ $(function() {
 //					console.log("error on submit"+xhr);
 					},
 					success: function( data ){ 
-					console.log(data);
+					//console.log(data + " Array Length "+ data.length);
+					
 					if (data.length===0){
 					options.hide();	
-						$("#delivdTo").empty();
-		$("#delivdTo").append("<input type='text' name='deliveredTo' id='delivTo' placeholder='Samuel Besiktas' class='input-md emailinput form-control'/>");	
-					}else
+					$("#delivTo").show();
+					}
+					else
 					{
-					$("#delivTo").remove();	
+					options.empty();				   
+					$("#delivTo").hide();
+					$("#delivTo").empty();
 					options.show();
-				
-					options.empty();
 					$.each(data, function(i, list){
 						options.append(new Option(list.name, this.value));
 					});
@@ -100,6 +101,13 @@ $(function() {
 				});
 			
 		}
+if($(this).find(":selected").val()==='VENDOR'){
+		$("#vendiv1").show();	
+	}
+	else{
+		$("#vendiv1").hide();
+	}
+		
 		});
 
 	 $("#printType").change(function(){
@@ -145,15 +153,15 @@ $(function() {
 		 }
 	 });
 	 $loc = $("#wType").val();
-     console.log($loc);
+   //  console.log($loc);
 	$("#search_btn").click(function(){
-	//	console.log("search button clicked");
+	console.log($loc);
 					var $s = $("#search_input").val();
 					if(!$.isNumeric($s) && !isEmpty($s)){				
-				console.log(" it is a string");
+				//console.log(" it is a string");
 				$("#tab_logic tbody > tr > td").remove();
 				
-						console.log("Text input entered");
+				//		console.log("Text input entered");
 				i=0
 				$("#tbody > tr").empty();
 				//$("#tab_logic2 tbody2 > tr > td").remove();	
@@ -167,23 +175,25 @@ $(function() {
 					beforeSend: function(xhr)
 					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 					data: {
-					"id": $("#search_input").val()
+					"id": $("#search_input").val(),
+					"wType": $loc
 					},                                                                           
 					error: function( xhr ){ 
 					// alert("ERROR ON SUBMIT");
 	//				console.log("error on submit"+xhr);
 					},
 					success: function( data, res ){ 
-					console.log(data[0][0].item_desc);
+				//	console.log(data[0][0].item_desc);
 					$("#tbody > tr").empty();
 						i=0
 					$.each(data[0], function(i, item){
-					
-					 $('#addr'+i).html("<td class='text-center'>"+'W'+data[1][i].wType.charAt(0)+ zeroPad(data[1][i].id, 5) +"</td><td class='text-center'>"+data[1][i].sentDate+"</td><td class='text-center'>"+item.item_desc+"</td><td class='text-center'>"+item.qty+"</td><td class='text-center'>"+data[1][i].sentFrom+"</td><td class='text-center'>"+data[1][i].sentTo+"</td><td><p data-placement='top' data-toggle='tooltip' title='List items'><button class='btn btn-primary btn-xs btn_items1' value='"+data[1][i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td>");
+					if(data[1][i].receiveStatus === 'OPEN')
+						{
+					 $('#addr'+i).html("<td class='text-center'>"+'W'+data[1][i].wType.charAt(0)+ zeroPad(data[1][i].id, 5) +"</td><td class='text-center'>"+data[1][i].sentDate+"</td><td class='text-center'>"+item.item_desc+"</td><td class='text-center'>"+data[1][i].sentBy+"</td><td class='text-center'>"+data[1][i].deliveredTo+"</td><td class='text-center'>"+data[1][i].sentFrom+"</td><td class='text-center'>"+data[1][i].sentTo+"</td><td class='text-center'>"+data[1][i].deliveredBy+"</td><td><p data-placement='top' data-toggle='tooltip' title='List items'><button class='btn btn-primary btn-xs btn_items' value='"+data[1][i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td><td class='text-center'>"+data[1][i].receiveStatus+"</td>");
 
 					$('#tbody').append('<tr id="addr'+(i+1)+'"></tr>');    				
 					$("#tab_logic").show();  				
-					
+					}
 					
 					});
 					$("#tab_logic").show();
@@ -227,7 +237,7 @@ $(function() {
 					$("#tab_logic tbody > tr > td").remove();	
 					$.each(data, function(i, item){
 					//	item.receivedBy = 'OPEN';
-					 $('#addr'+i).html("<td>"+'W'+ item.wType.charAt(0)+zeroPad(item.id,5) +"</td><td>"+item.sentDate+"</td><td>"+item.sentBy+"</td><td>"+item.sentFrom+"</td><td>"+item.sentTo+"</td><td>"+item.deliveredBy+"</td><td><p data-placement='top' data-toggle='tooltip' title='Edit'><button class='btn btn-primary btn-xs btn_items' value='"+item.id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td><td>"+item.receiveStatus+"</td>");
+					 $('#addr'+i).html("<td>"+'W'+ item.wType.charAt(0)+zeroPad(item.id,5) +"</td><td>"+item.sentDate+"</td><td>"+item.sentBy+"</td><td class='text-center'>"+item.deliveredTo+"</td><td>"+item.sentFrom+"</td><td>"+item.sentTo+"</td><td>"+item.deliveredBy+"</td><td><p data-placement='top' data-toggle='tooltip' title='Edit'><button class='btn btn-primary btn-xs btn_items' value='"+item.id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td><td>"+item.receiveStatus+"</td>");
 
 					$('#tbody').append('<tr id="addr'+(i+1)+'"></tr>');     
 					i++; 
@@ -285,9 +295,11 @@ $(function() {
 				});
 	});
 	$("body").on("click",'.btn_items', function(){
+		$("#recRemarks").hide();
 				$("#printText").hide();
 				$("#printType").hide();
 				$("#rec_btn3").hide();
+				//$("#recRemText").hide();
 //				console.log("Items button clicked");
 				$userid = $("#userid").val();
 				$doc_id = $(this).val();
@@ -600,9 +612,11 @@ $("body").on("click",'.btn_itemshow', function(){
 				$("#rec_err").text("");
 				recLoan();
 		}
-	}	else{$("#recRemarks").show();}	 
+	}	else{
+		$("#recRemarks").show();}	 
 		}
 		else if($item_err<0){
+			
 				recLoan();
 		} 
 //		console.log("receive button clicked "+$item_err);
@@ -770,7 +784,7 @@ $("body").on("click",'#searchi_btn', function(){
 						i=0
 					$.each(data[0], function(i, item){
 					
-					 $('#addr'+i).html("<td class='text-center'>"+'W'+data[1][i].wType.charAt(0)+ zeroPad(data[1][i].id, 5) +"</td><td class='text-center'>"+data[1][i].sentDate+"</td><td class='text-center'>"+item.item_desc+"</td><td class='text-center'>"+item.qty+"</td><td class='text-center'>"+data[1][i].sentFrom+"</td><td class='text-center'>"+data[1][i].sentTo+"</td><td><p data-placement='top' data-toggle='tooltip' title='List items'><button class='btn btn-primary btn-xs btn_items1' value='"+data[1][i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td>");
+					 $('#addr'+i).html("<td class='text-center'>"+'W'+data[1][i].wType.charAt(0)+ zeroPad(data[1][i].id, 5) +"</td><td class='text-center'>"+data[1][i].sentDate+"</td><td class='text-center'>"+item.item_desc+"</td><td class='text-center'>"+item.qty+"</td><td class='text-center'>"+data[1][i].deliveredTo+"</td><td class='text-center'>"+data[1][i].sentFrom+"</td><td class='text-center'>"+data[1][i].sentTo+"</td><td><p data-placement='top' data-toggle='tooltip' title='List items'><button class='btn btn-primary btn-xs btn_items1' value='"+data[1][i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td><td class='text-center'>"+data[1][i].receiveStatus+"</td>");
 
 					$('#tbody2').append('<tr id="addr'+(i+1)+'"></tr>');    				
 					$("#tab_logic2").show();  				
@@ -841,10 +855,9 @@ $("body").on("click",'#searchp_btn', function(){
 	else{$("#expRetDate").hide();}
 	if(($(this).find(":selected").val()==='PROMO'))
 	{	
-		$("#deliveredTo").hide();
-		$("#delivdTo").append("<input type='text' name='deliveredTo' id='delivTo' placeholder='Samuel Besiktas' class='input-md emailinput form-control'/>");
-	}else{ 
-		$("#delivTo").remove();
+		//$("#deliveredTo").hide();
+	//	$("#delivdTo").append("<input type='text' name='deliveredTo' id='delivTo' placeholder='Samuel Besiktas' class='input-md emailinput form-control'/>");
+	}else{ //		$("#delivTo").remove();
 
 		//$("#delivTo").hide();	
 		//$("#deliveredTo").show();	

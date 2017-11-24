@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
@@ -14,10 +14,12 @@ use App\User;
 use App\item;
 use App\printlog;
 use PDF;
+use Log;
 use App\HomeController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewWaybill;
 use App\Mail\recNewMail;
+use App\Jobs\SendNewWaybillEmail;
 
 class docs extends Controller
 {
@@ -135,10 +137,8 @@ public function checkdoc()
     if($request->sentTo=='VENDOR'){
 		$doc->vendorName = $request->sento;
 	}
-    if($request->sentFrom=='VENDOR'){
-		$doc->vendorName = $request->sentFro;
-	}
-				
+
+	$doc->proxyName = $request->proxyName;
 	$doc->sentFrom = $request->sentFrom;
 	$doc->sentDate = $request->sentDate;
 	$doc->deliveredBy = $request->deliveredBy;
@@ -147,6 +147,7 @@ public function checkdoc()
 	$doc->save();
 	echo $doc_id = $doc->id;
 	print $doc_id = $doc->id;
+	//$recEmail = User::where('name', $doc->deliveredTo)->first()->email;
 	$item = new item;
 	//$items = Input::get('items');
 	$items = $request->input('items');
@@ -164,17 +165,21 @@ public function checkdoc()
 			$item->lpo = $val['lpo'];
 			$item->save();
 	}
-
+	Log::info("Request cycle before sending mail");
     //$doc->$item->insert(Input::get('items'));
 	$items = item::where('doc_id', $doc->id)->get();
-	Mail::to($user_email)->send(new NewWaybill($doc, $items));
-		if($doc->sentTo == 'VENDOR' || $doc->deliveredTo == ""){
+	// dispatch(new SendNewWaybillEmail($doc, $items, $user_email));
+	 $newMailJob = (new SendNewWaybillEmail($doc, $items, $user_email))->delay(Carbon::now()->addMinutes(5));
+	 dispatch($newMailJob);
+	 //Mail::to($user_email)->send(new NewWaybill($doc, $items));
+	if($doc->sentTo == 'VENDOR' || $doc->deliveredTo == "" ){
 		
 	}
 	else{
-		$recEmail = User::where('name', $doc->deliveredTo)->first()->email;
-		Mail::to($recEmail)->send(new recNewMail($doc, $items));
+		
+		//Mail::to($recEmail)->send(new recNewMail($doc, $items));
 	}
+	Log::info("Request cycle After sending email");
 		return redirect('waybill/print')->with('message', "Waybill \n W".ucfirst($doc->wType[0]).str_pad($doc->id, 5, "0", STR_PAD_LEFT). " Successfully created! \t ")->with(['load'=>'no','sw'=>1, 'doc'=>$doc, 'items'=> $items]); 
 	 
  }

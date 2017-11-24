@@ -39,10 +39,10 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 								</div>
 								{!! Form::text('wType', $form, array('hidden','id' => 'row_value', 'id'=>'wType', 'value'=> '$form')) !!}
                                 <div class="col-lg-4">
-																			<label for="id_select"  class="control-label col-lg-3  requiredField">Waybill Number<span class="asteriskField">*</span> </label>
+																			<label for="id_select"  class="control-label col-lg-3  requiredField">Waybill Number/Item <span class="asteriskField">*</span> </label>
 
 							<div class="input-group custom-search-form">
-                                <input type="text" id="search_input" class="form-control" placeholder="Search...">
+                                <input type="text" id="search_input" class="form-control" placeholder="200 / Paper">
                                 <span class="input-group-btn">
                                 <button id="search_btn" class="btn btn-default" type="button">
                                     <i class="fa fa-search"></i>
@@ -84,6 +84,9 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 						Sender
 						</th>
 						<th class="text-center">
+						Receiver
+						</th>						
+						<th class="text-center">
 							Origin
 						</th>
 						<th class="text-center">
@@ -115,6 +118,9 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 						Sender
 						</th>
 						<th class="text-center">
+						Receiver
+						</th>						
+						<th class="text-center">
 							Origin
 						</th>
 						<th class="text-center">
@@ -133,27 +139,7 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 				</thead>				
 				<tbody id='tbody'>
 					<tr id='addr0'>
-						<td>
-						1
-						</td>
-						<td>
-						<input type="text" name='items[0][desc]'  placeholder='2017-11-20' class="form-control"/>
-						</td>
-						<td>
-						<input type="text" name='items[0][qty]' placeholder='Tunde Martins' class="form-control"/>
-						</td>
-						<td>
-						<input type="text" name='items[0][serial]' placeholder='ESRNL IKOYI' class="form-control"/>
-						</td>
-						<td>
-						<input type="text" name='items[0][status]' placeholder='John Alade' class="form-control"/>
-						</td>
-						<td>
-						<input type="text" name='items[0][remark]'  class="form-control"/>
-						</td>		
-						<td>
-						<input type="text" name='items[0][remark]' placeholder='OPEN/CLOSED/RECEIVED' class="form-control"/>
-						</td>							
+												
 					</tr>
                     <tr id='addr1'></tr>
 				</tbody>

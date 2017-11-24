@@ -95,6 +95,9 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 						</th>
 						<th class="text-center">
 							Quantity Sent
+						</th>		
+						<th class="text-center">
+							Receiver
 						</th>						
 						<th class="text-center">
 							Origin
@@ -104,6 +107,9 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 						</th>
 						<th class="text-center">
 							Items
+						</th>							
+						<th class="text-center">
+							Status
 						</th>							
 					</tr>
 				</thead>				

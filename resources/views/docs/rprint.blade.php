@@ -822,7 +822,7 @@ style='font-size:20.0pt;mso-bidi-font-size:11.0pt;font-family:"Times New Roman",
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;
-  mso-bidi-font-size:11.0pt;font-family:"Times New Roman","serif"'>{{$item->qty}}</span></p>
+  mso-bidi-font-size:11.0pt;font-family:"Times New Roman","serif"'>{{$item->recqty}}</span></p>
   </td>
   <td width=129 valign=top style='width:96.65pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;

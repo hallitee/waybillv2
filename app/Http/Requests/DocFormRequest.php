@@ -33,6 +33,7 @@ class DocFormRequest extends FormRequest
 			'sento'=>'nullable',			
 			'deliveredBy'=>'required',
 			'deliveredTo'=>'required',
+			'proxyName'=>'nullable',
 			#'items[0][desc]'=>'required',
 			#'items[0][status]'=>'required'
 

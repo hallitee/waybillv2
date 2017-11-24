@@ -41,8 +41,16 @@
 									    <div id="div_id_select" class="form-group required">
 											<label for="id_select"  class="control-label col-lg-4  requiredField">Receiver <span class="asteriskField">*</span> </label>
 											<div class="controls col-lg-8 "  id='delivdTo' style="margin-bottom: 10px">
+												{!! Form::text('deliveredTo','', array('class' => 'input-md emailinput form-control','id'=>'delivTo','style'=>'display:none', 'placeholder'=>'e.g Samuel Besiktas')); !!}											
 												{!! Form::select('deliveredTo',[],null, array('class' => 'input-md emailinput form-control', 'id'=>'deliveredTo','placeholder'=>'e.g Samuel Besiktas')); !!}
-												{!! Form::hidden('deliveredTo','', array('class' => 'input-md emailinput form-control','id'=>'delivTo','placeholder'=>'e.g Samuel Besiktas')); !!}
+											</div>
+										</div>	
+									    <div id="div_id_select" class="form-group required">
+											<label for="id_select"  class="control-label col-lg-2 requiredField">Proxy To
+											 </label>
+											<span class="col-lg-2">{!! Form::checkbox('proxyBox','proxy',false); !!}</span>
+											<div class="controls col-lg-8 "  id='delivdTo' style="margin-bottom: 10px">
+											{!! Form::text('proxyName','', array('class' => 'input-md emailinput form-control','id'=>'proxyName', 'style'=>'display:none', 'placeholder'=>'e.g Messi Nemedo')); !!}	
 											</div>
 										</div>										
                                 </div>

@@ -20,6 +20,7 @@ class CreateDocsTable extends Migration
 			$table->string('sentFrom');
 			$table->string('sentTo');
 			$table->string('vendorName')->nullable();
+			$table->string('proxyName')->nullable();			
 			$table->string('sentBy');
 			$table->string('deliveredBy');
 			$table->string('deliveredTo');
