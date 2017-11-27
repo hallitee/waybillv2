@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\NewWaybill;
 use App\Mail\recNewMail;
 use App\Jobs\SendNewWaybillEmail;
+use App\Jobs\SendNewRecWaybillEmail;
 
 class docs extends Controller
 {
@@ -147,7 +148,7 @@ public function checkdoc()
 	$doc->save();
 	echo $doc_id = $doc->id;
 	print $doc_id = $doc->id;
-	//$recEmail = User::where('name', $doc->deliveredTo)->first()->email;
+	$recEmail = User::where('name', $doc->deliveredTo)->first()->email;
 	$item = new item;
 	//$items = Input::get('items');
 	$items = $request->input('items');
@@ -169,11 +170,12 @@ public function checkdoc()
     //$doc->$item->insert(Input::get('items'));
 	$items = item::where('doc_id', $doc->id)->get();
 	// dispatch(new SendNewWaybillEmail($doc, $items, $user_email));
-	 $newMailJob = (new SendNewWaybillEmail($doc, $items, $user_email))->delay(Carbon::now()->addMinutes(5));
+	 $newMailJob = (new SendNewWaybillEmail($doc, $items, $user_email))->delay(Carbon::now()->addMinutes(1));
 	 dispatch($newMailJob);
 	 //Mail::to($user_email)->send(new NewWaybill($doc, $items));
-	if($doc->sentTo == 'VENDOR' || $doc->deliveredTo == "" ){
-		
+	if($recEmail != '' || $recEmail != null ){
+	 $newRecMailJob = (new SendNewRecWaybillEmail($doc, $items, $recEmail))->delay(Carbon::now()->addMinutes(1));
+	 dispatch($newRecMailJob);		
 	}
 	else{
 		

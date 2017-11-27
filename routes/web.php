@@ -23,7 +23,7 @@ use App\Mail\NewWaybill;
 Route::get('waybill/email', function(){
 	$doc = doc::where('id', 101)->first();
 	$item = item::where('doc_id', 101)->get();
-	return view('email.recNewMail')->with(['doc'=>$doc,'item'=>$item]);
+	return view('email.dailyreport')->with(['doc'=>$doc,'item'=>$item]);
 
 });
 Route::get('waybill/return', function(Request $request){

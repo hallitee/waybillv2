@@ -17,11 +17,8 @@ use App\Mail\recNewMail;
 use App\Http\Requests\DocFormRequest;
 use Auth;
 
-
-class SendNewWaybillEmail implements ShouldQueue
+class SendNewRecWaybillEmail implements ShouldQueue
 {
-	
-
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
@@ -29,28 +26,24 @@ class SendNewWaybillEmail implements ShouldQueue
      *
      * @return void
      */
-	 
-	public $doc, $items, $user_email;	 
-	
-    public function __construct($do, $it, $email)
+	 public $doc, $items, $email;
+    public function __construct($do, $it, $em)
     {
-        //
+		
 		$this->doc = $do;
 		$this->items = $it;
-		$this->user_email = $email;
-    }
-
+		$this->email = $em;
+	
+	}
     /**
      * Execute the job.
      *
      * @return void
-     */
+     **/
     public function handle()
     {
-        //
-
-		Mail::to($this->user_email)->send(new NewWaybill($this->doc, $this->items));
-		
-		echo "New email sent ";
+        Mail::to($this->email)->send(new recNewMail($this->doc, $this->items));
+		//Mail::to($this->user_email)->send(new NewWaybill($this->doc, $this->items));
     }
+
 }
