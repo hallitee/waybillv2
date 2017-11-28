@@ -14,16 +14,16 @@ xmlns="http://www.w3.org/TR/REC-html40">
  <o:DocumentProperties>
   <o:Author>Taofik</o:Author>
   <o:LastAuthor>Taofik</o:LastAuthor>
-  <o:Revision>8</o:Revision>
-  <o:TotalTime>1378</o:TotalTime>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>369</o:TotalTime>
   <o:Created>2017-11-27T15:34:00Z</o:Created>
-  <o:LastSaved>2017-11-28T08:23:00Z</o:LastSaved>
+  <o:LastSaved>2017-11-27T15:34:00Z</o:LastSaved>
   <o:Pages>2</o:Pages>
-  <o:Words>24</o:Words>
-  <o:Characters>140</o:Characters>
+  <o:Words>32</o:Words>
+  <o:Characters>183</o:Characters>
   <o:Lines>1</o:Lines>
   <o:Paragraphs>1</o:Paragraphs>
-  <o:CharactersWithSpaces>163</o:CharactersWithSpaces>
+  <o:CharactersWithSpaces>214</o:CharactersWithSpaces>
   <o:Version>14.00</o:Version>
  </o:DocumentProperties>
  <o:OfficeDocumentSettings>
@@ -46,7 +46,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
         margin: 5px;  /* this affects the margin on the content before sending to printer */
    }
 </style>
-
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:View>Print</w:View>
@@ -393,7 +392,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 	line-height:115%;}
 @page WordSection1
 	{size:8.5in 11.0in;
-	margin:31.5pt 45.0pt 1.0in .25in;
+	margin:31.5pt 1.0in 1.0in .25in;
 	mso-header-margin:.5in;
 	mso-footer-margin:.5in;
 	mso-paper-source:0;}
@@ -457,65 +456,68 @@ table.MsoTableGrid
 
 <div class=WordSection1>
 
-<p class=MsoNormal align=center style='text-align:center'><u><span
-style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:115%'>WAYBILL
-DAILY REPORT 27/11/2017<o:p></o:p></span></u></p>
+<p class=MsoNormal><span
+style='mso-spacerun:yes'>                                                  
+</span><u><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
+115%'>WAYBILL DAILY REPORT 27/11/2017<o:p></o:p></span></u></p>
 
 <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><u><span
 style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:115%'><o:p><span
  style='text-decoration:none'>&nbsp;</span></o:p></span></u></b></p>
 
-<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 width=676
- style='margin-left:43.1pt;border-collapse:collapse;mso-table-layout-alt:fixed;
- border:none;mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;
- mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 width=653
+ style='width:489.7pt;margin-left:43.1pt;border-collapse:collapse;border:none;
+ mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;mso-padding-alt:
+ 0in 5.4pt 0in 5.4pt'>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
   <td width=38 valign=top style='width:28.75pt;border:solid windowtext 1.0pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b style='mso-bidi-font-weight:normal'>S/N<o:p></o:p></b></p>
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>S/N<o:p></o:p></span></p>
   </td>
   <td width=86 valign=top style='width:64.35pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b style='mso-bidi-font-weight:normal'>WAYBILL #<o:p></o:p></b></p>
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>WAYBILL #<o:p></o:p></span></p>
   </td>
   <td width=84 valign=top style='width:62.7pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b style='mso-bidi-font-weight:normal'>Receiver<o:p></o:p></b></p>
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>Receiver<o:p></o:p></span></p>
   </td>
   <td width=90 valign=top style='width:67.5pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b style='mso-bidi-font-weight:normal'>Destination<o:p></o:p></b></p>
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>Destination<o:p></o:p></span></p>
   </td>
   <td width=55 valign=top style='width:41.1pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b style='mso-bidi-font-weight:normal'>Status<o:p></o:p></b></p>
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>Status<o:p></o:p></span></p>
   </td>
   <td width=71 valign=top style='width:53.4pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b style='mso-bidi-font-weight:normal'>Waybill Type<o:p></o:p></b></p>
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>Waybill Type<o:p></o:p></span></p>
   </td>
-  <td width=180 valign=top style='width:135.0pt;border:solid windowtext 1.0pt;
+  <td width=157 valign=top style='width:117.95pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b style='mso-bidi-font-weight:normal'>Items Description<o:p></o:p></b></p>
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>Items
+  Description<o:p></o:p></span></p>
   </td>
-  <td width=72 valign=top style='width:.75in;border:solid windowtext 1.0pt;
+  <td width=72 valign=top style='width:53.95pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><b style='mso-bidi-font-weight:normal'>Items Quantity<o:p></o:p></b></p>
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>Items
+  Quantity<o:p></o:p></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1;height:3.75pt'>
@@ -560,15 +562,15 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:115%'><o:p><span
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width=180 valign=top style='width:135.0pt;border-top:none;border-left:
+  <td width=157 valign=top style='width:117.95pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width=72 valign=top style='width:.75in;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=72 valign=top style='width:53.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
@@ -617,15 +619,15 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:115%'><o:p><span
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width=180 valign=top style='width:135.0pt;border-top:none;border-left:
+  <td width=157 valign=top style='width:117.95pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width=72 valign=top style='width:.75in;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=72 valign=top style='width:53.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
