@@ -7,10 +7,10 @@ class doc extends Model
 {
     //
 	public function user(){
-		return $this->belongsTo('waybill\User');
+		return $this->belongsTo('App\User');
 	}
 	public function item(){
-		return $this->hasMany('waybill\item');
+		return $this->hasMany('App\item');
 	}
 	public function getDates()
 {

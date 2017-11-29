@@ -1,4 +1,174 @@
-	 	$("body").on("click",'#rec_btn', function(){ 
+$today = '2017-11-28'
+
+================================================================
+$today = Carbon\Carbon::now()->format('Y-m-d');
+$users = [];
+$u=[];
+$v=[];
+$k = [];
+$j = [];
+$docs = doc::whereDate('sentDate','=',$today)->get();
+foreach($docs as $d){
+if(in_array($d->user_id, $users)){
+
+}
+else{
+array_push($users, $d->user_id);
+}
+}
+
+foreach($users as $key=>$user){
+$m = doc::where('user_id', $user)->whereDate('sentDate', $today)->get();
+array_push($u, $m);
+}
+foreach($u as $key=>$f){
+
+for($x=0;$x<count($f);$x++){
+$z = item::where('doc_id', $f[$x]->id)->get();
+array_push($v, $z);
+}
+
+}
+
+====================================================
+
+$today = '2017-11-28';
+$users = [];
+$u=[];
+$v=[];
+$k = [];
+$j = [];
+$l = [];
+$docs = doc::whereDate('sentDate','=',$today)->get();
+foreach($docs as $d){
+if(in_array($d->user_id, $users)){
+
+}
+else{
+array_push($users, $d->user_id);
+}
+}
+
+foreach($users as $key=>$user){
+$m = doc::where('user_id', $user)->whereDate('sentDate', $today)->get();
+array_push($u, $m);
+
+foreach($u as $key=>$f){
+
+for($x=0;$x<count($f);$x++){
+$z = item::where('doc_id', $f[$x]->id)->get();
+array_push($v, $z);
+}
+array_push($j, $v);
+} //end of each doc
+
+}//end of each users
+
+
+
+=============================================================
+$today = '2017-11-28';
+$users = [];
+$m;
+$u=[];
+$v=[];
+$k = [];
+$j = [];
+$l = [];
+$docs = doc::whereDate('sentDate','=',$today)->get();
+foreach($docs as $d){
+if(in_array($d->user_id, $users)){
+
+}
+else{
+array_push($users, $d->user_id);
+}
+}
+
+foreach($users as $key=>$user){
+$m = doc::where('user_id', $user)->whereDate('sentDate', $today)->get();
+array_push($u, $m);
+
+foreach($m as $key=>$f){
+$z = item::where('doc_id', $f->id)->get();
+array_push($v, $z);
+} //end of each doc
+array_push($k, $v);
+$v=[];
+}//end of each users
+
+
+Excel::create('Filename1', function($excel) use($users, $u, $k) {
+    $excel->sheet('Users', function($sheet) use($users) {
+
+        $sheet->fromArray($users);
+
+    });
+    $excel->sheet('Waybill Document list', function($sheet) use($u) {
+
+        $sheet->fromArray($u);
+
+    });	
+    $excel->sheet('ItemsList', function($sheet) use($k) {
+
+        $sheet->fromArray($k);
+
+    });
+
+})->store('xls', storage_path('excel/exports'));
+=====================================
+Excel::create('Filename1', function($excel) use($users, $u, $k) {
+$today = '2017-11-28';
+$users = [];
+$u=[];
+$v=[];
+$k = [];
+$j = [];
+$l = [];
+$docs = doc::whereDate('sentDate','=',$today)->get();
+foreach($docs as $d){
+if(in_array($d->user_id, $users)){
+
+}
+else{
+array_push($users, $d->user_id);
+}
+}
+    $excel->sheet('Users', function($sheet) use($users) {
+
+        $sheet->fromArray($users);
+
+    });
+foreach($users as $key=>$user){
+$m = doc::where('user_id', $user)->whereDate('sentDate', $today)->get();
+    $excel->sheet('Waybill Document list', function($sheet) use($m) {
+
+        $sheet->fromModel($m);
+
+    });
+array_push($u, $m);
+
+foreach($m as $key=>$f){
+$z = item::where('doc_id', $f->id)->get();
+array_push($v, $z);
+} //end of each doc
+array_push($k, $v);
+$v=[];
+}//end of each users
+
+    $excel->sheet('ItemsList', function($sheet) use($k) {
+
+        $sheet->fromArray($k);
+
+    });
+
+})->store('xls', storage_path('excel/exports'));
+
+
+
+==================================================================	 
+
+	$("body").on("click",'#rec_btn', function(){ 
 
 		//$("#rec_err").append("Error in your inputs");
 		/*$("#tbody1 > tr").each(function(i, tr){

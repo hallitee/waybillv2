@@ -14,16 +14,16 @@ xmlns="http://www.w3.org/TR/REC-html40">
  <o:DocumentProperties>
   <o:Author>Taofik</o:Author>
   <o:LastAuthor>Taofik</o:LastAuthor>
-  <o:Revision>3</o:Revision>
-  <o:TotalTime>1379</o:TotalTime>
+  <o:Revision>4</o:Revision>
+  <o:TotalTime>1497</o:TotalTime>
   <o:Created>2017-11-29T10:20:00Z</o:Created>
-  <o:LastSaved>2017-11-29T10:21:00Z</o:LastSaved>
+  <o:LastSaved>2017-11-29T12:19:00Z</o:LastSaved>
   <o:Pages>2</o:Pages>
-  <o:Words>25</o:Words>
-  <o:Characters>148</o:Characters>
+  <o:Words>23</o:Words>
+  <o:Characters>132</o:Characters>
   <o:Lines>1</o:Lines>
   <o:Paragraphs>1</o:Paragraphs>
-  <o:CharactersWithSpaces>172</o:CharactersWithSpaces>
+  <o:CharactersWithSpaces>154</o:CharactersWithSpaces>
   <o:Version>14.00</o:Version>
  </o:DocumentProperties>
  <o:OfficeDocumentSettings>
@@ -32,20 +32,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
 </xml><![endif]-->
 <link rel=themeData href="dailyreport0_files/themedata.thmx">
 <link rel=colorSchemeMapping href="dailyreport0_files/colorschememapping.xml">
-<style type="text/css" media="print">
-    @page 
-    {
-        size: auto;   /* auto is the initial value */
-        margin: 0mm;  /* this affects the margin in the printer settings */
-    }
-
-    body 
-    {
-        background-color:#FFFFFF; 
-        border: none;
-        margin: 5px;  /* this affects the margin on the content before sending to printer */
-   }
-</style>
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:View>Print</w:View>
@@ -466,7 +452,6 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:115%'><o:p><span
  border:none;mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;
  mso-padding-alt:0in 5.4pt 0in 5.4pt'>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
- 
   <td width=38 valign=top style='width:.4in;border:solid windowtext 1.0pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
@@ -515,44 +500,43 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:115%'><o:p><span
   normal'><b style='mso-bidi-font-weight:normal'>Items Quantity<o:p></o:p></b></p>
   </td>
  </tr>
-
- <tr style='mso-yfti-irow:1;height:5.0pt'>
-  <td width=38 rowspan=3 valign=top style='width:.4in;border:solid windowtext 1.0pt;
+ <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes;height:5.0pt'>
+  <td width=38 valign=top style='width:.4in;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width=86 rowspan=3 valign=top style='width:64.4pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=86 valign=top style='width:64.4pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width=84 rowspan=3 valign=top style='width:62.7pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=84 valign=top style='width:62.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width=90 rowspan=3 valign=top style='width:67.55pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=90 valign=top style='width:67.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width=55 rowspan=3 valign=top style='width:41.1pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=55 valign=top style='width:41.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width=71 rowspan=3 valign=top style='width:53.4pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=71 valign=top style='width:53.4pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
@@ -573,27 +557,6 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:115%'><o:p><span
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
  </tr>
-
-
- <tr style='mso-yfti-irow:3;mso-yfti-lastrow:yes;height:5.0pt'>
-  <td width=180 valign=top style='width:135.05pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width=72 valign=top style='width:.75in;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
-
-
-
 </table>
 
 <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><u><span

@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+		'App\Console\Commands\DailyReportEmail',
     ];
 
     /**
@@ -24,8 +25,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+     //$schedule->command('inspire')->hourly()->appendOutputTo('C:\xampp\htdocs\waybill\schedulelog.txt');
+	 
+	 $schedule->command('DailyReportEmail:dailySend')->everyMinute();
+	
     }
 
     /**

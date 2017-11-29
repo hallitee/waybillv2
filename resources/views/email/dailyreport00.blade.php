@@ -14,16 +14,16 @@ xmlns="http://www.w3.org/TR/REC-html40">
  <o:DocumentProperties>
   <o:Author>Taofik</o:Author>
   <o:LastAuthor>Taofik</o:LastAuthor>
-  <o:Revision>3</o:Revision>
-  <o:TotalTime>1379</o:TotalTime>
-  <o:Created>2017-11-29T10:20:00Z</o:Created>
-  <o:LastSaved>2017-11-29T10:21:00Z</o:LastSaved>
+  <o:Revision>8</o:Revision>
+  <o:TotalTime>1378</o:TotalTime>
+  <o:Created>2017-11-27T15:34:00Z</o:Created>
+  <o:LastSaved>2017-11-28T08:23:00Z</o:LastSaved>
   <o:Pages>2</o:Pages>
-  <o:Words>25</o:Words>
-  <o:Characters>148</o:Characters>
+  <o:Words>24</o:Words>
+  <o:Characters>140</o:Characters>
   <o:Lines>1</o:Lines>
   <o:Paragraphs>1</o:Paragraphs>
-  <o:CharactersWithSpaces>172</o:CharactersWithSpaces>
+  <o:CharactersWithSpaces>163</o:CharactersWithSpaces>
   <o:Version>14.00</o:Version>
  </o:DocumentProperties>
  <o:OfficeDocumentSettings>
@@ -46,6 +46,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
         margin: 5px;  /* this affects the margin on the content before sending to printer */
    }
 </style>
+
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:View>Print</w:View>
@@ -73,7 +74,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
    <w:DontFlipMirrorIndents/>
    <w:OverrideTableStyleHps/>
   </w:Compatibility>
-  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
   <m:mathPr>
    <m:mathFont m:val="Cambria Math"/>
    <m:brkBin m:val="before"/>
@@ -378,9 +378,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
 .MsoChpDefault
 	{mso-style-type:export-only;
 	mso-default-props:yes;
-	font-size:10.0pt;
-	mso-ansi-font-size:10.0pt;
-	mso-bidi-font-size:10.0pt;
 	font-family:"Calibri","sans-serif";
 	mso-ascii-font-family:Calibri;
 	mso-ascii-theme-font:minor-latin;
@@ -390,6 +387,10 @@ xmlns="http://www.w3.org/TR/REC-html40">
 	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:"Times New Roman";
 	mso-bidi-theme-font:minor-bidi;}
+.MsoPapDefault
+	{mso-style-type:export-only;
+	margin-bottom:10.0pt;
+	line-height:115%;}
 @page WordSection1
 	{size:8.5in 11.0in;
 	margin:31.5pt 45.0pt 1.0in .25in;
@@ -411,10 +412,13 @@ div.WordSection1
 	mso-style-priority:99;
 	mso-style-parent:"";
 	mso-padding-alt:0in 5.4pt 0in 5.4pt;
-	mso-para-margin:0in;
-	mso-para-margin-bottom:.0001pt;
+	mso-para-margin-top:0in;
+	mso-para-margin-right:0in;
+	mso-para-margin-bottom:10.0pt;
+	mso-para-margin-left:0in;
+	line-height:115%;
 	mso-pagination:widow-orphan;
-	font-size:10.0pt;
+	font-size:11.0pt;
 	font-family:"Calibri","sans-serif";
 	mso-ascii-font-family:Calibri;
 	mso-ascii-theme-font:minor-latin;
@@ -466,13 +470,12 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:115%'><o:p><span
  border:none;mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;
  mso-padding-alt:0in 5.4pt 0in 5.4pt'>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
- 
-  <td width=38 valign=top style='width:.4in;border:solid windowtext 1.0pt;
+  <td width=38 valign=top style='width:28.75pt;border:solid windowtext 1.0pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b style='mso-bidi-font-weight:normal'>S/N<o:p></o:p></b></p>
   </td>
-  <td width=86 valign=top style='width:64.4pt;border:solid windowtext 1.0pt;
+  <td width=86 valign=top style='width:64.35pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
@@ -484,7 +487,7 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:115%'><o:p><span
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b style='mso-bidi-font-weight:normal'>Receiver<o:p></o:p></b></p>
   </td>
-  <td width=90 valign=top style='width:67.55pt;border:solid windowtext 1.0pt;
+  <td width=90 valign=top style='width:67.5pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
@@ -502,7 +505,7 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:115%'><o:p><span
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><b style='mso-bidi-font-weight:normal'>Waybill Type<o:p></o:p></b></p>
   </td>
-  <td width=180 valign=top style='width:135.05pt;border:solid windowtext 1.0pt;
+  <td width=180 valign=top style='width:135.0pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
@@ -515,85 +518,70 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:115%'><o:p><span
   normal'><b style='mso-bidi-font-weight:normal'>Items Quantity<o:p></o:p></b></p>
   </td>
  </tr>
-
- <tr style='mso-yfti-irow:1;height:5.0pt'>
-  <td width=38 rowspan=3 valign=top style='width:.4in;border:solid windowtext 1.0pt;
+ @foreach($u[0] as $key=>$d)
+ <tr style='mso-yfti-irow:1;height:3.75pt'>
+ 
+  <td width=38 valign=top style='width:28.75pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
+  padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>{{$loop->iteration}}<o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width=86 rowspan=3 valign=top style='width:64.4pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width=84 rowspan=3 valign=top style='width:62.7pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width=90 rowspan=3 valign=top style='width:67.55pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width=55 rowspan=3 valign=top style='width:41.1pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width=71 rowspan=3 valign=top style='width:53.4pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width=180 valign=top style='width:135.05pt;border-top:none;border-left:
+  <td width=86 valign=top style='width:64.35pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>W{{ucfirst($d->wType[0])}}{{str_pad($d->id, 5, "0", STR_PAD_LEFT)}}<o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=84 valign=top style='width:62.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>{{$d->deliveredTo}}<o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=90 valign=top style='width:67.5pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>{{$d->sentTo}}<o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=55 valign=top style='width:41.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>{{$d->receiveStatus}}<o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=71 valign=top style='width:53.4pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'>{{$d->wType}}<o:p>&nbsp;</o:p></span></p>
+  </td>
+	@foreach($k[0][$key] as $it)
+  <td width=180 valign=top style='width:135.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
   <td width=72 valign=top style='width:.75in;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.75pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
   </td>
+
  </tr>
-
-
- <tr style='mso-yfti-irow:3;mso-yfti-lastrow:yes;height:5.0pt'>
-  <td width=180 valign=top style='width:135.05pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width=72 valign=top style='width:.75in;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:5.0pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
-
-
-
+	@endforeach
+@endforeach
+ 
 </table>
 
 <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><u><span

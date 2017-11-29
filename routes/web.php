@@ -6,8 +6,11 @@ use App\doc;
 use App\item;
 use App\itemslog;
 use App\User;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\NewWaybill;
-
+use App\Mail\recNewMail;
+use App\Jobs\SendNewWaybillEmail;
+use App\Jobs\SendNewRecWaybillEmail;
 
 
 /*
@@ -23,7 +26,39 @@ use App\Mail\NewWaybill;
 Route::get('waybill/email', function(){
 	$doc = doc::where('id', 101)->first();
 	$item = item::where('doc_id', 101)->get();
-	return view('email.dailyreport0')->with(['doc'=>$doc,'item'=>$item]);
+	
+	
+$today = Carbon\Carbon::now()->format('Y-m-d');
+$today = '2017-11-28';
+$users = [];
+$u=[];
+$v=[];
+$k = [];
+$j = [];
+$l = [];
+$docs = doc::whereDate('sentDate','=',$today)->get();
+foreach($docs as $d){
+if(in_array($d->user_id, $users)){
+
+}
+else{
+array_push($users, $d->user_id);
+}
+}
+
+foreach($users as $key=>$user){
+$m = doc::where('user_id', $user)->whereDate('sentDate', $today)->get();
+array_push($u, $m);
+
+foreach($m as $key=>$f){
+$z = item::where('doc_id', $f->id)->get();
+array_push($v, $z);
+} //end of each doc
+array_push($k, $v);
+$v=[];
+}//end of each users
+
+return view('email.dailyreport02')->with(['doc'=>$doc,'item'=>$item, 'u'=>$u, 'k'=>$k, 'user'=>$users]);
 
 });
 Route::get('waybill/return', function(Request $request){

@@ -28,7 +28,9 @@ class User extends Authenticatable
     ];
 	
 	public function doc(){
-		return $this->hasMany('waybill\Doc');
+		return $this->hasMany('App\doc');
 	}
-	
+	public function item(){
+		return $this->hasManyThrough('App\item', 'App\doc');
+	}	
 }
