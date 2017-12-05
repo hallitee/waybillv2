@@ -38,8 +38,8 @@ td{
 }
 </style>
 <body>
-<h2 style="margin-left:100px"> WAYBILL DAILY REPORT 28/11/2017 </h2>
 
+<h2 style="margin-left:100px"> WAYBILL DAILY REPORT {{ $today }}</h2>
 <br>
 
 <table>
@@ -50,29 +50,28 @@ td{
 <th style="width:120px">Destination</th>
 <th>Status</th>
 <th>Waybill Type</th>
-<th style="width:200px" >Items description</th>
+<th style="width:220px" >Items description</th>
 <th>Items Quantity</th>
 </thead>
 <tbody>
- @foreach($u[0] as $key=>$d)
+ @foreach($doc as $key=>$d)
 <tr>
 <td>{{$loop->iteration}}</td>
 <td>W{{ucfirst($d->wType[0])}}{{str_pad($d->id, 5, "0", STR_PAD_LEFT)}}</td>
 <td>{{$d->deliveredTo}}</td>
 <td>{{$d->sentTo}}</td>
 <td>{{$d->receiveStatus}}</td>
-<td>{{$d->wType}}	
-</td>
+<td>{{$d->wType}}</td>
 
 <td>
-@foreach($k[0][$key] as $it)
+@foreach($items[$key] as $it)
 <div>
 {{$it->item_desc}}
 </div>
 @endforeach
 </td>
 <td>
-@foreach($k[0][$key] as $it)
+@foreach($items[$key] as $it)
 <div>{{$it->qty}}</div>
 @endforeach
 </td>

@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
      //$schedule->command('inspire')->hourly()->appendOutputTo('C:\xampp\htdocs\waybill\schedulelog.txt');
 	 
-	 $schedule->command('DailyReportEmail:dailySend')->everyMinute();
+	 $schedule->command('DailyReportEmail:dailySend')->daily();
 	
     }
 

@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Http\Request;
 
-
+use Carbon\Carbon;
 use App\doc;
 use App\item;
 use App\itemslog;
@@ -9,9 +9,10 @@ use App\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewWaybill;
 use App\Mail\recNewMail;
+use App\Mail\DailyReport;
 use App\Jobs\SendNewWaybillEmail;
 use App\Jobs\SendNewRecWaybillEmail;
-
+use App\Jobs\SendDailyReport;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,14 +24,58 @@ use App\Jobs\SendNewRecWaybillEmail;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('waybill/globalreport', function(){
+	
+	return view('report.wreport');
+});
+Route::get('waybill/email', function(){
+$today = '2017-11-28';
+$users = [];
+$indx;
+$u=[];
+$v=[];
+$k = [];
+$j = [];
+$l = [];
+$docs = doc::whereDate('sentDate','=',$today)->get();
+foreach($docs as $d){
+if(in_array($d->user_id, $users)){
+
+}
+else{
+array_push($users, $d->user_id);
+}
+}
+
+foreach($users as $key=>$user){
+$m = doc::where('user_id', $user)->whereDate('sentDate', $today)->get();
+//array_push($u, $m);
+
+foreach($m as $key=>$f){
+$z = item::where('doc_id', $f->id)->get();
+array_push($v, $z);
+} //end of each doc
+array_push($k, $v);
+ $n = User::where('id', $user)->first();
+ array_push($u, $n);
+	Mail::to($n->email)->send(new DailyReport($m, $v, $n));
+ $v=[];
+ $u=[];
+}//end of each users
+
+	return view('email.dailyreport');
+});
+/*
 Route::get('waybill/email', function(){
 	$doc = doc::where('id', 101)->first();
 	$item = item::where('doc_id', 101)->get();
 	
 	
-$today = Carbon\Carbon::now()->format('Y-m-d');
+$today = date('Y-m-d');
 $today = '2017-11-28';
 $users = [];
+$indx = 0;
 $u=[];
 $v=[];
 $k = [];
@@ -57,10 +102,16 @@ array_push($v, $z);
 array_push($k, $v);
 $v=[];
 }//end of each users
+//foreach($users as $key=>$y){
+// $user = User::where('id', $y)->first();
+// $indx = $key;
+ $newRecMailJob = (new SendDailyReport($u, $k, $users));//$key, $today, $user));//->delay(Carbon::now()->addMinutes(1));
+ dispatch($newRecMailJob);	
+//}//
+return view('email.dailyreport02')->with(['u'=>$u, 'k'=>$k, 'indx'=>1, 'today'=>$today, 'user'=>$users]);
 
-return view('email.dailyreport02')->with(['doc'=>$doc,'item'=>$item, 'u'=>$u, 'k'=>$k, 'user'=>$users]);
+});*/
 
-});
 Route::get('waybill/return', function(Request $request){
 	$id = $request->doc_id;
 	$printType = $request->printType;
