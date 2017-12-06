@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
 		'App\Console\Commands\DailyReportEmail',
+		'App\Console\Commands\MonthlyReportEmail',		
     ];
 
     /**
@@ -27,8 +28,8 @@ class Kernel extends ConsoleKernel
     {
      //$schedule->command('inspire')->hourly()->appendOutputTo('C:\xampp\htdocs\waybill\schedulelog.txt');
 	 
-	 $schedule->command('DailyReportEmail:dailySend')->daily();
-	
+	 $schedule->command('DailyReportEmail:dailySend')->daily()->between('16:00', '16:30');
+	 $schedule->command('MonthlyReportEmail:monthlySend')->everyMinute();	
     }
 
     /**

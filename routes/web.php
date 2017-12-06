@@ -27,7 +27,7 @@ use App\Jobs\SendDailyReport;
 
 Route::get('waybill/globalreport', function(){
 	
-	return view('report.wreport');
+	return view('report.mreport');
 });
 Route::get('waybill/email', function(){
 $today = '2017-11-28';
