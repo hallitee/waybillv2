@@ -16,7 +16,7 @@ use App\Mail\NewWaybill;
 use App\Mail\recNewMail;
 use App\Http\Requests\DocFormRequest;
 use Auth;
-
+//use Log;
 
 class SendNewWaybillEmail implements ShouldQueue
 {
@@ -30,14 +30,16 @@ class SendNewWaybillEmail implements ShouldQueue
      * @return void
      */
 	 
-	public $doc, $items, $user_email;	 
+	public $doc, $items, $user_email, $copiEmail;	 
 	
-    public function __construct($do, $it, $email)
+    public function __construct($do, $it, $email, $g)
     {
         //
 		$this->doc = $do;
 		$this->items = $it;
 		$this->user_email = $email;
+		$this->copiEmail = $g;
+
     }
 
     /**
@@ -47,10 +49,10 @@ class SendNewWaybillEmail implements ShouldQueue
      */
     public function handle()
     {
-        //
+		if($this->copiEmail!=null){
+		Mail::to($this->user_email)->send(new NewWaybill($this->doc, $this->items, $this->copiEmail));
+		}
 
-		Mail::to($this->user_email)->send(new NewWaybill($this->doc, $this->items));
-		
-		echo "New email sent ";
+
     }
 }

@@ -4,6 +4,8 @@ namespace App\Mail;
 
 use App\doc;
 use App\item;
+use App\email;
+use Log;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -18,12 +20,13 @@ class NewWaybill extends Mailable
      *
      * @return void
      */
-	 public $doc, $item;
-    public function __construct(doc $do, $it)
+	 public $doc, $item, $copi;
+    public function __construct(doc $do, $it, $g)
     {
-        //
+
 		$this->doc = $do;
 		$this->item = $it;
+		$this->copi = $g;
     }
 
     /**
@@ -33,11 +36,27 @@ class NewWaybill extends Mailable
      */
     public function build()
     {
+		if($this->copi!=null){
 		$address = 'helpdesk@esrnl.com';
 		$name = 'Waybill Manager';
 		$subject = 'New Waybill created';
         return $this->view('email.NewWaybill')
+					->cc([$this->copi->to, $this->copi->copi])
+					->bcc($this->copi->bcopy)
 					->from($address, $name)
 					->subject($subject);
+		}
+		else{
+		$address = 'helpdesk@esrnl.com';
+		$name = 'Waybill Manager';
+		$subject = 'New Waybill created';
+        return $this->view('email.NewWaybill')
+					->cc($this->copi->bcopy)
+					->bcopy($this->copi->copi)
+					->from($address, $name)
+					->subject($subject);			
+			
+			
+		}
     }
 }

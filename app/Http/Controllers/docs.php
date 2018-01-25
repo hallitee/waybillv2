@@ -13,6 +13,7 @@ use App\doc;
 use App\User;
 use App\item;
 use App\printlog;
+use App\email;
 use PDF;
 use Log;
 use App\HomeController;
@@ -133,6 +134,10 @@ public function checkdoc()
  {
 	 $user_id = Auth::user()->id;
 	 $user_email = Auth::user()->email;
+	 $comp = Auth::user()->company;
+	 $loc = Auth::user()->location;
+	
+	
 	$doc = new doc;
 	$doc->wType = $request->wType;	
 	if($doc->wType == 'PROMO'){
@@ -180,8 +185,20 @@ public function checkdoc()
     //$doc->$item->insert(Input::get('items'));
 	$items = item::where('doc_id', $doc->id)->get();
 	// dispatch(new SendNewWaybillEmail($doc, $items, $user_email));
-	 $newMailJob = (new SendNewWaybillEmail($doc, $items, $user_email))->delay(Carbon::now()->addMinutes(1));
+	 $copiEmail = email::where('location', $loc)->where('company', $comp)->first();
+	
+	 if($copiEmail!=null){
+				 Log::info("Before sending email with CC & BCC recipients");
+	 $newMailJob = (new SendNewWaybillEmail($doc, $items, $user_email, $copiEmail))->delay(Carbon::now()->addMinutes(1));
 	 dispatch($newMailJob);
+			Log::info("After dispatch email with CC & BCC recipients");
+	 }
+	 else{
+		 Log::info("Before sending email without CC & BCC recipients");
+	 $newMailJob = (new SendNewWaybillEmail($doc, $items, $user_email, $copiEmail))->delay(Carbon::now()->addMinutes(1));
+	 dispatch($newMailJob);	
+		Log::info("After dispatch without CC & BCC recipients");	 
+	 }
 	 //Mail::to($user_email)->send(new NewWaybill($doc, $items));
 	if($recEmail != '' || $recEmail != null ){
 	 $newRecMailJob = (new SendNewRecWaybillEmail($doc, $items, $recEmail))->delay(Carbon::now()->addMinutes(1));

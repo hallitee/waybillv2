@@ -42,6 +42,7 @@ class SendNewRecWaybillEmail implements ShouldQueue
      **/
     public function handle()
     {
+		
         Mail::to($this->email)->send(new recNewMail($this->doc, $this->items));
 		//Mail::to($this->user_email)->send(new NewWaybill($this->doc, $this->items));
     }
