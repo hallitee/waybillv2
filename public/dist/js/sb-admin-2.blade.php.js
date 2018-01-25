@@ -27,6 +27,7 @@ $(function() {
 	var $username = $("#username").val();
 	var $location = $("#userlocation").val();
 	var $company =  $("#usercompany").val();
+	var $userpriv =  $("#userpriv").val();	
 	var $lc = $company+" "+$location;
 	console.log("Username " + $username + "  User id: "+ $userid + " company "+ $company +" location: "+ $location);
 	var $item_stat = "";
@@ -51,7 +52,7 @@ $("input[type='checkbox']").change(function() {
 	
 		 $sentTo = $("#sentTosel").val();
 		 //$lc = $company+" "+$location;
-	//	 console.log(" $lc "+ $lc + " sent To "+$sentTo);
+	 console.log(" $lc "+ $lc + " sent To "+$sentTo);
 		 if($sentTo == $lc){
 		//	 console.log("same company and location detected");
 			 $("#errmsglist").text("choose another location");
@@ -82,14 +83,17 @@ $("input[type='checkbox']").change(function() {
 					},
 					success: function( data ){ 
 					//console.log(data + " Array Length "+ data.length);
-					
-					if (data.length===0){
-					options.hide();	
+					console.log('Request data for users '+data);
+					if ($sentTo=='VENDOR'){
+					options.empty();
+					options.hide();
 					$("#delivTo").show();
+					
 					}
 					else
 					{
-					options.empty();				   
+						options.show();
+					options.empty();	
 					$("#delivTo").hide();
 					$("#delivTo").empty();
 					options.show();
@@ -138,7 +142,7 @@ if($(this).find(":selected").val()==='VENDOR'){
 	   $(this).prop('readonly', true);
 	  });
     $("#add_row").click(function(){
-      $('#addr'+i).html("<td class='text-center'>"+ (i+1) +"</td><td><input name='items["+i+"][desc]' type='text' placeholder='Item description' class='form-control input-md'  /> </td><td><input  name='items["+i+"][qty]'  type='number' onkeypress='return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57' type='number' min='0' max='1000' placeholder='Quantity'  class='form-control input-md'></td><td><input  name='items["+i+"][serial]' type='text' placeholder='Serial Number'  class='form-control input-md'></td><td><input  name='items["+i+"][status]' type='text' placeholder='Item Status'  class='form-control input-md'></td><td><input  name='items["+i+"][remark]' type='text' placeholder='Remarks'  class='form-control input-md'></td><td><input  name='items["+i+"][sircode]' type='text' placeholder='SIR Number'  class='form-control input-md'></td><td><input  name='items["+i+"][lpo]' type='text' placeholder='LPO Number'  class='form-control input-md'></td>");
+      $('#addr'+i).html("<td class='text-center'>"+ (i+1) +"</td><td><input name='items["+i+"][desc]' type='text' placeholder='Item description' class='form-control input-md'  /> </td><td><input  name='items["+i+"][qty]'  type='number' onkeypress='return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57' type='number' min='0' max='10000' placeholder='Quantity'  class='form-control input-md'></td><td><input  name='items["+i+"][serial]' type='text' placeholder='Serial Number'  class='form-control input-md'></td><td><input  name='items["+i+"][status]' type='text' placeholder='Item Status'  class='form-control input-md'></td><td><input  name='items["+i+"][remark]' type='text' placeholder='Remarks'  class='form-control input-md'></td><td><input  name='items["+i+"][sircode]' type='text' placeholder='SIR Number'  class='form-control input-md'></td><td><input  name='items["+i+"][lpo]' type='text' placeholder='LPO Number'  class='form-control input-md'></td>");
 
 	$('#tbody').append('<tr id="addr'+(i+1)+'"></tr>');      i++; 
 	$('#row_value').val(i);
@@ -210,7 +214,8 @@ if($(this).find(":selected").val()==='VENDOR'){
 				});					
 				
 				
-		}else{
+		}
+		else{
 			
 				$("#thead1").show();
 				$("#thead2").hide();
@@ -277,7 +282,7 @@ if($(this).find(":selected").val()==='VENDOR'){
 					//$("#tbody1 > tr > td").empty();	
 					$.each(data, function(i, item){
 
-						console.log(" items "+ item.item_desc);
+						//console.log(" items "+ item.item_desc);
 						//rec_qty[i] = item.recqty;
 					$('#trows'+i).html("<td>"+(i+1)+"</td><td>"+item.item_desc+"</td><td> "+item.serialNo+"</td><td>"+item.qty+"</td><td>"+item.recqty+"</td><td>"+(item.qty-item.recqty)+"</td><td>"+item.status +"</td><td>"+item.remark+"</td><td>"+item.sircode+"</td><td>"+item.lpo+"</td>");
 					
@@ -303,7 +308,7 @@ if($(this).find(":selected").val()==='VENDOR'){
 //				console.log("Items button clicked");
 				$userid = $("#userid").val();
 				$doc_id = $(this).val();
-				$.ajax({
+				$.ajax({  //load waybill document
 					type: 'GET',
 					url: "/waybill/loaddoc",
 					dataType: 'JSON',
@@ -323,7 +328,7 @@ if($(this).find(":selected").val()==='VENDOR'){
 				
 				});
 
-				$.ajax({
+				$.ajax({ //load waybill item 
 					type: 'GET',
 					url: "/waybill/loadItems",
 					dataType: 'JSON',
@@ -391,8 +396,7 @@ if($(this).find(":selected").val()==='VENDOR'){
 					$("#rec_suc").text("");
 					if($doc.wType=='LOAN'){
 						
-						if($doc.ackcnt>9){
-
+					if($doc.ackcnt>9){
 					$("#rec_btn1").hide();
 					$("#rec_btn2").show();
 					$("#printText").show();
@@ -403,8 +407,7 @@ if($(this).find(":selected").val()==='VENDOR'){
 					$("#rec_btn2").hide();							
 					$("#printText").hide();
 					$("#printType").hide();							
-					}
-				
+					}				
 						}else{
 					$("#rec_btn1").show();
 					$("#rec_btn2").hide();							
@@ -561,8 +564,9 @@ $("body").on("click",'.btn_itemshow', function(){
 	$("body").on("click",'#rec_btn1', function(){ 
 	
 		loaddoc();
-
-		if($doc.sentTo == $lc){    //if waybill sent To location same as receiver location
+		console.log('$lc  = '+$lc);
+		console.log(' Waybill SentTo ' +$doc.sentTo);
+		if($doc.sentTo == $lc ){    //if waybill sent To location same as receiver location
 		//$("#rec_err").hide();
 		$("#recRemarks").css('diplay','none');
 		$("#rec_err").text("");			
@@ -612,7 +616,8 @@ $("body").on("click",'.btn_itemshow', function(){
 				$("#rec_err").text("");
 				recLoan();
 		}
-	}	else{
+	}
+	else{
 		$("#recRemarks").show();}	 
 		}
 		else if($item_err<0){
@@ -621,7 +626,70 @@ $("body").on("click",'.btn_itemshow', function(){
 		} 
 //		console.log("receive button clicked "+$item_err);
 //			console.log("receive button 1  clicked ");		
-		}else{
+		}
+		else if(($doc.wType == 'REPAIR')|| ($userpriv == 1)){ //
+	
+		//$("#rec_err").hide();
+		$("#recRemarks").css('diplay','none');
+		$("#rec_err").text("");			
+		$item_err = 0; 
+		for(var c=0; c<$item_count; c++){
+		//	console.log("Received quantity"+ rec_qty[c]);
+		var	$h = Number($("input[name='item["+c+"][qty]'").val());
+		var	$g = Number($("input[name='item["+c+"][recqty]'").val());
+		var	$j = $("input[name='item["+c+"][recvnqty]'").val();
+		var	$i = $("input[name='item["+c+"][id]'").val();
+		var $k = Number(rec_qty[c]);
+			if($g<0){
+		   $("#rec_err").text("Received can't be a negative number Item "+(c+1)+" ");
+				$item_error=0;
+				return true;
+			}
+		$g=$g+$k;
+		//console.log("receive qty" + ($g + $k));
+					if($g<0){
+		   $("#rec_err").text("Received can't be a negative number Item "+(c+1)+" ");
+				return true;
+			}
+				if($g>$h)	{
+					$("#rec_err").text("Received can't be greater than sent on Item "+(c+1)+" ");
+					return true;
+							}
+							else if($g<$h){
+								$item_err=$item_err+1;	
+							//console.log("Quantity received less"+ $g+" counter "+c +" Item error"+$item_err);	
+								}
+							else if($g === $h){ 
+							$item_err=$item_err-1;
+							console.log("Quantity received equal"+ $g+" counter "+c +" Item error"+$item_err);
+											}
+		                    } 		
+		if($item_err>0){
+			
+			if($('#recRemarks').is(':visible')){
+			console.log("did u run this");
+			if($("#recRemText").val()==""){
+			console.log("Remarks cannot be empty");	
+			$("#rec_err").text("Remarks cannot be empty");
+			$("#rec_err").show();
+			}
+			else{
+				//$("#rec_err").hide();
+				$("#rec_err").text("");
+				recLoan();
+		}
+	}
+	else{
+		$("#recRemarks").show();}	 
+		}
+		else if($item_err<0){
+			
+				recLoan();
+		} 
+//		console.log("receive button clicked "+$item_err);
+//			console.log("receive button 1  clicked ");		
+		}		
+		else{
 			if(($doc.receiveStatus=='RETURNED')||$doc.ackcnt>19){
 												//if waybill returned to allow sender close waybill
 												// do final receive command

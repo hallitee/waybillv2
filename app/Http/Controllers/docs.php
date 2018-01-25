@@ -24,7 +24,7 @@ use App\Jobs\SendNewRecWaybillEmail;
 
 class docs extends Controller
 {
-    //
+
 
 public function __construct()
 {
@@ -100,18 +100,24 @@ public function reports(Request $request) {
 	$type = strtoupper($request->input('type'));
 	$status = $request->input('status');		
 	$id=Auth::user()->id;
+	$name = Auth::user()->name;
 	$loc = Auth::user()->company.' '.Auth::user()->location;
-	if($status=='OPEN'){
-		
+	if($type=='LOAN'){
+		if($status=='OPEN'){
+	    $doc = doc::where('sentBy', $name)->where('wType', $type)->where(function ($q) use ($status){
+	$q->where('receiveStatus', $status)->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');})->orderBy('sentDate', 'DESC')->paginate(10);		
+		}else{
+			    $doc = doc::where('sentBy', $name)->where('wType', $type)->where('receiveStatus', $status)->orderBy('sentDate', 'DESC')->paginate(10);		
+		}
 	
 	}
 	else{
-		
+    $doc = doc::where('sentBy', $name)->where('wType', $type)->where('receiveStatus', $status)->orderBy('sentDate', 'DESC')->paginate(10);		
 		
 	}
-	$doc=doc::where('wType', $type)->where(function ($q) use ($status){
+	/*$doc=doc::where('sentBy', $name)->where('wType', $type)->where(function ($q) use ($status){
 	$q->where('receiveStatus', $status)->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');})->where(function($g) use ($loc){
-		$g->where('sentTo',$loc)->orWhere('sentFrom',$loc);})->orderby('sentDate', 'DESC')->paginate(10);
+		$g->where('sentTo',$loc);})->orderby('sentDate', 'DESC')->paginate(10);*/
 
 	//$doc = doc::where('wType', $type)->paginate(20);
 	/*$doc = doc::where('wType', $type)->orderby('sentDate', 'DESC')->get();*/
@@ -137,6 +143,10 @@ public function checkdoc()
 	$doc->sentTo = $request->sentTo;
     if($request->sentTo=='VENDOR'){
 		$doc->vendorName = $request->sento;
+		$recEmail = '';
+	}
+	else{
+	$recEmail = User::where('name', $request->deliveredTo)->first()->email;
 	}
 
 	$doc->proxyName = $request->proxyName;
@@ -148,7 +158,7 @@ public function checkdoc()
 	$doc->save();
 	echo $doc_id = $doc->id;
 	print $doc_id = $doc->id;
-	$recEmail = User::where('name', $doc->deliveredTo)->first()->email;
+	
 	$item = new item;
 	//$items = Input::get('items');
 	$items = $request->input('items');

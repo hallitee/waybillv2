@@ -12,6 +12,29 @@
                             </div>
                             <!-- /input-group -->
                         </li>
+							 @if(Auth::user()->isAdmin())	           
+
+							   <li>
+
+                            <a href="#"><i class="fa fa-cog fa-fw"></i> Configuration <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{{ route('waybill.create') }}">Create New Waybill</a>
+                                </li>
+                    								
+                                <li>
+                                    <a href="{{ route('waybill.print') }}">Print Waybill</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('waybill.search') }}">Find Item/Waybill </a>
+                                </li>
+
+                            </ul>
+                            <!-- /.nav-second-level -->
+							
+                        </li>
+						
+						@endif
                         <li>
                             <a href="{{ route('home') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>

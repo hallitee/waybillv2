@@ -62,6 +62,7 @@
 			{!! Form::hidden('username',Auth::user()->name, array('class' => 'input-md emailinput form-control', 'id'=>'username')); !!}
 			{!! Form::hidden('usercompany',Auth::user()->company, array('class' => 'input-md emailinput form-control', 'id'=>'usercompany')); !!}
 			{!! Form::hidden('userlocation',Auth::user()->location, array('class' => 'input-md emailinput form-control', 'id'=>'userlocation')); !!}
+			{!! Form::hidden('userpriv',Auth::user()->priv, array('class' => 'input-md emailinput form-control', 'id'=>'userpriv')); !!}			
 		   </li>
 
                 <li class="dropdown">

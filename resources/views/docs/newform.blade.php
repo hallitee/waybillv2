@@ -146,7 +146,7 @@
 						<input type="text" name='items[0][desc]'  placeholder='Item description' class="form-control"/>
 						</td>
 						<td>
-						<input  type='number' onkeypress='return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57' type='number' min='0' max='1000' name='items[0][qty]' placeholder='Quantity' class="form-control"/>
+						<input  type='number' onkeypress='return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57' type='number' min='0' max='10000' name='items[0][qty]' placeholder='Quantity' class="form-control"/>
 						</td>
 						<td>
 						<input type="text" name='items[0][serial]' placeholder='Serial Number' class="form-control"/>

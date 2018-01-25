@@ -38,6 +38,9 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 							Sent Date
 						</th>
 						<th class="text-center">
+						Sender 
+						</th>						
+						<th class="text-center">
 						Receiver 
 						</th>
 						<th class="text-center">
@@ -61,8 +64,11 @@ $waybill_type = array('TRANSFER' => 'TRANSFER', 'REPAIR' => 'REPAIR', 'LOAN' => 
 					W{{ucfirst($d->wType[0])}}{{str_pad($d->id, 5, "0", STR_PAD_LEFT)}}
 						</td>
 						<td>
-						{{ $d->sentDate }}
+						{{ substr($d->sentDate, 0, 10) }}
 						</td>
+						<td>
+						{{ $d->sentBy }}
+						</td>						
 						<td>
 						{{ $d->deliveredTo }}
 						</td>

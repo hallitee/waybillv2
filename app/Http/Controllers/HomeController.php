@@ -48,22 +48,21 @@ class HomeController extends Controller
 		$tRec = doc::where('receivedBy', $name)->where('wType','TRANSFER')->count();
 		$tPend = doc::where(function($q) use ($loc, $name){
 		$q->where('deliveredTo', $name)->orWhere('sentTo', $loc);})->where('receiveStatus', 'OPEN')->where('wType', 'TRANSFER')->count();
-		$tPend = doc::where(function($q) use ($loc, $name){
-		$q->where('deliveredTo', $name)->orWhere('sentTo', $loc);})->where('receiveStatus', 'OPEN')->where('wType', 'TRANSFER')->count();
+		//$tPend = doc::where(function($q) use ($loc, $name){
+		//$q->where('deliveredTo', $name)->orWhere('sentTo', $loc);})->where('receiveStatus', 'OPEN')->where('wType', 'TRANSFER')->count();
 		//End of transfer metric
 		//Start of Loan metrics
 		$lSent = doc::where('sentBy', $name)->where('wType', 'LOAN')->count();
 		$lRec = doc::where('receivedBy', $name)->where('wType','LOAN')->count();
 		$lPend = doc::where(function($q) use ($loc, $name){
-		$q->where('deliveredTo', $name)->orWhere('sentTo', $loc);})->where('receiveStatus', 'OPEN')->where('wType', 'LOAN')->count();
+		$q->where('deliveredTo', $name)->orWhere('sentTo', $loc)->orWhere('sentBy', $name);})->where('receiveStatus', 'OPEN')->where('wType', 'LOAN')->count();
 	
 		//End  of Loan metrics
 		//Repair
 		$rSent = doc::where('sentBy', $name)->where('wType', 'REPAIR')->count();
 		$rRec = doc::where('receivedBy', $name)->where('wType','REPAIR')->count();
 		$rPend = doc::where(function($q) use ($loc, $name){
-		$q->where('deliveredTo', $name)->orWhere('sentTo', $loc);})->where('receiveStatus', 'OPEN')->where('wType', 'REPAIR')->count();
-		//Repair 
+		$q->where('deliveredTo', $name)->orWhere('sentTo', $loc)->orWhere('sentBy', $name);})->where('receiveStatus', 'OPEN')->where('wType', 'REPAIR')->count();		//Repair 
         return view('home')->with(['transfers'=>$transfers,'loaned'=>$loaned, 'repaired'=>$repaired, 'rTransfers'=>$rTransfers, 'rLoans'=>$rLoans, 'rRepairs'=>$rRepairs, 'rPromo'=>$rPromo, 'tPend'=>$tPend,'open'=>$open, 'tSent'=>$tSent,'tRec'=>$tRec,'lSent'=>$lSent, 'lRec'=>$lRec,'lPend'=>$lPend,'rSent'=>$rSent, 'rRec'=>$rRec,'rPend'=>$rPend]);
 
     }

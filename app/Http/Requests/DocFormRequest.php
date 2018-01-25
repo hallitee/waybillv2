@@ -34,17 +34,21 @@ class DocFormRequest extends FormRequest
 			'deliveredBy'=>'required',
 			'deliveredTo'=>'required',
 			'proxyName'=>'nullable',
-			#'items[0][desc]'=>'required',
-			#'items[0][status]'=>'required'
 
         ];
+
+
     }
-/*
+
 	public function messages(){
 		return[
-		'items[0][desc].required' => 'The item field is required',
-		'items[0][qty].required' => 'The quantity field is required',
-		'items[0][status].required' => 'The status field is required',
+		'sentBy.required'=>'Sender field can not be empty',
+		'sentDate.required'=>'Sent Date can not be empty',
+		'sentFrom.required'=>'Origin field can not be empty',
+		'sentTo.required'=>'Destination field can not be empty',
+		'deliveredTo.required' => 'Receiver field can not be empty',
+		'deliveredBy.required'=>'Delivered By field can not be empty',
+		
 		];
-	}*/
+	}
 	}

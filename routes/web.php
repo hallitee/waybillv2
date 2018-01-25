@@ -16,7 +16,7 @@ use App\Jobs\SendDailyReport;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Web Routes 
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -24,11 +24,24 @@ use App\Jobs\SendDailyReport;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('admin/getuser', function(Request $request){
+	$srch = $request->search; 
+	$data = User::where('email', 'LIKE', '%'.$srch.'%')->first();
+	return Response::json($data);
+})->middleware('auth', 'admin');;
+Route::get('admin/user', function(){
+	$emails = App\email::all();
+	return view('admin/user')->with(['emails'=>$emails]);
+})->name('userconfig')->middleware('auth', 'admin');
+Route::get('admin', function(){
+	$emails = App\email::all();
+	return view('admin/index')->with(['emails'=>$emails]);
+})->name('config')->middleware('auth', 'admin');
 
 Route::get('waybill/globalreport', function(){
-	
 	return view('report.mreport');
 });
+
 Route::get('waybill/email', function(){
 $today = '2017-11-28';
 $users = [];
@@ -111,7 +124,34 @@ $v=[];
 return view('email.dailyreport02')->with(['u'=>$u, 'k'=>$k, 'indx'=>1, 'today'=>$today, 'user'=>$users]);
 
 });*/
+Route::get('emailDel', function(Request $request){
+	$id = $request->id;
+	$r = App\email::where('id', $id)->first();
+	$r->delete();
+	$data = App\email::all();
+    return Response::json($data);
+	//return view('waybill.reports');
 
+})->middleware('auth', 'admin');
+Route::get('emailSave', function(Request $request){
+	$location = $request->location;
+	$company = $request->company;
+	$to = $request->to;
+	$copy = $request->copi;
+	$bcopy = $request->bcopy;
+
+	$t = new App\email;
+	$t->company = $company;
+	$t->location = $location;
+	$t->to = $to;
+	$t->copi = $copy;
+	$t->bcopy = $bcopy;
+	$t->save();
+	$data = $t;
+    return Response::json($data);
+	//return view('waybill.reports');
+
+})->middleware('auth', 'admin');
 Route::get('waybill/return', function(Request $request){
 	$id = $request->doc_id;
 	$printType = $request->printType;
@@ -143,10 +183,11 @@ Route::get('waybill/loadusers', function(Request $request){
 	$data = User::where('location', $location)->get();
 	}
 	else{			}
-
+/*
 	if(Auth::user()->priv == 1){
 		$data = User::all();
 	}	
+	*/
     return Response::json($data);
 	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
 });
@@ -180,7 +221,7 @@ Route::get('waybill/loadItems', function(Request $request){
 	}	
     return Response::json($data);
 	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
-});
+})->middleware('auth');
 
 Route::get('waybill/load', function(Request $request){
 	$loc = $request->location;
@@ -189,21 +230,17 @@ Route::get('waybill/load', function(Request $request){
 	
 	if ($loc!=''){
 		if($wType=='LOAN'){
-	$data = doc::where('wType', $wType)->where(function ($q){
-	$q->where('receiveStatus', 'OPEN')->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');})->where(function($g) use ($loc){
-		$g->where('sentTo',$loc)->orWhere('sentFrom',$loc);})->orderby('sentDate', 'DESC')->get();	
+	$data = doc::where('wType', $wType)->where(function($g) use ($loc){
+		$g->where('sentTo',$loc)->orWhere('sentFrom',$loc);})->whereIn('receiveStatus', ['OPEN','RECEIVED','RETURNED'])->orderby('sentDate', 'DESC')->get();	
 		}else{
-	$data = doc::where('wType', $wType)->where(function ($q){
-	$q->where('receiveStatus', 'OPEN')->orWhere('receiveStatus', 'RECEIVED')->orWhere('receiveStatus', 'RETURNED');})->where(function($g) use ($loc){
+	$data = doc::where('wType', $wType)->whereIn('receiveStatus', ['OPEN', 'RECEIVED','RETURNED'])->where(function($g) use ($loc){
 		$g->where('sentTo',$loc);})->orderby('sentDate', 'DESC')->get();				
 		}
 	}
 	else{$data = [];}
 	if($id!=''){
-	$data = doc::where('wType',$wType)->where('id', $id)->where(function ($q){
-	$q->where('receiveStatus', 'OPEN')->orWhere('receiveStatus', 'RECEIVED');})->orderby('sentDate', 'DESC')->get();
+	$data = doc::where('wType',$wType)->where('id', $id)->whereIn('receiveStatus', ['OPEN','RECEIVED', 'RETURNED'])->orderby('sentDate', 'DESC')->get();
 	}
-	
     return Response::json($data);
 	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
 });
