@@ -19,15 +19,13 @@
                             <a href="#"><i class="fa fa-cog fa-fw"></i> Configuration <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{{ route('waybill.create') }}">Create New Waybill</a>
+                                    <a href="{{ route('config') }}">Email Recipients</a>
                                 </li>
                     								
                                 <li>
-                                    <a href="{{ route('waybill.print') }}">Print Waybill</a>
+                                    <a href="{{ route('userconfig') }}">User Configuration</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('waybill.search') }}">Find Item/Waybill </a>
-                                </li>
+
 
                             </ul>
                             <!-- /.nav-second-level -->
