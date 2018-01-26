@@ -185,19 +185,15 @@ public function checkdoc()
     //$doc->$item->insert(Input::get('items'));
 	$items = item::where('doc_id', $doc->id)->get();
 	// dispatch(new SendNewWaybillEmail($doc, $items, $user_email));
+	if(Auth::user()->dept == "IT"){
+		$copiEmail = email::where('dept', 'IT')->first();
+		$this->newMail($doc, $items, $user_email, $copiEmail);
+	}
+	else{
 	 $copiEmail = email::where('location', $loc)->where('company', $comp)->first();
-	
 	 if($copiEmail!=null){
-				 Log::info("Before sending email with CC & BCC recipients");
-	 $newMailJob = (new SendNewWaybillEmail($doc, $items, $user_email, $copiEmail))->delay(Carbon::now()->addMinutes(1));
-	 dispatch($newMailJob);
-			Log::info("After dispatch email with CC & BCC recipients");
-	 }
-	 else{
-		 Log::info("Before sending email without CC & BCC recipients");
-	 $newMailJob = (new SendNewWaybillEmail($doc, $items, $user_email, $copiEmail))->delay(Carbon::now()->addMinutes(1));
-	 dispatch($newMailJob);	
-		Log::info("After dispatch without CC & BCC recipients");	 
+		$this->newMail($doc, $items, $user_email, $copiEmail);
+	 }	 
 	 }
 	 //Mail::to($user_email)->send(new NewWaybill($doc, $items));
 	if($recEmail != '' || $recEmail != null ){
@@ -292,5 +288,11 @@ public function printreview(Request $req) {
  }
  public function destroy($id){
 	 
+}
+		function newMail($doc, $items, $user_email, $copiEmail){	
+		Log::info("Before sending email with CC & BCC recipients");
+		$newMailJob = (new SendNewWaybillEmail($doc, $items, $user_email, $copiEmail))->delay(Carbon::now()->addMinutes(1));
+		dispatch($newMailJob);
+		Log::info("After dispatch email with CC & BCC recipients");
 }
 }

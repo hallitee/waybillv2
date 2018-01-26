@@ -49,9 +49,9 @@ class SendNewWaybillEmail implements ShouldQueue
      */
     public function handle()
     {
-		if($this->copiEmail!=null){
+		
 		Mail::to($this->user_email)->send(new NewWaybill($this->doc, $this->items, $this->copiEmail));
-		}
+
 
 
     }
