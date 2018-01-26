@@ -109,9 +109,9 @@ $array_option
                             <td >	
 			{!! Form::select('company',array('ESRNL'=>'ESRNL', 'NPRNL'=>'NPRNL', 'PFNL'=>'PFNL','IKOYI'=>'IKOYI', 'IT'=>'IT'),null, array('class' => 'input-md emailinput form-control', 'id'=>'company', 'placeholder'=>'e.g Ikoyi office')); !!}							
 						</td>
-                            <td><input class=" email form-control" id="to"   type="email" required></td>
-                            <td><input class="form-control" id="copy" type="email"></td>
-							<td><input class="form-control" id="bcopy" type="email"></td>
+                            <td><input class="email form-control" id="to"   type="email" required></td>
+                            <td><input class="email form-control" id="copy" type="email"></td>
+							<td><input class="email form-control" id="bcopy" type="email"></td>
                           </tr>
 						  					
                         </tbody>

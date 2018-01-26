@@ -934,6 +934,34 @@ $("body").on("click",'#searchp_btn', function(){
 	}
 	});
 								
+$("#saveRecipient").click(function(){
+	
+	$.ajax({
+					type: 'GET',
+					url: "emailSave",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"location": $("#location").val(),
+					"company": $("#company").val(),
+					"to": $("#to").val(),
+					"copi": $("#copy").val(),
+					"bcopy": $("#bcopy").val(),
+
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+//					console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+
+					//data response can contain what we want here...
+					console.log("Item saved "+data+"fully");
+					}
+				});
+	
+});
 function recitem(){
 	
 			$item_err = 0; 
