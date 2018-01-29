@@ -113,7 +113,9 @@ public function reports(Request $request) {
 	
 	}
 	else{
-    $doc = doc::where('sentBy', $name)->where('wType', $type)->where('receiveStatus', $status)->orderBy('sentDate', 'DESC')->paginate(10);		
+    $doc = doc::where('wType', $type)->where('receiveStatus', $status)->where(function($q) use ($name){
+		$q->where('sentBy', $name)->orWhere('sentTo', $name);
+	})->orderBy('sentDate', 'DESC')->paginate(10);		
 		
 	}
 	/*$doc=doc::where('sentBy', $name)->where('wType', $type)->where(function ($q) use ($status){

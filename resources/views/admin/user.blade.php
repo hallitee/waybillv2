@@ -66,18 +66,49 @@ $array_option
 	{!! Form::open(['action' => 'docs@store', 'class'=>'form']) !!}			
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                         Add  Recipient					
+                       User details					
                         </div>
                         <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-	
-								              <div class="panel-body">
-               
-            </div>
-              </div>
+										<div class="row">
+								<div class="table-responsive">
+							
+					<table class="table table-bordered table-hover" id="userlogic" >
+						<thead id="thead1" >
+						<tr >
+						<th class="text-center">
+							user id #
+						</th>
+						<th class="text-center">
+							user name
+						</th>
+						<th class="text-center">
+						Email
+						</th>
+						<th class="text-center">
+						company
+						</th>						
+						<th class="text-center">
+						location
+						</th>
+						<th class="text-center">
+							Priviledge
+						</th>						
+						<th class="text-center">
+							department
+						</th>
+						<th class="text-center">
+							Admin
+						</th>			
+						
+					</tr>
+				</thead>
+								
+				<tbody id='tuserbody'>
 
-											
+				</tbody>
+			</table>								
+									</div>
+								</div>	
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
 

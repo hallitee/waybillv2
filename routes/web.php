@@ -24,11 +24,17 @@ use App\Jobs\SendDailyReport;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('admin/getuser', function(Request $request){
-	$srch = $request->search; 
-	$data = User::where('email', 'LIKE', '%'.$srch.'%')->first();
+Route::get('searchuser', function(Request $request){
+	$text  =  $request->search;
+	$user = user::where('email', 'like', '%'.$text.'%')->first();
+	return Response::json($user);
+})->middleware('auth', 'admin');
+
+Route::get('getuser', function(Request $request){
+	$srch = $request->srch; 
+	$data = user::where('email', 'LIKE', '%'.$srch.'%')->first();
 	return Response::json($data);
-})->middleware('auth', 'admin');;
+})->middleware('auth', 'admin');
 Route::get('admin/user', function(){
 	$emails = App\email::all();
 	return view('admin/user')->with(['emails'=>$emails]);
@@ -293,7 +299,7 @@ Route::get('waybill/recitem', function(Request $request){
 
 	$data = 'success';
 	}	
-    return Response::json($data);
+    return Response::json($il);
 	//return View::make('waybill.receive')->with('data',$data,'return',$wType);
 });
 

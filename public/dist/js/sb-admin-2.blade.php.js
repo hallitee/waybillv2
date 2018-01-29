@@ -560,7 +560,30 @@ $("body").on("click",'.btn_itemshow', function(){
 		
 				});
 	
-	
+	$(".removeBtn").click(function(){
+		
+$.ajax({
+					type: 'GET',
+					url: "emailDel",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"id": $(this).val(),
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+//					console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+
+					//data response can contain what we want here...
+					console.log("Item saved "+data+"fully");
+					location.reload();
+					}
+				});
+		
+	});
 	$("body").on("click",'#rec_btn1', function(){ 
 	
 		loaddoc();
@@ -933,7 +956,41 @@ $("body").on("click",'#searchp_btn', function(){
 		//$("#deliveredTo").replaceWith("<select class='input-md emailinput form-control' id='deliveredTo'> </select>");
 	}
 	});
-								
+	$("#search_user").click(function(){
+		var intext = $("#search_input").val();
+		console.log(intext);
+		$("#tuserbody > tr > td").remove();
+		if(intext==''||intext==null){
+			
+		}
+		else{
+		$.ajax({
+					type: 'GET',
+					url: "/getuser",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"srch": intext
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+				   console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+					
+					//data response can contain what we want here...
+					console.log("Item saved "+data.email+"fully");
+					$("#tuserbody > tr > td").remove();
+					if(data!=null || data!='undefined'){
+					$("#tuserbody").append("<tr><td class='text-center'>"+data.id+"</td><td class='text-center'>"+data.name+"</td><td class='text-center'>"+data.email+"</td><td class='text-center'>"+data.company+"</td><td class='text-center'>"+data.location+"</td><td class='text-center'>"+data.priv+"</td><td class='text-center'>"+data.dept+"</td><td class='text-center'>"+ data.admin+"</td></tr>");
+					}
+					intext="";
+					}
+				});
+				
+		}
+	});
 $("#saveRecipient").click(function(){
 	
 	$.ajax({
@@ -958,6 +1015,7 @@ $("#saveRecipient").click(function(){
 
 					//data response can contain what we want here...
 					console.log("Item saved "+data+"fully");
+					location.reload();
 					}
 				});
 	
