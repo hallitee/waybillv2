@@ -32,7 +32,17 @@ Route::get('searchuser', function(Request $request){
 
 Route::get('getuser', function(Request $request){
 	$srch = $request->srch; 
-	$data = user::where('email', 'LIKE', '%'.$srch.'%')->first();
+	$key = $request->keys;
+	if($key == 'id'){
+		$data = user::where('id', $srch)->first();
+	}else{
+	if($srch==""){
+		$data = user::all();
+	}else{
+	$data = user::where('email', 'LIKE', '%'.$srch.'%')->get();
+	}
+	
+	}
 	return Response::json($data);
 })->middleware('auth', 'admin');
 Route::get('admin/user', function(){

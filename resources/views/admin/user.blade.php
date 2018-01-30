@@ -99,7 +99,9 @@ $array_option
 						<th class="text-center">
 							Admin
 						</th>			
-						
+						<th class="text-center">
+							Edit
+						</th>							
 					</tr>
 				</thead>
 								
@@ -124,6 +126,36 @@ $array_option
 
 	
 	{!! Form::close() !!}
+<!-- Modal -->
+            <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="text-center"></i> Edit User Information </h4>
+                  </div>
+                  <div class="modal-body">
+                   
+                    <table class="col-md-10 col-md-offset-2">
+                         <tbody>
 
-   </div>
+                            
+                         </tbody>
+                    </table>
+                             
+                         
+ 
+                    
+             
+                    
+                  <div class="modal-footer">       
+                      
+      
+                     
+                </div>
+              </div>
+            </div>
+            </div>
+<!-- fim Modal-->    
+    
    	@endsection

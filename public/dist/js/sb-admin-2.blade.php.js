@@ -39,6 +39,7 @@ $(function() {
 	var $loc, $wType;
 	var rec_qty = [];
       var i=1;
+	  var comp = ["GSNL", "NPRNL", "ESRNL"]
 $("input[type='checkbox']").change(function() {
     if(this.checked) {
        $("#proxyName").show();
@@ -960,10 +961,7 @@ $("body").on("click",'#searchp_btn', function(){
 		var intext = $("#search_input").val();
 		console.log(intext);
 		$("#tuserbody > tr > td").remove();
-		if(intext==''||intext==null){
-			
-		}
-		else{
+
 		$.ajax({
 					type: 'GET',
 					url: "/getuser",
@@ -977,19 +975,102 @@ $("body").on("click",'#searchp_btn', function(){
 					// alert("ERROR ON SUBMIT");
 				   console.log("error on submit"+xhr);
 					},
-					success: function( data ){ 
+					success: function( data, res ){ 
 					
 					//data response can contain what we want here...
-					console.log("Item saved "+data.email+"fully");
+					console.log("Item saved "+data[0].email+"fully");
 					$("#tuserbody > tr > td").remove();
-					if(data!=null || data!='undefined'){
-					$("#tuserbody").append("<tr><td class='text-center'>"+data.id+"</td><td class='text-center'>"+data.name+"</td><td class='text-center'>"+data.email+"</td><td class='text-center'>"+data.company+"</td><td class='text-center'>"+data.location+"</td><td class='text-center'>"+data.priv+"</td><td class='text-center'>"+data.dept+"</td><td class='text-center'>"+ data.admin+"</td></tr>");
-					}
-					intext="";
+					admin = '';
+					$.each(data, function(i, item){		
+					if(data[i].admin==null || data[i].admin==0 ){admin = 'NO';}
+					else{ admin = 'YES'; }
+					$("#tuserbody").append("<tr><td class='text-center'>"+data[i].id+"</td><td class='text-center'>"+data[i].name+"</td><td class='text-center'>"+data[i].email+"</td><td class='text-center'>"+data[i].company+"</td><td class='text-center'>"+data[i].location+"</td><td class='text-center'>"+data[i].priv+"</td><td class='text-center'>"+data[i].dept+"</td><td class='text-center'>"+ admin+"</td><td><p><button type='button' class='btn btn-primary btn-xs useredit'  value='"+data[i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td></tr>");
+								
+					});
 					}
 				});
 				
-		}
+	
+	});
+	$(".close").click(function(){
+		$("#myModal").hide();
+	});
+	$("body").on("click", '.useredit', function(){	
+		$(".modal-body >  table > tbody > tr").remove();
+		console.log("clicking sound");
+		console.log($(this).val());
+		
+		$.ajax({
+					type: 'GET',
+					url: "/getuser",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"srch": $(this).val(),
+					"keys": "id", 
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+				   console.log("error on submit"+xhr);
+					},
+					success: function( data, res ){ 
+					
+					//data response can contain what we want here...
+					console.log("Item saved "+ data.email +"fully");
+					
+			
+		$(".modal-body >  table > tbody").append('<tr><td class="h5"><strong>Username: </strong></td><td> </td><td class="h5">'+data.name+'</td></tr><tr><td class="h5"><strong>Email:</strong></td> \
+                                 <td> </td> \
+                                 <td class="h5">'+data.email+'</td> \
+                             </tr> \
+                              \
+                             <tr> \
+                                 <td class="h5"><strong>Company</strong></td> \
+                                 <td> </td>\
+                                 <td class="h5"><select id="compsel"><option value="ESRNL">ESRNL</option><option value="NPRNL">NPRNL</option><option value="PFNL">PFNL</option><option value="GSNL">GSNL</option></select> </td> \
+                             </tr>\
+                             \
+                             <tr>\
+                                 <td class="h5"><strong>Location</strong></td>\
+                                 <td> </td>\
+                                 <td class="h5"><select id="locsel"><option value="AGBARA">AGBARA</option><option value="APAPA">APAPA</option><option value="IKOYI">IKOYI</option><option value="PARKVIEW">PARKVIEW</option><option value="IKEJA">IKEJA</option></select></td>\
+                             </tr>\
+                             \
+                             <tr>\
+                                 <td class="h5"><strong>Department</strong></td>\
+                                 <td> </td>\
+                                 <td class="h5"><select id="deptsel"><option value="IT">IT</option><option value="ACCOUNTS">ACCOUNTS</option><option value="ADMIN">ADMIN</option><option value="PURCHASING">PURCHASING</option><option value="MARKETING">MARKETING</option><option value="WAREHOUSE">WAREHOUSE</option><option value="RAW MATERIAL">RAW MATERIAL</option><option value="">NULL</option></select></td>\
+                             </tr>\
+                             \
+                             <tr>\
+                                 <td class="h5"><strong>Priviledge</strong></td>\
+                                 <td> </td>\
+                                 <td class="h5"><select id="privsel"><option value="1">1</option><option value="2">2</option><option value="2">4</option><option value="5">5</option><option value="MARKETING">MARKETING</option></select></td>\
+                             </tr>  \
+\
+                             <tr>\
+                                 <td class="h5"><strong>Unid. por Embalagem</strong></td>\
+                                 <td> </td>\
+                                 <td class="h5">50</td>\
+                             </tr><tr> \
+                                 <td class="h5"><strong>Quantidade Mínima</strong></td>\
+                                 <td> </td> \
+                                 <td class="h5">50</td> \
+                             </tr>\
+\
+                             <tr>\
+                                 <td class="h5"><strong>Preço Atacado</strong></td>\
+                                 <td> </td>\
+                                 <td class="h5">R$ 35,00</td>\
+                             </tr>');
+		$("#deptsel").val(data.dept).change();							 
+		$("#locsel").val(data.location).change();
+		$("#compsel").val(data.company).change();
+		$("#myModal").show();
+				}
+				});
+		
 	});
 $("#saveRecipient").click(function(){
 	
