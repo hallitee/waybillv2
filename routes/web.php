@@ -55,7 +55,7 @@ Route::get('admin', function(){
 })->name('config')->middleware('auth', 'admin');
 
 Route::get('waybill/globalreport', function(){
-	return view('report.mreport');
+	return view('email.dailyHodEmai');
 });
 
 Route::get('waybill/email', function(){
