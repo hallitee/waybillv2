@@ -19,7 +19,6 @@ class CreateEmailsTable extends Migration
             $table->string('location');
             $table->string('company')->unique();
 			$table->string('dept')->nullable();				
-            $table->string('to')->nullable();
 			$table->string('copi')->nullable();		
             $table->string('bcopy')->nullable();
 			

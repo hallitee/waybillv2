@@ -39,7 +39,7 @@ $(function() {
 	var $loc, $wType;
 	var rec_qty = [];
       var i=1;
-	  var comp = ["GSNL", "NPRNL", "ESRNL"]
+	  var comp = ["GSNL", "NPRNL", "ESRNL"];
 $("input[type='checkbox']").change(function() {
     if(this.checked) {
        $("#proxyName").show();
@@ -1083,7 +1083,6 @@ $("#saveRecipient").click(function(){
 					data: {
 					"location": $("#location").val(),
 					"company": $("#company").val(),
-					"to": $("#to").val(),
 					"copi": $("#copy").val(),
 					"bcopy": $("#bcopy").val(),
 

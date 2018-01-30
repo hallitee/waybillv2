@@ -34,7 +34,6 @@ $array_option
                     <tr>
                         <th class="col-xs-1">location</th>
                         <th class="col-xs-1">Company</th>
-                        <th class="col-xs-3">To</th>
                         <th class="col-xs-3">Copy (CC)</th>
 						<th class="col-xs-3">BCopy (BCC)</th>
 						<th class="col-xs-1">Remove</th>
@@ -47,7 +46,6 @@ $array_option
 							{{$d->location}}
                             </td>
                             <td>{{$d->company}}</td>
-                            <td>{{$d->to}}</td>
                             <td>{{$d->copi}}</td>
 							<td>{{$d->bcopy}}</td>
 							<td align="center">
@@ -96,7 +94,6 @@ $array_option
                     <tr>
                         <th class="col-xs-2">location</th>
                         <th class="col-xs-2">Company</th>
-                        <th class="col-xs-2">To</th>
                         <th class="col-xs-2">Copy (CC)</th>
 						<th class="col-xs-2">BCopy (BCC)</th>
                     </tr> 
@@ -109,8 +106,7 @@ $array_option
                             <td >	
 			{!! Form::select('company',array('ESRNL'=>'ESRNL', 'NPRNL'=>'NPRNL', 'PFNL'=>'PFNL','IKOYI'=>'IKOYI', 'IT'=>'IT'),null, array('class' => 'input-md emailinput form-control', 'id'=>'company', 'placeholder'=>'e.g Ikoyi office')); !!}							
 						</td>
-                            <td><input class="email form-control" id="to"   type="email" required></td>
-                            <td><input class="email form-control" id="copy" type="email"></td>
+                            <td><input class="email form-control" id="copy" type="email" required></td>
 							<td><input class="email form-control" id="bcopy" type="email"></td>
                           </tr>
 						  					

@@ -36,16 +36,11 @@ class NewWaybill extends Mailable
      */
     public function build()
     {
-			$temail=[];
+
 			$cemail = [];
 			$bcemail = [];
 		if($this->copi!=null){
 
-			if($this->copi->to!=null || $this->copi->to!=""){
-				//array_push($cemail, $this->copi->to);
-				$temail=preg_split("/[;,\s]+/", $this->copi->to);
-				
-			}
 			if($this->copi->copi!=null || $this->copi->copi!=""){
 				//array_push($cemail, $this->copi->copi);
 				$cemail = preg_split("/[;,\s]+/", $this->copi->copi);
@@ -58,7 +53,6 @@ class NewWaybill extends Mailable
 		$name = 'Waybill Manager';
 		$subject = 'New Waybill created';
         return $this->view('email.NewWaybill')
-					->cc($temail)
 					->cc($cemail)
 					->bcc($bcemail)
 					->from($address, $name)
@@ -69,7 +63,6 @@ class NewWaybill extends Mailable
 		$name = 'Waybill Manager';
 		$subject = 'New Waybill created';
         return $this->view('email.NewWaybill')
-					->cc($temail)
 					->cc($cemail)
 					->bcc($bcemail)
 					->from($address, $name)

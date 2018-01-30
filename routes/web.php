@@ -37,7 +37,7 @@ Route::get('getuser', function(Request $request){
 		$data = user::where('id', $srch)->first();
 	}else{
 	if($srch==""){
-		$data = user::all();
+		$data = user::all()->paginate(10);
 	}else{
 	$data = user::where('email', 'LIKE', '%'.$srch.'%')->get();
 	}
@@ -152,14 +152,12 @@ Route::get('emailDel', function(Request $request){
 Route::get('emailSave', function(Request $request){
 	$location = $request->location;
 	$company = $request->company;
-	$to = $request->to;
 	$copy = $request->copi;
 	$bcopy = $request->bcopy;
 
 	$t = new App\email;
 	$t->company = $company;
 	$t->location = $location;
-	$t->to = $to;
 	$t->copi = $copy;
 	$t->bcopy = $bcopy;
 	$t->save();
