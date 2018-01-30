@@ -1,0 +1,11 @@
+user register 
+user configuration /save 
+remove To field
+paginate  user page 
+
+
+daily report to GMs in copy and bcopy
+showing in and out transfers
+Loan or repair
+
+report to user 
