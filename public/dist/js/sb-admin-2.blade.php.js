@@ -995,6 +995,43 @@ $("body").on("click",'#searchp_btn', function(){
 	$(".close").click(function(){
 		$("#myModal").hide();
 	});
+		$("body").on("click", '#btnUpdateUser', function(){
+		console.log("Thank You " + $(this).val());
+		console.log($("#deptsel").val());
+
+		$.ajax({
+					type: 'GET',
+					url: "/updateuser",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"id": $(this).val(),
+					"company": $("#compsel").val(),
+					"location": $("#locsel").val(),
+					"dept": $("#deptsel").val(),					
+					"priv": $("#privsel").val(),
+					"admin": $("#adminsel").val(),
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+				   console.log("error on submit"+xhr);
+					},
+					success: function( data, res ){ 
+					
+					//data response can contain what we want here...
+					console.log(" User update "+ data.email +"fully");
+					
+				setTimeout(function(){
+				$('#myModal').hide();
+				window.location.href = '/admin/user';
+				
+				}, 500);
+					}
+					
+		});
+		
+		});		
 	$("body").on("click", '.useredit', function(){	
 		$(".modal-body >  table > tbody > tr").remove();
 		console.log("clicking sound");
@@ -1046,24 +1083,21 @@ $("body").on("click",'#searchp_btn', function(){
                              <tr>\
                                  <td class="h5"><strong>Priviledge</strong></td>\
                                  <td> </td>\
-                                 <td class="h5"><select id="privsel"><option value="1">1</option><option value="2">2</option><option value="2">4</option><option value="5">5</option><option value="MARKETING">MARKETING</option></select></td>\
+                                 <td class="h5"><select id="privsel"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>\
                              </tr>  \
 \
                              <tr>\
-                                 <td class="h5"><strong>Unid. por Embalagem</strong></td>\
+                                 <td class="h5"><strong>ADMIN</strong></td>\
                                  <td> </td>\
-                                 <td class="h5">50</td>\
-                             </tr><tr> \
-                                 <td class="h5"><strong>Quantidade Mínima</strong></td>\
-                                 <td> </td> \
-                                 <td class="h5">50</td> \
-                             </tr>\
-\
-                             <tr>\
-                                 <td class="h5"><strong>Preço Atacado</strong></td>\
+                                 <td class="h5"><select id="adminsel"><option value="1">YES</option><option value="0">NO</option></select></td>\
+                             </tr>                             <tr>\
+                                 <td class="h5"><strong></strong></td>\
                                  <td> </td>\
-                                 <td class="h5">R$ 35,00</td>\
+                                 <td class="h5"><button id="btnUpdateUser" value="" class="btn btn-primary btn-sm">SAVE</button></td>\
                              </tr>');
+		$("#btnUpdateUser").val(data.id).change();
+		$("#adminsel").val(data.admin).change();	
+		$("#privsel").val(data.priv).change();	
 		$("#deptsel").val(data.dept).change();							 
 		$("#locsel").val(data.location).change();
 		$("#compsel").val(data.company).change();

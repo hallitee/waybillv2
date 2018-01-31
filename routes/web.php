@@ -6,6 +6,7 @@ use App\doc;
 use App\item;
 use App\itemslog;
 use App\User;
+use App\email;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewWaybill;
 use App\Mail\recNewMail;
@@ -29,7 +30,12 @@ Route::get('searchuser', function(Request $request){
 	$user = user::where('email', 'like', '%'.$text.'%')->first();
 	return Response::json($user);
 })->middleware('auth', 'admin');
-
+Route::get('updateuser', function(Request $request){
+	$id = $request->id;
+	$find = user::find($id);
+	$user = $find->update($request->all());
+	return Response::json($user);
+});
 Route::get('getuser', function(Request $request){
 	$srch = $request->srch; 
 	$key = $request->keys;
@@ -37,7 +43,7 @@ Route::get('getuser', function(Request $request){
 		$data = user::where('id', $srch)->first();
 	}else{
 	if($srch==""){
-		$data = user::all()->paginate(10);
+		$data = user::all();
 	}else{
 	$data = user::where('email', 'LIKE', '%'.$srch.'%')->get();
 	}
@@ -55,7 +61,7 @@ Route::get('admin', function(){
 })->name('config')->middleware('auth', 'admin');
 
 Route::get('waybill/globalreport', function(){
-	return view('email.dailyHodEmai');
+	return view('email.hodreport');
 });
 
 Route::get('waybill/email', function(){
