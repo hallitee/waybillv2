@@ -78,7 +78,7 @@ array_push($v, $z);
 array_push($k, $v);
  $n = User::where('id', $user)->first();
  array_push($u, $n);
-	Mail::to($n->email)->send(new DailyReport($m, $v, $n, $today));
+	Mail::to($n->email)->send(new DailyHodReportMail($m, $v, $n, $today));
  $v=[];
  $u=[];
 }//end of each users

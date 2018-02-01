@@ -985,13 +985,15 @@ $("body").on("click",'#searchp_btn', function(){
 					if(data[i].admin==null || data[i].admin==0 ){admin = 'NO';}
 					else{ admin = 'YES'; }
 					$("#tuserbody").append("<tr><td class='text-center'>"+data[i].id+"</td><td class='text-center'>"+data[i].name+"</td><td class='text-center'>"+data[i].email+"</td><td class='text-center'>"+data[i].company+"</td><td class='text-center'>"+data[i].location+"</td><td class='text-center'>"+data[i].priv+"</td><td class='text-center'>"+data[i].dept+"</td><td class='text-center'>"+ admin+"</td><td><p><button type='button' class='btn btn-primary btn-xs useredit'  value='"+data[i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td></tr>");
-								
+						
 					});
 					}
 				});
 				
 	
 	});
+	
+
 	$(".close").click(function(){
 		$("#myModal").hide();
 	});

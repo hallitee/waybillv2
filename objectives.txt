@@ -12,13 +12,17 @@ report to user
 
 
 $comps = App\email::all()
-$day = Carbon\Carbon::today()->toDateString();
+$day = Carbon\Carbon::today()->subDays(6)->toDateString();
+$cmp = [];
 $m=[];
 foreach($comps as $c){
 $loc = $c->company." ".$c->location;
 if($c->location=='IKOYI'){
-echo "true";
-echo $loc;
+$doc = doc::where('sentDate', '=', $day)->where('sentFrom', 'LIKE', '%'.$c->location.'%')->get();
+foreach($doc as $d){
+$item = item::where('doc_id', $d->id)->get();
+array_push($m, $item);
+}
 }
 else{
 $doc = doc::where('sentDate', '=', $day)->where('sentFrom', $loc)->get();
@@ -26,4 +30,6 @@ foreach($doc as $d){
 $item = item::where('doc_id', $d->id)->get();
 array_push($m, $item);
 }
+}
+array_push($cmp, $doc);
 }

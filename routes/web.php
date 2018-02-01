@@ -61,7 +61,21 @@ Route::get('admin', function(){
 })->name('config')->middleware('auth', 'admin');
 
 Route::get('waybill/globalreport', function(){
-	return view('email.hodreport');
+	$day = Carbon::today()->toDateString();
+	$itms= [];
+	$itmr = [];
+	$com = email::where('location', 'IKOYI')->first();
+	$cmps = doc::where('sentDate', '=', $day)->where('sentFrom', 'LIKE', '%IKOYI%')->get();
+	foreach($cmps as $d){
+	$n = item::where('doc_id', $d->id)->get();
+	array_push($itms, $n);
+	}
+	$cmpr = doc::where('sentDate', '=', $day)->where('sentTo', 'LIKE', '%IKOYI%')->get();
+	foreach($cmpr as $d){
+	$m = item::where('doc_id', $d->id)->get();
+	array_push($itmr, $m);
+	}
+	return view('email.hodreport')->with(['day'=>$day, 'comp'=>$com, 'docs'=>$cmps, 'items'=>$itms, 'docr'=>$cmpr, 'itemr'=>$itmr ]);
 });
 
 Route::get('waybill/email', function(){

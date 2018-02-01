@@ -124,7 +124,7 @@ $array_option
 							
                 </div>
 
-	
+	<div id="demo"> </div>
 	{!! Form::close() !!}
 <!-- Modal -->
             <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

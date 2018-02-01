@@ -6,7 +6,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title></title>
 
-	<link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<style type="text/css" media="print">
     @page 
     {
@@ -20,26 +19,36 @@
         border: none;
         margin: 5px;  /* this affects the margin on the content before sending to printer */
    }
-   th, td{
+   table, th, td{
 
+    border: 1px solid black;
+    border-collapse: collapse;
+	text-align: center;
    	font-size: 11px;
+   }
+</style>
+<style type="text/css">
+   table, th, td{
+	
+    border: 1px solid black;
+   	font-size: 12px;
    }
 </style>
 </head>
 <body>
 
+
 			<br>
+			<h3 style="margin-left:250px">DAILY REPORT FOR {{$day}}</h3>
 			<br>
-			<h3 class="text-center">DAILY REPORT FOR 31-1-2018</h3>
-			<br>
-			<br>
-	<div class="row">
+
+<div style="margin-left:90px">
 
 		<div class="col-md-12 align-content-center">
-				<h5 class="form-group text-center"><u>WAYBILL SENT FROM NPRNL</u></h5>
+				<h4 style="margin-left:150px"><u>WAYBILL SENT FROM {{$comp->company}}</u></h4>
 
 				<div class="col-md-10">
-			<table class="table table-bordered table-sm border-2">
+			<table style="border:1px solid black;border-collapse: collapse">
 			
 				<thead class="border-2">
 					<tr>
@@ -65,30 +74,38 @@
 					</tr>
 				</thead>
 				<tbody class="border-2">
+				 @foreach($docs as $key=>$d)
 					<tr>
-						<td>data</td>
-						<td>data
+						<td>W{{ucfirst($d->wType[0])}}{{str_pad($d->id, 5, "0", STR_PAD_LEFT)}}</td>
+						<td>
+							@foreach($items[$key] as $t)
+							{{$t->item_desc}}
+							<br>
+							@endforeach
 						</td>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
+						<td>@foreach($items[$key] as $t)
+							{{$t->qty}}
+							<br>
+							@endforeach</td>
+						<td>{{$d->sentBy}}</td>
+						<td>{{$d->deliveredTo}}</td>
+						<td>{{$d->sentTo}}</td>
+						<td>{{$d->wType}}</td>
+						<td>{{$d->receiveStatus}}</td>
+						<td>{{$d->deliveredBy}}</td>
 						
 					</tr>
-					
+					@endforeach
 				</tbody>
 			</table>
 		</div>
 		</div>
 	</div>
-<div class="col-md-12 align-content-center">
-				<h5 class="form-inline text-center"><u>WAYBILL RECEIVE AT NPRNL</u></h5>
+<div style="margin-left:90px">
+				<h4 style="margin-left:150px"><u>WAYBILL RECEIVE AT {{$comp->company}}</u></h4>
 
 				<div class="col-md-10">
-			<table class="table table-bordered table-sm border-2">
+			<table style="border:1px solid black;border-collapse: collapse">
 			
 				<thead class="border-2">
 					<tr>
@@ -114,18 +131,28 @@
 					</tr>
 				</thead>
 				<tbody class="border-2">
+				 @foreach($docr as $key=>$d)
 					<tr>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
-						<td>data</td>
+						<td>W{{ucfirst($d->wType[0])}}{{str_pad($d->id, 5, "0", STR_PAD_LEFT)}}</td>
+						<td>
+							@foreach($itemr[$key] as $t)
+							{{$t->item_desc}}
+							<br>
+							@endforeach
+						</td>
+						<td>@foreach($itemr[$key] as $t)
+							{{$t->qty}}
+							<br>
+							@endforeach</td>
+						<td>{{$d->sentBy}}</td>
+						<td>{{$d->deliveredTo}}</td>
+						<td>{{$d->sentTo}}</td>
+						<td>{{$d->wType}}</td>
+						<td>{{$d->receiveStatus}}</td>
+						<td>{{$d->deliveredBy}}</td>
 						
 					</tr>
+					@endforeach
 					
 				</tbody>
 			</table>

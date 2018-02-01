@@ -19,7 +19,7 @@
 
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-
+  <link href="../dist/css/pagination.css" rel="stylesheet">
     <!-- Morris Charts CSS -->
     <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
 
@@ -127,7 +127,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.blade.php.js"></script>
-
+	<script src="../dist/js/pagination.js"></script>
 </body>
 
 </html>
