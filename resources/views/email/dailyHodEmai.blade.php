@@ -15,7 +15,7 @@
 <head></head>
 <body style="background: white; color: black">
 
-<h3>WAYBILL DAILY REPORT</h3>
+<h3>WAYBILL DAILY REPORT {{}}</h3>
 <table >
 
 <tbody>

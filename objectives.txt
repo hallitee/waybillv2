@@ -1,6 +1,6 @@
-user register 
+-user register 
 user configuration /save 
-remove To field
+-remove To field
 paginate  user page 
 
 
@@ -9,3 +9,21 @@ showing in and out transfers
 Loan or repair
 
 report to user 
+
+
+$comps = App\email::all()
+$day = Carbon\Carbon::today()->toDateString();
+$m=[];
+foreach($comps as $c){
+$loc = $c->company." ".$c->location;
+if($c->location=='IKOYI'){
+echo "true";
+echo $loc;
+}
+else{
+$doc = doc::where('sentDate', '=', $day)->where('sentFrom', $loc)->get();
+foreach($doc as $d){
+$item = item::where('doc_id', $d->id)->get();
+array_push($m, $item);
+}
+}

@@ -1,10 +1,12 @@
+
 <!DOCTYPE>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title></title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+	<link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<style type="text/css" media="print">
     @page 
     {
@@ -28,13 +30,13 @@
 
 			<br>
 			<br>
-			<strong class="form-text text-md-center">DAILY REPORT FOR 31-1-2018</strong>
+			<h3 class="text-center">DAILY REPORT FOR 31-1-2018</h3>
 			<br>
 			<br>
 	<div class="row">
 
 		<div class="col-md-12 align-content-center">
-				<h5 class="form-text text-md-center"><u>WAYBILL SENT FROM NPRNL</u></h5>
+				<h5 class="form-group text-center"><u>WAYBILL SENT FROM NPRNL</u></h5>
 
 				<div class="col-md-10">
 			<table class="table table-bordered table-sm border-2">
@@ -83,7 +85,7 @@
 		</div>
 	</div>
 <div class="col-md-12 align-content-center">
-				<h5 class="form-text text-md-center"><u>WAYBILL RECEIVE AT NPRNL</u></h5>
+				<h5 class="form-inline text-center"><u>WAYBILL RECEIVE AT NPRNL</u></h5>
 
 				<div class="col-md-10">
 			<table class="table table-bordered table-sm border-2">
