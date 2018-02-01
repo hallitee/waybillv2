@@ -25,6 +25,7 @@ use App\Jobs\SendDailyReport;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('searchuser', function(Request $request){
 	$text  =  $request->search;
 	$user = user::where('email', 'like', '%'.$text.'%')->first();
@@ -53,7 +54,8 @@ Route::get('getuser', function(Request $request){
 })->middleware('auth', 'admin');
 Route::get('admin/user', function(){
 	$emails = App\email::all();
-	return view('admin/user')->with(['emails'=>$emails]);
+	$users = user::paginate(10);
+	return view('admin/users')->with(['users'=>$users, 'emails'=>$emails]);
 })->name('userconfig')->middleware('auth', 'admin');
 Route::get('admin', function(){
 	$emails = App\email::all();
