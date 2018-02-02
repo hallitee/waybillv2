@@ -44,7 +44,7 @@ Route::get('getuser', function(Request $request){
 		$data = user::where('id', $srch)->first();
 	}else{
 	if($srch==""){
-		$data = user::all();
+		//$data = user::all();
 	}else{
 	$data = user::where('email', 'LIKE', '%'.$srch.'%')->get();
 	}
@@ -54,7 +54,7 @@ Route::get('getuser', function(Request $request){
 })->middleware('auth', 'admin');
 Route::get('admin/user', function(){
 	$emails = App\email::all();
-	$users = user::paginate(10);
+	$users = user::paginate(5);
 	return view('admin/users')->with(['users'=>$users, 'emails'=>$emails]);
 })->name('userconfig')->middleware('auth', 'admin');
 Route::get('admin', function(){

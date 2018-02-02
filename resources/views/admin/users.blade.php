@@ -108,11 +108,12 @@ $array_option
 				<tbody id='tuserbody'>
 				@if(count($users)>0)
 					@foreach($users as $u)
-<tr><td class='text-center'></td><td class='text-center'>{{$u->name}}</td><td class='text-center'>{{$u->email}}</td><td class='text-center'>{{$u->company}}</td><td class='text-center'>{{$u->location}}</td><td class='text-center'>{{$u->priv}}</td><td class='text-center'>{{$u->dept}}</td><td class='text-center'>{{ $u->admin}}</td><td><p><button type='button' class='btn btn-primary btn-xs useredit'  value='{{$u.id}}'><span class='glyphicon glyphicon-pencil'></span></button></p></td></tr>
+<tr><td class='text-center'>{{$u->id}}</td><td class='text-center'>{{$u->name}}</td><td class='text-center'>{{$u->email}}</td><td class='text-center'>{{$u->company}}</td><td class='text-center'>{{$u->location}}</td><td class='text-center'>{{$u->priv}}</td><td class='text-center'>{{$u->dept}}</td><td class='text-center'>{{ $u->admin}}</td><td><p><button type='button' class='btn btn-primary btn-xs useredit'  value='{{$u->id}}'><span class='glyphicon glyphicon-pencil'></span></button></p></td></tr>
 					@endforeach
 					@endif
 				</tbody>
-			</table>								
+			</table>	
+	{{ $users->links()}} 			
 									</div>
 								</div>	
                                 </div>
@@ -146,7 +147,7 @@ $array_option
                             
                          </tbody>
                     </table>
-                             
+				      
                          
  
                     
