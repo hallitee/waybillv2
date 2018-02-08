@@ -25,7 +25,9 @@ use App\Jobs\SendDailyReport;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('intranet', function(Request $request){
+	return view('index');
+});
 Route::get('searchuser', function(Request $request){
 	$text  =  $request->search;
 	$user = user::where('email', 'like', '%'.$text.'%')->first();
@@ -63,7 +65,7 @@ Route::get('admin', function(){
 })->name('config')->middleware('auth', 'admin');
 
 Route::get('waybill/globalreport', function(){
-	$day = Carbon::today()->toDateString();
+	$day = Carbon::today()->subDays(11)->toDateString();
 	$itms= [];
 	$itmr = [];
 	$com = email::where('location', 'IKOYI')->first();
