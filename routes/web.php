@@ -25,7 +25,26 @@ use App\Jobs\SendDailyReport;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('genreport', function(Request $request){
+	$frmDate = Carbon::parse($request->frmDate);
+	$toDate = Carbon::parse($request->toDate);
+	$origin = $request->origin;
+	$destination = $request->destination;
+	$sender = $request->sender;
+	$receiver = $request->receiver;
+	//$data = 'Hello';
 
+	$data = doc::where('sentFrom', 'NPRNL AGBARA')->get();
+	
+	//return view('admin.report');
+	return Response::json($data);
+})->name('report')->middleware('auth', 'admin');
+Route::get('report', function(Request $request){
+	$text  =  $request->search;
+	$user = user::where('email', 'like', '%'.$text.'%')->first();
+	return view('admin.report');
+	//return Response::json($user);
+})->name('report')->middleware('auth', 'admin');
 Route::get('searchuser', function(Request $request){
 	$text  =  $request->search;
 	$user = user::where('email', 'like', '%'.$text.'%')->first();
@@ -63,16 +82,16 @@ Route::get('admin', function(){
 })->name('config')->middleware('auth', 'admin');
 
 Route::get('waybill/globalreport', function(){
-	$day = Carbon::today()->toDateString();
+	$day = '2018-02-08';//Carbon::today()->subDays(11)->toDateString();
 	$itms= [];
 	$itmr = [];
 	$com = email::where('location', 'IKOYI')->first();
-	$cmps = doc::where('sentDate', '=', $day)->where('sentFrom', 'LIKE', '%IKOYI%')->get();
+	$cmps = doc::where('sentDate', '=', $day)->where('sentFrom', 'LIKE', '%NPRNL AGBARA%')->get();
 	foreach($cmps as $d){
 	$n = item::where('doc_id', $d->id)->get();
 	array_push($itms, $n);
 	}
-	$cmpr = doc::where('sentDate', '=', $day)->where('sentTo', 'LIKE', '%IKOYI%')->get();
+	$cmpr = doc::where('sentDate', '=', $day)->where('sentTo', 'LIKE', '%NPRNL AGBARA%')->get();
 	foreach($cmpr as $d){
 	$m = item::where('doc_id', $d->id)->get();
 	array_push($itmr, $m);

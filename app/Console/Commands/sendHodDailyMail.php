@@ -47,6 +47,7 @@ class sendHodDailyMail extends Command
     public function handle()
     {
         //
+		//$cmp = email::where('location', 'AGBARA')->where('company', 'NPRNL')->get();
 	$cmp = email::all();
 	$day = Carbon::today()->toDateString();
 	$itms= [];
@@ -67,16 +68,15 @@ class sendHodDailyMail extends Command
 	array_push($itmr, $m);
 	}
 
-
 		}
 	else{
 		
-	$cmps = doc::where('sentDate', '=', $day)->where('sentFrom', 'LIKE', $loc)->get();
+	$cmps = doc::where('sentDate', '=', $day)->where('sentFrom', 'LIKE', '%'.$loc.'%')->get();
 	foreach($cmps as $d){
 	$n = item::where('doc_id', $d->id)->get();
 	array_push($itms, $n);
 	}
-	$cmpr = doc::where('sentDate', '=', $day)->where('sentTo', 'LIKE', $loc)->get();
+	$cmpr = doc::where('sentDate', '=', $day)->where('sentTo', 'LIKE', '%'.$loc.'%')->get();
 	foreach($cmpr as $d){
 	$m = item::where('doc_id', $d->id)->get();
 	array_push($itmr, $m);

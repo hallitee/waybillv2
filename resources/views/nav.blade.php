@@ -25,7 +25,9 @@
                                 <li>
                                     <a href="{{ route('userconfig') }}">User Configuration</a>
                                 </li>
-
+                                <li>
+                                    <a href="{{ route('report') }}">Generate Report</a>
+                                </li>
 
                             </ul>
                             <!-- /.nav-second-level -->

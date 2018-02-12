@@ -49,7 +49,7 @@ $("input[type='checkbox']").change(function() {
 		console.log("unchecked");
 	}
 });
-	  $("#sentTosel").change(function(){
+$("#sentTosel").change(function(){
 	
 		 $sentTo = $("#sentTosel").val();
 		 //$lc = $company+" "+$location;
@@ -115,7 +115,7 @@ if($(this).find(":selected").val()==='VENDOR'){
 		
 		});
 
-	 $("#printType").change(function(){
+$("#printType").change(function(){
 		 	$res= $(this).find(":selected").val();
 			
 		if($res=='No'){
@@ -127,7 +127,7 @@ if($(this).find(":selected").val()==='VENDOR'){
 			}
 			
 	 });
-	$("#deliveredTo").on("focus mouseover", function(){
+$("#deliveredTo").on("focus mouseover", function(){
 			$sentTo = $("#sentTosel").val();
 
 		if($sentTo==null){
@@ -136,13 +136,13 @@ if($(this).find(":selected").val()==='VENDOR'){
 			$("#errmsg").prop('hidden', false);
 		}else{$("#errmsg").hide();}	
 	  });  
-	$("body").on("mouseover hover focus click", '#sentBy', function(){
+$("body").on("mouseover hover focus click", '#sentBy', function(){
 		$userid = $("#userid").val();
 		$username = $("#username").val();
 		$(this).val($username);
 	   $(this).prop('readonly', true);
 	  });
-    $("#add_row").click(function(){
+$("#add_row").click(function(){
       $('#addr'+i).html("<td class='text-center'>"+ (i+1) +"</td><td><input name='items["+i+"][desc]' type='text' placeholder='Item description' class='form-control input-md'  /> </td><td><input  name='items["+i+"][qty]'  type='number' onkeypress='return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57' type='number' min='0' max='10000' placeholder='Quantity'  class='form-control input-md'></td><td><input  name='items["+i+"][serial]' type='text' placeholder='Serial Number'  class='form-control input-md'></td><td><input  name='items["+i+"][status]' type='text' placeholder='Item Status'  class='form-control input-md'></td><td><input  name='items["+i+"][remark]' type='text' placeholder='Remarks'  class='form-control input-md'></td><td><input  name='items["+i+"][sircode]' type='text' placeholder='SIR Number'  class='form-control input-md'></td><td><input  name='items["+i+"][lpo]' type='text' placeholder='LPO Number'  class='form-control input-md'></td>");
 
 	$('#tbody').append('<tr id="addr'+(i+1)+'"></tr>');      i++; 
@@ -151,7 +151,7 @@ if($(this).find(":selected").val()==='VENDOR'){
 
 	console.log(g);
   });
-    $("#delete_row").click(function(){
+$("#delete_row").click(function(){
     	 if(i>1){
 		 $("#addr"+(i-1)).html('');
 		 i--;
@@ -529,7 +529,7 @@ $("body").on("click",'.btn_itemshow', function(){
 					}
 				});
 	});	
-	$("body").on("click",'#rec_btn', function(){ 
+$("body").on("click",'#rec_btn', function(){ 
        console.log("User ID"+ $userid);
 		//$("#rec_err").hide();
 		$("#recRemarks").hide();
@@ -561,7 +561,7 @@ $("body").on("click",'.btn_itemshow', function(){
 		
 				});
 	
-	$(".removeBtn").click(function(){
+$(".removeBtn").click(function(){
 		
 $.ajax({
 					type: 'GET',
@@ -585,7 +585,7 @@ $.ajax({
 				});
 		
 	});
-	$("body").on("click",'#rec_btn1', function(){ 
+$("body").on("click",'#rec_btn1', function(){ 
 	
 		loaddoc();
 		console.log('$lc  = '+$lc);
@@ -723,7 +723,7 @@ $.ajax({
 		}
 			});
 
-	$("body").on("click", "#rec_btn2", function(){
+$("body").on("click", "#rec_btn2", function(){
 		console.log("Return Submitted");
 		$printType=$("#printType").find(":selected").val();
 		console.log("Print type "+$printType);
@@ -803,7 +803,7 @@ $("body").on("click", "#rec_btn4", function(){
 				window.location.href = '/home';
 				}, 4500);					
 })
-	$("body").on("click",'#print_btn', function(){ 
+$("body").on("click",'#print_btn', function(){ 
 	//	console.log("print button clicked "+$item_err);
 		window.print();
 				});	
@@ -938,7 +938,7 @@ $("body").on("click",'#searchp_btn', function(){
 						
 					}	
 				});		
-	$("#wTypeSel").on("change", function(){
+$("#wTypeSel").on("change", function(){
 
 		if(($(this).find(":selected").val()==='LOAN')|| ($(this).find(":selected").val()==='REPAIR')){
 			console.log("LOAN or REPAIR Selected");
@@ -957,7 +957,7 @@ $("body").on("click",'#searchp_btn', function(){
 		//$("#deliveredTo").replaceWith("<select class='input-md emailinput form-control' id='deliveredTo'> </select>");
 	}
 	});
-	$("#search_user").click(function(){
+$("#search_user").click(function(){
 		var intext = $("#search_input").val();
 		console.log(intext);
 		$("#tuserbody > tr > td").remove();
@@ -994,10 +994,10 @@ $("body").on("click",'#searchp_btn', function(){
 	});
 	
 
-	$(".close").click(function(){
+$(".close").click(function(){
 		$("#myModal").hide();
 	});
-		$("body").on("click", '#btnUpdateUser', function(){
+$("body").on("click", '#btnUpdateUser', function(){
 		console.log("Thank You " + $(this).val());
 		console.log($("#deptsel").val());
 
@@ -1034,7 +1034,7 @@ $("body").on("click",'#searchp_btn', function(){
 		});
 		
 		});		
-	$("body").on("click", '.useredit', function(){	
+$("body").on("click", '.useredit', function(){	
 		$(".modal-body >  table > tbody > tr").remove();
 		console.log("clicking sound");
 		console.log($(this).val());
@@ -1108,6 +1108,59 @@ $("body").on("click",'#searchp_btn', function(){
 				});
 		
 	});
+$("#rSearch").click(function(){
+	origin = $("#origin").val();
+	destination = $("#destination").val();
+	frmDate = $("#frmDate").val();
+	toDate = $("#toDate").val();
+	sender = $("#sender").val();
+	receiver = $("#receiver").val();	
+	console.log("Origin "+ origin + " Destination "+ destination);
+	console.log("To Date "+ toDate + " From Date "+ frmDate);
+	console.log("Sender "+ sender + " Receiver "+ receiver);	
+	
+	$.ajax({
+					type: 'GET',
+					url: "genreport",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"frmDate": frmDate,
+					"toDate":  toDate,
+					"origin":  origin,
+					"destination":   destination,
+					"sender":  sender,
+					"receiver": receiver,
+
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+					console.log("error on submit"+xhr);
+				//	window.location.href = '/report'					
+					},
+					success: function( data, res){ 
+
+					//data response can contain what we want here...
+					console.log("Item saved "+ data[0].sentFrom +" Rseult "+res);
+					//window.location.href = '/report'
+					//location.reload();
+					$("#tbody > tr").empty();
+						i=0
+					$.each(data, function(i, item){
+					 $('#addr'+i).html("<td class='text-center'>"+'W'+data[i].wType.charAt(0)+ zeroPad(data[i].id, 5) +"</td><td class='text-center'>"+data[i].sentDate+"</td><td class='text-center'>"+data[i].sentBy+"</td><td class='text-center'>"+data[i].deliveredTo+"</td><td class='text-center'>"+data[i].sentFrom+"</td><td class='text-center'>"+data[i].sentTo+"</td><td class='text-center'>"+data[i].deliveredBy+"</td><td><p data-placement='top' data-toggle='tooltip' title='List items'><button class='btn btn-primary btn-xs btn_items' value='"+data[i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td><td class='text-center'>"+data[i].receiveStatus+"</td>");
+
+					$('#tbody').append('<tr id="addr'+(i+1)+'"></tr>');   
+					});
+					$("#tab_logic").show();  				
+					
+					$("#thead1").show();	
+				
+					}				
+					
+				});
+	
+});
 $("#saveRecipient").click(function(){
 	
 	$.ajax({
@@ -1125,13 +1178,15 @@ $("#saveRecipient").click(function(){
 					},                                                                                             
 					error: function( xhr ){ 
 					// alert("ERROR ON SUBMIT");
-//					console.log("error on submit"+xhr);
+					console.log("error on submit"+xhr);
+					window.location.href = '/admin'					
 					},
 					success: function( data ){ 
 
 					//data response can contain what we want here...
 					console.log("Item saved "+data+"fully");
-					location.reload();
+					window.location.href = '/admin'
+					//location.reload();
 					}
 				});
 	

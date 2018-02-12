@@ -112,8 +112,8 @@ $array_option
 						  					
                         </tbody>
                 </table>
-						
-					{!! Form::submit('Save Email', array('class' => 'btn btn-default', 'style'=> 'margin-top:50px', 'id'=>'saveRecipient')) !!}
+					  <button type="button" id="saveRecipient" style="margin-top:50px" class="btn btn-default">Save Email</button>	
+		
             </div>
               </div>
 
