@@ -1142,11 +1142,12 @@ $("#rSearch").click(function(){
 					success: function( data, res){ 
 
 					//data response can contain what we want here...
-					console.log("Item saved "+ data[0].sentFrom +" Rseult "+res);
+					console.log("Item saved  Rseult "+res);
 					//window.location.href = '/report'
 					//location.reload();
 					$("#tbody > tr").empty();
 					$("#tbody > tr > td").empty();
+					$("#tbody > tr").remove();
 						i=0
 					$.each(data, function(i, item){
 					 $('#addr'+i).html("<td class='text-center'>"+'W'+data[i].wType.charAt(0)+ zeroPad(data[i].id, 5) +"</td><td class='text-center'>"+data[i].sentDate+"</td><td class='text-center'>"+data[i].sentBy+"</td><td class='text-center'>"+data[i].deliveredTo+"</td><td class='text-center'>"+data[i].sentFrom+"</td><td class='text-center'>"+data[i].sentTo+"</td><td class='text-center'>"+data[i].deliveredBy+"</td><td><p data-placement='top' data-toggle='tooltip' title='List items'><button class='btn btn-primary btn-xs btn_items' value='"+data[i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td><td class='text-center'>"+data[i].receiveStatus+"</td>");
