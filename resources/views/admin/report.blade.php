@@ -92,7 +92,7 @@ $array_option
 					 <div class="row">
 					  <div class="col-lg-12">
 					 <div class="col-lg-3">
-					 <button name="rSearch" class="btn btn-default" id="rSearch" type="button">
+					 <button name="rSearch"  class="btn btn-default" id="rSearch" type="submit">
 					 SEARCH 
 					 </button>
 					 </div>
@@ -155,6 +155,7 @@ $array_option
 					</tr>
                     <tr id='addr1'></tr>
 				</tbody>
+				
 			</table>								
 									</div>
 								</div>								

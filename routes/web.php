@@ -26,28 +26,79 @@ use App\Jobs\SendDailyReport;
 |
 */
 Route::get('genreport', function(Request $request){
-	$frmDate = Carbon::parse($request->frmDate);
-	$toDate = Carbon::parse($request->toDate);
+	$frmDate = $request->frmDate;
+	$toDate = $request->toDate;
 	$origin = $request->origin;
 	$destination = $request->destination;
+	
 	$sender = $request->sender;
 	$receiver = $request->receiver;
 	//$data = 'Hello';
-
-	$data = doc::where('sentFrom', 'NPRNL AGBARA')->get();
-	
+	$doc = new doc;
+	$query = $doc->newQuery();
+	if($request->has('frmDate')){
+		if($request->has('toDate')){
+		 $query->whereBetween('sentDate', [$frmDate, $toDate]);
+		}
+		else{
+		$query->whereBetween('sentDate', [$frmDate, $frmDate]);	
+		}
+	}
+	if($request->has('origin')){
+	$query->where('sentFrom', $origin);
+	}
+	if($request->has('destination')){
+	$query->where('sentTo', $destination);
+	}	
+	if($request->has('sender')){
+	$query->where('sentBy', 'LIKE', '%'.$sender.'%');
+	}	
+	if($request->has('receiver')){
+	$query->where('deliveredTo', 'LIKE', '%'.$receiver.'%');
+	}
+		$data = $query->get();
+	//$data=$query->paginate(20);
 	//return view('admin.report');
 	return Response::json($data);
 })->name('report')->middleware('auth', 'admin');
 Route::get('report', function(Request $request){
-	$text  =  $request->search;
-	$user = user::where('email', 'like', '%'.$text.'%')->first();
-	return view('admin.report');
+$frmDate = $request->frmDate;
+	$toDate = $request->toDate;
+	$origin = $request->origin;
+	$destination = $request->destination;
+	
+	$sender = $request->sender;
+	$receiver = $request->receiver;
+	//$data = 'Hello';
+	$doc = new doc;
+	$query = $doc->newQuery();
+	if($request->has('frmDate')){
+		if($request->has('toDate')){
+		 $query->whereBetween('sentDate', [$frmDate, $toDate]);
+		}
+		else{
+		$query->whereBetween('sentDate', [$frmDate, $frmDate]);	
+		}
+	}
+	if($request->has('origin')){
+	$query->where('sentFrom', $origin);
+	}
+	if($request->has('destination')){
+	$query->where('sentTo', $destination);
+	}	
+	if($request->has('sender')){
+	$query->where('sentBy', 'LIKE', '%'.$sender.'%');
+	}	
+	if($request->has('receiver')){
+	$query->where('deliveredTo', 'LIKE', '%'.$receiver.'%');
+	}	
+	$data=$query->paginate(20);
+	return view('admin.report')->with(['data'=>$data]);
 	//return Response::json($user);
 })->name('report')->middleware('auth', 'admin');
 Route::get('searchuser', function(Request $request){
 	$text  =  $request->search;
-	$user = user::where('email', 'like', '%'.$text.'%')->first();
+	$user = user::where('email', 'like', '%'.$text.'%')->first(); 
 	return Response::json($user);
 })->middleware('auth', 'admin');
 Route::get('updateuser', function(Request $request){
