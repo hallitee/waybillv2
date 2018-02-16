@@ -14,6 +14,7 @@ use App\Mail\DailyReport;
 use App\Jobs\SendNewWaybillEmail;
 use App\Jobs\SendNewRecWaybillEmail;
 use App\Jobs\SendDailyReport;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +26,95 @@ use App\Jobs\SendDailyReport;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('intranet', function(Request $request){
-	return view('index');
-});
+Route::get('genreport', function(Request $request){
+	$frmDate = $request->frmDate;
+	$toDate = $request->toDate;
+	$origin = $request->origin;
+	$destination = $request->destination;
+	$sender = $request->sender;
+	$receiver = $request->receiver;
+	$status = $request->status;
+	$wType = $request->wType;	
+	//$data = 'Hello';
+	$doc = new doc;
+	$query = $doc->newQuery();
+	if($request->has('frmDate')){
+		if($request->has('toDate')){
+		 $query->whereBetween('sentDate', [$frmDate, $toDate]);
+		}
+		else{
+		$query->whereBetween('sentDate', [$frmDate, $frmDate]);	
+		}
+	}
+	if($request->has('origin')){
+	$query->where('sentFrom', $origin);
+	}
+	if($request->has('destination')){
+	$query->where('sentTo', $destination);
+	}
+	if($request->has('status')){
+	$query->where('receiveStatus', $status);
+	}
+	if($request->has('wType')){
+	$query->where('wType', $wType);
+	}
+	if($request->has('sender')){
+	$query->where('sentBy', 'LIKE', '%'.$sender.'%');
+	}	
+	if($request->has('receiver')){
+	$query->where('deliveredTo', 'LIKE', '%'.$receiver.'%');
+	}
+		$data = $query->paginate(20);
+	//$data=$query->paginate(20);
+	//return view('admin.report');
+	//return Response::json($data);
+	if($request->ajax()){
+		 return view('admin.table', ['doc' => $data])->render(); 
+	}
+})->name('report')->middleware('auth', 'admin');
+
+Route::get('report', function(Request $request){
+	$frmDate = $request->frmDate;
+	$toDate = $request->toDate;
+	//$origin = $request->origin;
+	//$destination = $request->destination;
+	//$sender = $request->sender;
+	//$receiver = $request->receiver;
+	$items = [];
+	//$data = 'Hello';
+	$doc = new doc;
+	$query = $doc->newQuery();
+	if($request->has('frmDate')){
+		if($request->has('toDate')){
+		 $query->whereBetween('sentDate', [$frmDate, $toDate]);
+		}
+		else{
+		$query->whereBetween('sentDate', [$frmDate, $frmDate]);	
+		}
+	}
+	if($request->has('origin')){
+	$query->where('sentFrom', $origin);
+	}
+	if($request->has('destination')){
+	$query->where('sentTo', $destination);
+	}	
+	if($request->has('sender')){
+	$query->where('sentBy', 'LIKE', '%'.$sender.'%');
+	}	
+	if($request->has('receiver')){
+	$query->where('deliveredTo', 'LIKE', '%'.$receiver.'%');
+	}	
+	$data=$query->paginate(10);
+	foreach($data as $d){
+		$it = item::where('doc_id', $d->id)->get();
+		array_push($items, $it);
+	}
+		return view('admin.report1')->with(['doc'=>$data, 'item'=>$items]);
+	//return Response::json($user);
+})->name('report')->middleware('auth', 'admin');
 Route::get('searchuser', function(Request $request){
 	$text  =  $request->search;
-	$user = user::where('email', 'like', '%'.$text.'%')->first();
+	$user = user::where('email', 'like', '%'.$text.'%')->first(); 
 	return Response::json($user);
 })->middleware('auth', 'admin');
 Route::get('updateuser', function(Request $request){
@@ -65,16 +149,16 @@ Route::get('admin', function(){
 })->name('config')->middleware('auth', 'admin');
 
 Route::get('waybill/globalreport', function(){
-	$day = Carbon::today()->subDays(11)->toDateString();
+	$day = '2018-02-08';//Carbon::today()->subDays(11)->toDateString();
 	$itms= [];
 	$itmr = [];
 	$com = email::where('location', 'IKOYI')->first();
-	$cmps = doc::where('sentDate', '=', $day)->where('sentFrom', 'LIKE', '%IKOYI%')->get();
+	$cmps = doc::where('sentDate', '=', $day)->where('sentFrom', 'LIKE', '%NPRNL AGBARA%')->get();
 	foreach($cmps as $d){
 	$n = item::where('doc_id', $d->id)->get();
 	array_push($itms, $n);
 	}
-	$cmpr = doc::where('sentDate', '=', $day)->where('sentTo', 'LIKE', '%IKOYI%')->get();
+	$cmpr = doc::where('sentDate', '=', $day)->where('sentTo', 'LIKE', '%NPRNL AGBARA%')->get();
 	foreach($cmpr as $d){
 	$m = item::where('doc_id', $d->id)->get();
 	array_push($itmr, $m);
@@ -349,11 +433,12 @@ Route::get('waybill/checkdoc',['as' => 'waybill.checkdoc', 'uses' => 'docs@check
 //}]);
 Route::get('waybill/printreview/{docid?}',['as' => 'waybill.print', 'uses' => 'docs@printreview', 'docid'=>'docid']);
 //Route::get('waybill/rprint',['as' => 'waybill.rprint', 'uses' => 'docs@rprint']);
+Route::get('waybill/reports',['as' => 'waybill.reports', 'uses' => 'docs@reports']);
 Route::get('waybill/print/{docid?}',['as' => 'waybill.print', 'uses' => 'docs@prints', 'docid'=>'docid']);
 Route::get('waybill/search/{docid?}',['as' => 'waybill.search', 'uses' => 'docs@search', 'docid'=>'docid']);
 Route::get('waybill/receive',['as' => 'waybill.receive', 'uses' => 'docs@receive']);
 Route::get('waybill/rprint',['as' => 'waybill.rprint', 'uses' => 'docs@rprint', 'doc']);
-Route::get('waybill/reports',['as' => 'waybill.reports', 'uses' => 'docs@reports']);
+Route::get('excelreport',['as' => 'excelreport', 'uses' => 'docs@excelreport']);
 Route::post('waybill/receive',['as' => 'waybill.receive', 'uses' => 'docs@receive']);
 Route::resource('waybill', 'docs',array('names' => array('receive' => 'docs.receive','load'=>'no' )));
 Auth::routes();

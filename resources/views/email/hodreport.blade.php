@@ -146,7 +146,7 @@
 							@endforeach</td>
 						<td>{{$d->sentBy}}</td>
 						<td>{{$d->deliveredTo}}</td>
-						<td>{{$d->sentTo}}</td>
+						<td>{{$d->sentFrom}}</td>
 						<td>{{$d->wType}}</td>
 						<td>{{$d->receiveStatus}}</td>
 						<td>{{$d->deliveredBy}}</td>
