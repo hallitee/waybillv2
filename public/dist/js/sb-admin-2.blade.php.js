@@ -300,6 +300,148 @@ $("#delete_row").click(function(){
 					}
 				});
 	});
+$("body").on("click", '.btn_items2', function(){
+
+				$("#recRemarks").hide();
+				$("#printText").hide();
+				$("#printType").hide();
+				$("#rec_btn3").hide();
+				//$("#recRemText").hide();
+//				console.log("Items button clicked");
+				$userid = $("#userid").val();
+				$doc_id = $(this).val();
+				$.ajax({  //load waybill document
+					type: 'GET',
+					url: "/waybill/loaddoc",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"id": $doc_id
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+//					console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+					$doc = data;
+//					console.log($doc.id);
+					}
+				
+				});
+
+				$.ajax({ //load waybill item 
+					type: 'GET',
+					url: "/waybill/loadItems",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"id": $doc_id
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+					console.log("error on submit"+xhr);
+					},
+					success: function( data ){ 
+					$item_err = 0; 
+					$item_count=0;
+					rec_qty = [];
+					$("#tbody1 > tr > td").remove();	
+					$.each(data, function(i, item){
+						if(item.recqty===item.qty){
+							$rd = "readonly";
+						}else if($doc.ackcnt>9){$rd="readonly"}
+						else{$rd = "";}
+//						console.log(i);
+						rec_qty[i] = item.recqty;
+				if($doc.receiveStatus=='CLOSED' || $doc.receiveStatus=='RECEIVED' || $doc.receiveStatus == 'RETURNED')	{
+					$rd = 'readonly';
+					$("#recheader").text("Received Quantity");
+					$ins="<td><input  name='item["+i+"][recqty]' onkeypress='return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57' type='number' min='0' max='1000' placeholder='qty' value='"+item.recqty+"' class='form-control input-md' required "+$rd+"></td>";
+				}else{
+					$rd="readonly";
+					$("#recheader").text("Received Quantity");
+					$ins="<td><input  name='item["+i+"][recqty]' onkeypress='return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57' type='number' min='0' max='1000' placeholder='qty' value='"+item.recqty+"' class='form-control input-md' required "+$rd+"></td>";
+				}
+					 $('#addrs'+i).html("<td>"+ (i+1) +"<input name='item["+i+"][id]' value='"+item.id+"' type='text' placeholder='Item description' hidden/> </td><td><input name='item["+i+"][desc]' value='"+item.item_desc+"' type='text' placeholder='Item description' class='form-control input-md'  readonly/> </td><td><input  name='item["+i+"][serial]' value='"+item.serialNo+"' type='text' placeholder='Quantity'  class='form-control input-md' readonly></td><td><input  name='item["+i+"][qty]'  value='"+item.qty+"'  type='text' placeholder='Serial Number'  class='form-control input-md' readonly></td>"+$ins+"<td><input  name='item["+i+"][recvnqty]'  value='"+(item.qty-item.recqty)+"' type='text' min='0' max='1000' placeholder='Serial Number'  class='form-control input-md' required "+$rd+" readonly></td><td><input  name='item["+i+"][status]'  value='"+item.status+"' type='text' placeholder='Item Status'  class='form-control input-md' readonly></td><td><input  value='"+item.remark+"'  name='item["+i+"][remark]' type='text' placeholder='Remarks'  class='form-control input-md' readonly></td><td><input  value='"+item.sircode+"'  name='item["+i+"][sircode]' type='text' placeholder='SIR Number'  class='form-control input-md' readonly></td><td><input  value='"+item.lpo+"'  name='item["+i+"][lpo]' type='text' placeholder='LPO Number'  class='form-control input-md' readonly></td>");
+					 $('#tbody1').append('<tr id="addrs'+(i+1)+'"></tr>');     
+					 $item_count++;
+					$('#row_value').val(i);
+					}); 	
+//					console.log("item count "+$item_count);
+					//$("#tab_logic1 tbody1").remove();	
+					//$("#tab_logic1").show();	
+					if($doc.receiveStatus === 'CLOSED'){
+					$("#rec_by").text($doc.receivedBy);	
+					$("#rec_date").text($doc.receiveDate);	
+					console.log($doc.closeremark);
+					if($doc.closeremark === null){
+					$("#rec_rem0").hide();	
+					$("#rec_rem").hide();	
+					}else{
+					$("#rec_rem").text($doc.closeremark);
+					$("#rec_rem0").show();	
+					$("#rec_rem").show();	
+					}	
+					if($doc.wType == 'PROMO'){
+					$("#rec_by").text($doc.deliveredTo);	
+					$("#rec_date").text($doc.sentDate);							
+					}
+					$("#disp_rec").show();
+					$("#rec_btn").hide();
+					$("#rec_btn1").hide();
+					$("#rec_suc").text("");
+					}else{ $("#rec_btn").show();$("#disp_rec").hide(); $("#rec_btn1").show();}
+					$("#edit").modal('show');
+					$("#rec_err").text("");
+					$("#rec_suc").text("");
+					if($doc.wType=='LOAN'){
+						
+					if($doc.ackcnt>9){
+					$("#rec_btn1").hide();
+					$("#rec_btn2").show();
+					$("#printText").show();
+					$("#printType").show();						
+					if($username == $doc.sentBy){
+						console.log("same person");
+					$("#rec_btn1").show();
+					$("#rec_btn2").hide();							
+					$("#printText").hide();
+					$("#printType").hide();							
+					}				
+						}else{
+					$("#rec_btn1").show();
+					$("#rec_btn2").hide();							
+					$("#printText").hide();
+					$("#printType").hide();				
+						}
+						if($doc.ackcnt>19){
+					if($username==$doc.sentBy){
+					$("#rec_btn1").hide();  //receive button
+					$("#rec_btn2").hide();	// receive button load for loan 						
+					$("#printText").hide();
+					$("#printType").hide();	
+					$("#rec_btn4").show();
+							}
+							else{	
+					$("#rec_btn1").hide();
+					$("#rec_btn2").hide();							
+					$("#printText").show();
+					$("#printType").show();	
+					$("#rec_btn3").show();
+							}
+							
+						}
+					}
+					//$("#rec_err").hide();
+					//data response can contain what we want here...
+					
+	//				console.log(data);
+					//console.log("SUCCESS, data="+data);
+					}
+				});
+	});	
 	$("body").on("click",'.btn_items', function(){
 		$("#recRemarks").hide();
 				$("#printText").hide();
@@ -1109,16 +1251,21 @@ $("body").on("click", '.useredit', function(){
 		
 	});
 $("#rSearch").click(function(){
+					item = '';
+					desc = '';
+					qty = '';	
 	origin = $("#origin").val();
 	destination = $("#destination").val();
 	frmDate = $("#frmDate").val();
 	toDate = $("#toDate").val();
 	sender = $("#sender").val();
 	receiver = $("#receiver").val();	
+	wType = $("#wType").val();
+	statis = $("#status").val();	
 	console.log("Origin "+ origin + " Destination "+ destination);
 	console.log("To Date "+ toDate + " From Date "+ frmDate);
 	console.log("Sender "+ sender + " Receiver "+ receiver);	
-	
+
 	$.ajax({
 					type: 'GET',
 					url: "genreport",
@@ -1132,6 +1279,8 @@ $("#rSearch").click(function(){
 					"destination":   destination,
 					"sender":  sender,
 					"receiver": receiver,
+					"status":	statis,
+					"wType":	wType,
 
 					},                                                                                             
 					error: function( xhr, des ){ 
@@ -1150,8 +1299,34 @@ $("#rSearch").click(function(){
 					$("#tbody > tr").remove();
 						i=0
 					$.each(data, function(i, item){
-					 $('#addr'+i).html("<td class='text-center'>"+'W'+data[i].wType.charAt(0)+ zeroPad(data[i].id, 5) +"</td><td class='text-center'>"+data[i].sentDate+"</td><td class='text-center'>"+data[i].sentBy+"</td><td class='text-center'>"+data[i].deliveredTo+"</td><td class='text-center'>"+data[i].sentFrom+"</td><td class='text-center'>"+data[i].sentTo+"</td><td class='text-center'>"+data[i].deliveredBy+"</td><td><p data-placement='top' data-toggle='tooltip' title='List items'><button class='btn btn-primary btn-xs btn_items' value='"+data[i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td><td class='text-center'>"+data[i].receiveStatus+"</td>");
+						//start get items 
+				getItems = function(){		
+		$.ajax({
+					type: 'GET',
+					url: "waybill/loadItems",
+					dataType: 'JSON',
+					beforeSend: function(xhr)
+					{xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+					data: {
+					"id": data[i].id,
+					},                                                                                             
+					error: function( xhr ){ 
+					// alert("ERROR ON SUBMIT");
+				   console.log("error on submit items"+xhr);
+					},
+					success: function( items, resItem ){ 
+					//console.log(" User update "+ items  +"fully");
 
+					//data response can contain what we want here...
+						return items;
+					}
+					
+		});
+				}
+												
+						//end get items
+					 $('#addr'+i).html("<td class='text-center'>"+'W'+data[i].wType.charAt(0)+ zeroPad(data[i].id, 5) +"</td><td class='text-center'>"+data[i].sentDate+"</td><td class='text-center'>"+data[i].sentBy+"</td><td class='text-center'>"+data[i].deliveredTo+"</td><td class='text-center'>"+data[i].sentFrom+"</td><td class='text-center'>"+data[i].sentTo+"</td><td class='text-center'>"+desc+"</td><td><p data-placement='top' data-toggle='tooltip' title='List items'><button class='btn btn-primary btn-xs btn_items2' value='"+data[i].id+"'><span class='glyphicon glyphicon-pencil'></span></button></p></td><td class='text-center'>"+data[i].receiveStatus+"</td>");
+				console.log(" User update "+ getItems() +"fully");
 					$('#tbody').append('<tr id="addr'+(i+1)+'"></tr>');   
 					});
 					$("#tab_logic").show();  				

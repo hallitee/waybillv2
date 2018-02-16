@@ -1,4 +1,35 @@
 @extends('layouts.app')
+@section('header')
+
+	<style type="text/css" media="print">
+    @page 
+    {
+        size: auto;   /* auto is the initial value */
+        margin: 0mm;  /* this affects the margin in the printer settings */
+    }
+
+    body 
+    {
+        background-color:#FFFFFF; 
+        border: none;
+        margin: 5px;  /* this affects the margin on the content before sending to printer */
+   }
+   table, th, td{
+
+    border: 1px solid black;
+    border-collapse: collapse;
+	text-align: center;
+   	font-size: 11px;
+   }
+</style>
+<style type="text/css">
+   table, th, td{
+	
+    border: 1px solid black;
+   	font-size: 12px;
+   }
+</style>
+@endsection
 @section('navbar')
 @include('nav')
 @endsection
@@ -25,15 +56,15 @@ $arr_status = array(''=>'', 'OPEN'=>'OPEN', 'RECEIVED'=>'RECEIVED', 'RETURNED'=>
                 <div class="panel-heading">Generate Waybill Report</div>
                      <div class="panel-body">
                             <div class="row">
-
+						{!! Form::open(['route' => 'report', 'method'=>'GET']) !!}
                             <div class="row">
                             <div class="col-lg-12">
-                                     <div class="col-lg-4">
+                                <div class="col-lg-4">
                                      <div class="panel-body">
                                             <label for="id_select"  class="control-label col-lg-6  requiredField">Date From<span class="asteriskField">*</span> </label>
 
                                             <div class="input-group custom-search-form col-lg-6">
-											<input type="date" id="frmDate" class="form-control">
+											<input type="date" name="frmDate" class="form-control">
                                      </div>
                                      </div>
                                 </div>                                
@@ -42,32 +73,30 @@ $arr_status = array(''=>'', 'OPEN'=>'OPEN', 'RECEIVED'=>'RECEIVED', 'RETURNED'=>
                                             <label for="id_select"  class="control-label col-lg-6  requiredField">Date To<span class="asteriskField">*</span> </label>
 
                                             <div class="input-group custom-search-form col-lg-6">
-											<input type="date" id="toDate" class="form-control">
+											<input type="date" name="toDate" class="form-control">
                                      </div>
                                      </div>
                                 </div> 
-					 <div class="col-lg-4">
-					    <div class="panel-body">
-					 <button name="rSearch"  class="btn btn-default text-center" id="rSearch" type="submit">
-					 <b>SEARCH </b>
-					 </button>
-					 </div>
-					 </div>
+								<div class="col-lg-4">
+                                     <div class="panel-body">
+                                            <label for="id_select"  class="control-label col-lg-6  requiredField"><span class="asteriskField"></span> </label>
+
+                                    <div class="input-group col-lg-6">
+											{!! Form::submit('Search', array('class' => 'btn btn-success', 'style'=> 'margin-top:50px')) !!}
+                                     </div>
+                                     </div>
+                                </div> 			
 				 
-                            </div>	
-                        
-                                                      
-
-                       						
+            					{!! Form::close() !!}
                      </div>
-
+				
                                 <!-- /.col-lg-6 (nested) -->
                 </div>
                             <!-- /.row (nested) -->
             </div>
 
                         <!-- /.panel-body -->
-					
+			
                     <!-- /.panel -->
 	   </div>                 <div   class="row">
                 <div class="col-lg-12" id="tbl_list">
@@ -79,51 +108,68 @@ $arr_status = array(''=>'', 'OPEN'=>'OPEN', 'RECEIVED'=>'RECEIVED', 'RETURNED'=>
 								<div class="row">
 								<div class="table-responsive">
 							
-					<table class="table table-bordered table-hover" id="tab_logic" hidden>
-						<thead id="thead1">
-						<tr >
-						<th class="text-center">
-							Waybill #
-						</th>
-						<th class="text-center">
-							Sent Date
-						</th>
-						<th class="text-center">
-						Sender
-						</th>
-						<th class="text-center">
-						Receiver
-						</th>						
-						<th class="text-center">
-							Origin
-						</th>
-						<th class="text-center">
-							Destination
-						</th>						
-						<th class="text-center">
-							Delivered By
-						</th>
-	
-						<th class="text-center">
-							Items
-						</th>						
-						<th class="text-center">
-							Status
-						</th>						
+			<table border='2|1' >
+			
+				<thead class="border-2" style="border:1px solid black;border-collapse:collapse">
+					<tr style="border:1px solid black;border-collapse:collapse">
+						<th class="text-center align-text-top">Waybill #</th>
+						<th class="text-center align-text-top">Sent Date</th>						
+						<th class="" rowspan="1" colspan="2">Items Delivered</th>
+						<th class="">Sender</th>
+						<th class="">Receiver</th>
+						<th class="">Origin</th>
+						<th class="">Destination</th>						
+						<th class="">Type</th>
+						<th class="">Status</th>
+						<th class="">Delivered By</th>
 					</tr>
-				</thead>				
-				<tbody id='tbody'>
-					<tr id='addr0'>
-												
+					<tr style="border:1px solid black;border-collapse:collapse">
+						<th colspan="" rowspan="" headers="" scope=""></th>
+						<th colspan="" rowspan="" headers="" scope=""></th>						
+						<th colspan="" rowspan="" headers="" scope="">Description</th>
+						<th colspan="" rowspan="" headers="" scope="">Quantity</th>
+						<th colspan="" rowspan="" headers="" scope=""></th>
+
+						<th colspan="" rowspan="" headers="" scope=""></th>
+						<th colspan="" rowspan="" headers="" scope=""></th>
+						<th colspan="" rowspan="" headers="" scope=""></th>						
+						<th colspan="" rowspan="" headers="" scope=""></th>
+						<th colspan="" rowspan="" headers="" scope=""></th>												
 					</tr>
-                    <tr id='addr1'></tr>
+				</thead>
+				<tbody class="border-2">
+				 @foreach($doc as $key=>$d)
+					<tr>
+						<td>W{{ucfirst($d->wType[0])}}{{str_pad($d->id, 5, "0", STR_PAD_LEFT)}}</td>
+						<td>W{{ $d->sentDate }}</td>						
+						<td>
+							@foreach($item[$key] as $t)
+							{{$t->item_desc}}
+							<br>
+							@endforeach
+						</td>
+						<td>@foreach($item[$key] as $t)
+							{{$t->qty}}
+							<br>
+							@endforeach</td>
+						<td>{{$d->sentBy}}</td>
+						<td>{{$d->deliveredTo}}</td>
+						<td>{{$d->sentFrom}}</td>
+						<td>{{$d->sentTo}}</td>						
+						<td>{{$d->wType}}</td>
+						<td>{{$d->receiveStatus}}</td>
+						<td>{{$d->deliveredBy}}</td>
+						
+					</tr>
+					@endforeach
+					
 				</tbody>
-				
 			</table>								
 									</div>
+												{{ $doc->links() }}
 								</div>								
 							</div>
-							
+							<a href="{{route('excelreport')}}"> <button class="btn btn-info">Export Excel </button> </a>
 						</div>
 					</div>
 				</div>
@@ -212,6 +258,7 @@ $arr_status = array(''=>'', 'OPEN'=>'OPEN', 'RECEIVED'=>'RECEIVED', 'RETURNED'=>
                 
 				</tbody>
 			</table>	
+
 			<div id='recRemarks' style="display:none">
 			<textarea id="recRemText" placeholder="Enter remarks before closing waybill" class="center-block" cols="40" rows="3" style="width:300px;height:100px;border:5px solid orange;border-radius:2px"></textarea>			
 			</div>
@@ -246,4 +293,5 @@ $arr_status = array(''=>'', 'OPEN'=>'OPEN', 'RECEIVED'=>'RECEIVED', 'RETURNED'=>
 		</div>
       <!-- /.modal-dialog --> 
     </div>
+		
    	@endsection

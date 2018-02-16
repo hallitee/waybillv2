@@ -22,6 +22,8 @@ use App\Mail\NewWaybill;
 use App\Mail\recNewMail;
 use App\Jobs\SendNewWaybillEmail;
 use App\Jobs\SendNewRecWaybillEmail;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class docs extends Controller
 {
@@ -131,7 +133,63 @@ public function checkdoc()
 {
 	
 }
-		
+public function excelreport(Request $request) {
+$frmDate = $request->frmDate;
+	$toDate = $request->toDate;
+	//$origin = $request->origin;
+	//$destination = $request->destination;
+	//$sender = $request->sender;
+	//$receiver = $request->receiver;
+	$items = [];
+	//$data = 'Hello';
+	$doc = new doc;
+	$query = $doc->newQuery();
+	if($request->has('frmDate')){
+		if($request->has('toDate')){
+		 $query->whereBetween('sentDate', [$frmDate, $toDate]);
+		}
+		else{
+		$query->whereBetween('sentDate', [$frmDate, $frmDate]);	
+		}
+	}
+	if($request->has('origin')){
+	$query->where('sentFrom', $origin);
+	}
+	if($request->has('destination')){
+	$query->where('sentTo', $destination);
+	}	
+	if($request->has('sender')){
+	$query->where('sentBy', 'LIKE', '%'.$sender.'%');
+	}	
+	if($request->has('receiver')){
+	$query->where('deliveredTo', 'LIKE', '%'.$receiver.'%');
+	}	
+	$data=$query->get();
+	foreach($data as $d){
+		$it = item::where('doc_id', $d->id)->get();
+		array_push($items, $it);
+	}
+		$data = $data->toArray();
+		//	$data = Item::get()->toArray();
+	Log::info('Download generated file into local disk');
+		return Excel::create('excel_report1', function($excel) use ($data) {
+
+			$excel->sheet('mySheet', function($sheet) use ($data)
+
+	        {
+
+				$sheet->fromArray($data);
+
+	        });
+
+		})->export('csv');	
+		Log::info('After Excel download');
+	//	$data = Item::get()->toArray();
+	//return Response::json($user);
+	//return view('admin.users')->with(['doc'=>$data, 'item'=>$items]);
+
+	
+	}		
  public function store(DocFormRequest  $request)
  {
 	 $user_id = Auth::user()->id;

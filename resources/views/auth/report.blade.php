@@ -25,7 +25,36 @@ $arr_status = array(''=>'', 'OPEN'=>'OPEN', 'RECEIVED'=>'RECEIVED', 'RETURNED'=>
                 <div class="panel-heading">Generate Waybill Report</div>
                      <div class="panel-body">
                             <div class="row">
+                                <div class="col-lg-12">
+							         <div class="col-lg-4">
+							         <div class="panel-body">
+								 <label for="id_select"  class="control-label col-lg-6  requiredField"> Origin <span class="asteriskField"></span> </label>
 
+								            <div class="input-group custom-search-form col-lg-6">
+                                           {!! Form::select('origin',$arr_option2,null, array('class' => 'form-control', 'id'=>'origin', 'placeholder'=>'e.g ESRNL AGBARA')); !!}
+                                         
+                                     </div>
+							         </div>
+						        </div>
+							         <div class="col-lg-4">
+							         <div class="panel-body">
+								            <label for="id_select"  class="control-label col-lg-6  requiredField">Destination <span class="asteriskField"></span> </label>
+
+								            <div class="input-group custom-search-form col-lg-6">
+                                            {!! Form::select('destination',$arr_option2,null, array('class' => 'form-control', 'id'=>'destination', 'placeholder'=>'e.g ESRNL IKOYI')); !!}
+                                     </div>
+							         </div>
+						        </div>	
+							    <div class="col-lg-4">
+							         <div class="panel-body">
+								            <label for="id_select"  class="control-label col-lg-6  requiredField">Sender<span class="asteriskField"></span> </label>
+											
+								            <div class="input-group custom-search-form col-lg-6">
+                                            <input type="text" id="sender" class="form-control" placeholder="Ronaldo">
+                                     </div>
+							         </div>
+						        </div>								
+					        </div>	
                             <div class="row">
                             <div class="col-lg-12">
                                      <div class="col-lg-4">
@@ -46,6 +75,42 @@ $arr_status = array(''=>'', 'OPEN'=>'OPEN', 'RECEIVED'=>'RECEIVED', 'RETURNED'=>
                                      </div>
                                      </div>
                                 </div> 
+							    <div class="col-lg-4">
+							         <div class="panel-body">
+								            <label for="id_select"  class="control-label col-lg-6  requiredField">Receiver <span class="asteriskField"></span> </label>
+											
+								            <div class="input-group custom-search-form col-lg-6">
+                                            <input type="text" id="receiver" class="form-control" placeholder="Ronaldo">
+                                     </div>
+							         </div>
+						        </div>	
+                            </div>	
+                        
+                                                      
+
+                       						
+                     </div>
+					 <div class="row">
+					  <div class="col-lg-12">
+							         <div class="col-lg-4">
+							         <div class="panel-body">
+								 <label for="id_select"  class="control-label col-lg-6  requiredField"> Waybill Type <span class="asteriskField"></span> </label>
+
+								            <div class="input-group custom-search-form col-lg-6">
+                                           {!! Form::select('wType',$arr_type,null, array('class' => 'form-control', 'id'=>'wType', 'placeholder'=>'e.g ESRNL AGBARA')); !!}
+                                         
+                                     </div>
+							         </div>
+						        </div>
+							         <div class="col-lg-4">
+							         <div class="panel-body">
+								            <label for="id_select"  class="control-label col-lg-6  requiredField">Waybill Status<span class="asteriskField"></span> </label>
+
+								            <div class="input-group custom-search-form col-lg-6">
+                                            {!! Form::select('status',$arr_status,null, array('class' => 'form-control', 'id'=>'status', 'placeholder'=>'e.g ESRNL IKOYI')); !!}
+                                     </div>
+							         </div>
+						        </div>						  
 					 <div class="col-lg-4">
 					    <div class="panel-body">
 					 <button name="rSearch"  class="btn btn-default text-center" id="rSearch" type="submit">
@@ -53,14 +118,8 @@ $arr_status = array(''=>'', 'OPEN'=>'OPEN', 'RECEIVED'=>'RECEIVED', 'RETURNED'=>
 					 </button>
 					 </div>
 					 </div>
-				 
-                            </div>	
-                        
-                                                      
-
-                       						
-                     </div>
-
+					 </div>
+					 </div>
                                 <!-- /.col-lg-6 (nested) -->
                 </div>
                             <!-- /.row (nested) -->

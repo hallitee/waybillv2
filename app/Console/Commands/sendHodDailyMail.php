@@ -49,7 +49,7 @@ class sendHodDailyMail extends Command
         //
 		//$cmp = email::where('location', 'AGBARA')->where('company', 'NPRNL')->get();
 	$cmp = email::all();
-	$day = Carbon::today()->toDateString();
+	$day = Carbon::today()->toDateString(); //$day = '2018-02-14'; 
 	$itms= [];
 	$itmr = [];
 	//$cmps = doc::where('sentDate', '=', $day)->where('sentFrom', 'LIKE', '%IKOYI%')->get();
@@ -88,9 +88,12 @@ class sendHodDailyMail extends Command
 				//array_push($cemail, $this->copi->copi);
 				$cemail = preg_split("/[;,\s]+/", $c->copi);
 				Mail::to($cemail)->send(new DailyHodReportMail($day, $c, $cmps, $cmpr, $itms, $itmr ));
+				$itms = [];
+				$itmr = [];
 			}
 	
-		
+				$itms = [];
+				$itmr = [];
 }
 		
 		
